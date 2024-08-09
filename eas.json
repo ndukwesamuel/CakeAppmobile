@@ -1,0 +1,29 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://cake-app-server.onrender.com/api/"
+
+      }
+    },    "test": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://cake-app-server.onrender.com/api/"
+
+      }
+    }
+
+  }
+}
