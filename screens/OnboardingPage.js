@@ -4,10 +4,10 @@ import OnBoarding from "../components/OnBoading/OnBoarding";
 
 const OnBoardingPage = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar backgroundColor="#001272" barStyle="light-content" />
-      <OnBoarding />
-    </SafeAreaView>
+    // <SafeAreaView style={{ flex: 1 }}>
+    //   <StatusBar backgroundColor="#001272" barStyle="light-content" />
+    <OnBoarding />
+    // {/* </SafeAreaView> */}
   );
 };
 
