@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
+    // alignItems: "center",
     margin: 0,
     gap: 40,
   },
