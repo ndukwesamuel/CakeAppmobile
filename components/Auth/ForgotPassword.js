@@ -16,11 +16,12 @@ import { useNavigation } from "@react-navigation/native";
 import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
-const SignUp = ({ onSetAuth }) => {
+const ForgotPassword = ({ onSetAuth }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -83,69 +84,13 @@ const SignUp = ({ onSetAuth }) => {
         {/* heading texts */}
         <View style={{ gap: 10 }}>
           <Text style={{ fontSize: 24, lineHeight: 36, fontWeight: "900" }}>
-            Sign Up
+            Forgot Password
           </Text>
         </View>
 
         {/* inputs container*/}
         <View style={styles.inputGroup}>
           {/* username */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.labels}>First Name</Text>
-
-            <TextInput
-              style={styles.inputs}
-              value={firstName}
-              onChangeText={(text) => setFirstName(text)}
-              placeholder="Enter your first name"
-            />
-          </View>
-
-          {/* last name */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.labels}>Last Name</Text>
-            <TextInput
-              style={styles.inputs}
-              value={lastName}
-              onChangeText={(text) => setLastName(text)}
-              placeholder="Enter your last name"
-            />
-          </View>
-
-          {/* Phone Number */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.labels}>Phone Number</Text>
-            <TextInput
-              style={styles.inputs}
-              value={phoneNumber}
-              onChangeText={(text) => setPhoneNumber(text)}
-              placeholder="Enter your phone number"
-              keyboardType="phone-pad"
-            />
-          </View>
-
-          {/* email address */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.labels}>Email Address</Text>
-
-            <TextInput
-              style={styles.inputs}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              placeholder="Enter your email"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.labels}>Lacation </Text>
-
-            <TextInput
-              style={styles.inputs}
-              value={homeAddress}
-              onChangeText={(text) => setHomeAddress(text)}
-              placeholder="Enter your home address"
-            />
-          </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.labels}>Password</Text>
@@ -153,6 +98,16 @@ const SignUp = ({ onSetAuth }) => {
               style={styles.inputs}
               value={password}
               onChangeText={(text) => setPassword(text)}
+              secureTextEntry
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.labels}>New Password</Text>
+            <TextInput
+              style={styles.inputs}
+              value={confirmPassword}
+              onChangeText={(text) => setConfirmPassword(text)}
               secureTextEntry
             />
           </View>
@@ -200,7 +155,7 @@ const SignUp = ({ onSetAuth }) => {
                   lineHeight: 24.05,
                 }}
               >
-                Sign Up
+                Submit
               </Text>
             )}
           </Pressable>
@@ -223,7 +178,7 @@ const SignUp = ({ onSetAuth }) => {
   );
 };
 
-export default SignUp;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {

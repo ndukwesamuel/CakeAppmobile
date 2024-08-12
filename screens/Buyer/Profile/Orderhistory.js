@@ -33,10 +33,6 @@ const Orderhistory = () => {
 
   const dispatch = useDispatch();
 
-  console.log({
-    aaa: get_all_order_history_data?.orders[0],
-  });
-
   useEffect(() => {
     dispatch(Get_All_Order_HIstory_Fun());
     return () => {};

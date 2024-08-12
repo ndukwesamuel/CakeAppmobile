@@ -8,16 +8,17 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function ReuseModals({ visible, children }) {
+export default function ReuseModals({ visible, onclose, children }) {
   return (
     <Modal transparent visible={visible} animationType="slide">
-      <View
+      <TouchableOpacity
         style={{
           flex: 1,
           justifyContent: "flex-end",
           alignItems: "center",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
         }}
+        onPress={onclose}
       >
         <View
           style={{
@@ -26,12 +27,12 @@ export default function ReuseModals({ visible, children }) {
             width: "100%",
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
-            height: "70%",
+            height: "80%",
           }}
         >
           {children}
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 }

@@ -23,9 +23,7 @@ const data = [
 
 const CircularItem = ({ item }) => {
   const navigation = useNavigation();
-  console.log({
-    kk: item,
-  });
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("VendorDetails", item)}
@@ -46,9 +44,6 @@ const CircularItem = ({ item }) => {
 const VendorList = () => {
   const { get_all_vendor_data } = useSelector((state) => state.VendorSlice);
 
-  console.log({
-    dff: get_all_vendor_data?.vendors[0]?.businessName,
-  });
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {

@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 
 export default CakeCategories;
 
-const ImageCard = ({ item }) => {
+export const ImageCard = ({ item }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity

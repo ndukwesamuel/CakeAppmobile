@@ -139,11 +139,13 @@ export const NavigationScreen = () => {
   // const isAuth = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.Auth);
+  const { user_data } = useSelector((state) => state?.Auth);
 
-  const { user_data } = useSelector((state) => state.Auth);
+  console.log({
+    asdd: user_data,
+  });
 
-  const [country, setCountry] = useState("Loading...");
+  // const [country, setCountry] = useState("Loading...");
 
   return (
     <NavigationContainer>

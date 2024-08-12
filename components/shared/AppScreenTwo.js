@@ -12,10 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
 const AppScreenTwo = ({ arrrow, children }) => {
-  console.log({
-    james: arrrow, // This should log `true`
-  });
-
   const navigation = useNavigation();
   return (
     <View
