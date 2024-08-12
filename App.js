@@ -131,7 +131,7 @@ export const StartScreen = ({}) => {
 
   const dispatch = useDispatch();
 
-  return <>{!isOnboarding ? <Auth /> : <OnBoardingPage />}</>;
+  return <>{isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
   // return <Auth />;
 };
 
