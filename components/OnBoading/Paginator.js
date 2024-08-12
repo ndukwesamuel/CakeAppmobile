@@ -16,7 +16,7 @@ export default function Paginator({ data, scrollX }) {
         const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
         const dotWidth = scrollX.interpolate({
           inputRange,
-          outputRange: [10, 20, 10],
+          outputRange: [10, 10, 10],
           extrapolate: "clamp",
         });
         const opacity = scrollX.interpolate({
@@ -31,7 +31,7 @@ export default function Paginator({ data, scrollX }) {
             style={{
               borderRadius: 10,
               height: 10,
-              backgroundColor: "#001272",
+              backgroundColor: "#DD293E",
               marginHorizontal: 8,
               width: dotWidth,
               opacity,

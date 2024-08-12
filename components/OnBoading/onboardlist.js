@@ -1,25 +1,24 @@
-const image1 = require("../../assets/onboard-1.png");
-const image2 = require("../../assets/onboard-2.png");
-const image3 = require("../../assets/onboard-3.png");
+const image1 = require("../../assets/cakeImages/background.png");
+const image2 = require("../../assets/cakeImages/background2.png");
 export const list = [
   {
     id: 1,
-    title: "Move Round Lagos with Ease",
-    description: "Effortlessly Move Around with Confidence and Convenience.",
+    title: "Welcome !",
+    description:
+      "Get your cake with no stress and connect with your vendors easy.......",
     image: image1,
   },
   {
     id: 2,
-    title: "Your Go-to Bus Companion",
-    description:
-      "Your Trusted Sidekick for Stress-Free Bus Travel - Anytime, Anywhere.",
-    image: image2,
+    title: "Welcome !",
+    description: "Get ready for a splendid cake adventure .....",
+    image: image1,
   },
   {
     id: 3,
-    title: "The Ultimate Bus Application for Seamless Travel",
+    title: "Welcome",
     description:
-      "Effortlessly Navigate Your Journey with Real-Time Updates, Easy Booking, and Reliable Routes",
-    image: image3,
+      "Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia",
+    image: image2,
   },
 ];

@@ -131,8 +131,8 @@ export const StartScreen = ({}) => {
 
   const dispatch = useDispatch();
 
-  // return <>{!isOnboarding ? <Auth /> : <OnBoardingPage />}</>;
-  return <Auth />;
+  return <>{isOnboarding ? <Auth /> : <OnBoardingPage />}</>;
+  // return <Auth />;
 };
 
 export const NavigationScreen = () => {
@@ -162,9 +162,9 @@ const MainScreen = () => {
 
   useEffect(() => {
     if (!["driver", "user"].includes(user_data?.user?.role)) {
-      // dispatch(reset_isOnboarding());
-      // dispatch(reset_login());
-      // dispatch(BookATripSlice_reset());
+      dispatch(reset_isOnboarding());
+      dispatch(reset_login());
+      dispatch(BookATripSlice_reset());
       // console.log("this is user data", user_data);
     }
 
