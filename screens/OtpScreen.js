@@ -53,7 +53,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
 
   const Resend_Mutation = useMutation(
     (data_info) => {
-      let url = `${API_BASEURL}api/auth/send-otp`;
+      let url = `${API_BASEURL}v1/auth/send-otp`;
 
       let datas = {
         email: otpemail,
@@ -97,7 +97,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
 
   const Verify_Mutation = useMutation(
     (data_info) => {
-      let url = `${API_BASEURL}api/auth/verify-otp`;
+      let url = `${API_BASEURL}v1/auth/verify-otp`;
 
       let datas = {
         email: otpemail,
@@ -167,7 +167,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
       </TouchableOpacity>
       <View style={styles.container}>
         <View style={{ gap: 30 }}>
-          <Text style={styles.heading}>Account Verification</Text>
+          <Text style={styles.heading}>E-mail Verification</Text>
 
           {/* phone numbers */}
           <View style={{ gap: 10 }}>
@@ -177,6 +177,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                 fontSize: 16,
                 lineHeight: 23,
                 fontWeight: 400,
+                textAlign: "center",
               }}
             >
               Enter the 4- digit code sent to{" "}
@@ -237,9 +238,9 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: "#001272",
-                    width: "40%",
-                    borderRadius: 10,
+                    backgroundColor: "#DD293E",
+                    width: "70%",
+                    borderRadius: 30,
                   }}
                   onPress={() => Verify_Mutation.mutate()}
                 >
@@ -296,6 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "900",
     lineHeight: 36,
+    textAlign: "center",
   },
 
   resend: {
@@ -303,5 +305,6 @@ const styles = StyleSheet.create({
     color: "#06094F",
     fontWeight: "400",
     lineHeight: 23,
+    textAlign: "center",
   },
 });

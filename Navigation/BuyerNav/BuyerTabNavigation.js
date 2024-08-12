@@ -19,6 +19,7 @@ import { StyleSheet } from "react-native";
 // import BuyerHome from "../../screens/Buyer/Home.js/BuyerHome";
 import Profile from "../../screens/Buyer/Profile/Profile";
 import BuyerHome from "../../screens/Buyer/Home.js/BuyerHome";
+import BuyerOrder from "../../screens/Buyer/Order/BuyerOrder";
 
 const Tab = createBottomTabNavigator();
 
@@ -63,32 +64,8 @@ const BuyerTabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Cart"
-        component={BuyerHome}
-        options={{
-          title: "Cart",
-          tabBarActiveTintColor: "#005091",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <Tabcomponent
-              focused={focused}
-              iconFocused={require("../../assets/cartIcon-2.png")}
-              iconUnfocused={require("../../assets/cartIcon.png")}
-              label="Cart"
-              containerStyle={{
-                alignItems: "center",
-                justifyContent: "center",
-                top: 10,
-              }}
-              texttStyle={{ color: "#000000" }}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen
         name="Order"
-        component={BuyerHome}
+        component={BuyerOrder}
         options={{
           title: "Order",
           tabBarActiveTintColor: "#005091",

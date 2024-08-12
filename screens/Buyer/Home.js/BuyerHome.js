@@ -11,7 +11,8 @@ import CakeCategories from "./CakeCategories";
 
 const BuyerHome = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.Auth.user_profile_data);
+  const { user } = useSelector((state) => state?.Auth);
+
   const { get_all_vendor_data } = useSelector((state) => state.VendorSlice);
 
   const [profletab, setprofletab] = useState("vendors");

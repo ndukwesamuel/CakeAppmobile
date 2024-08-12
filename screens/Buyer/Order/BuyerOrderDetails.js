@@ -12,6 +12,7 @@ import {
   TextInput,
   Button,
   Modal,
+  ScrollView,
   Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,29 +33,13 @@ import { Forminput } from "../../../components/shared/InputForm";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import {
+  Get_single__Order_HIstory_Fun,
+  reset_Get_Single_Order_HIstory_Fun,
+} from "../../../Redux/Buyer/OrderSlice";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
-const images = [
-  {
-    id: "1",
-    url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-  },
-  {
-    id: "2",
-    url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-  },
-  {
-    id: "3",
-    url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-  },
-  {
-    id: "4",
-    url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-  },
-  // More images...
-];
-
-const CakeDetails = () => {
+const BuyerOrderDetails = () => {
   const dataroute = useRoute()?.params;
 
   const { get_single_cake_data } = useSelector((state) => state.CakeSlice);
@@ -62,15 +47,15 @@ const CakeDetails = () => {
   const dispatch = useDispatch();
 
   console.log({
-    dataroute: get_single_cake_data,
+    dataroute: dataroute?.item?._id,
   });
 
   const [preview, setpreview] = useState(false);
 
   useEffect(() => {
-    dispatch(Get_Single_Cake_Fun(dataroute?.item?._id));
+    dispatch(Get_single__Order_HIstory_Fun(dataroute?.item?._id));
     return () => {
-      dispatch(reset_Get_Single_Cake_Fun());
+      dispatch(reset_Get_Single_Order_HIstory_Fun());
     };
   }, []);
 
@@ -87,173 +72,214 @@ const CakeDetails = () => {
 
 const Details = ({ data1, setdata1 }) => {
   const { get_single_cake_data } = useSelector((state) => state.CakeSlice);
+  const { get_single_order_history_data } = useSelector(
+    (state) => state.OrderSlice
+  );
+  console.log({
+    xxx: get_single_order_history_data?.order?._id,
+    cake: get_single_order_history_data?.order?.cake,
+  });
 
+  const data = {
+    __v: 0,
+    _id: "66b6206ac3b34f7482f07772",
+    address: "Sidiek",
+    cake: { _id: "66b0ae3c8ff79bf05f1461b0", name: "SuperCake" },
+    cakeText: "Kakaka",
+    commission: 1390,
+    createdAt: "2024-08-09T13:58:02.244Z",
+    customized: true,
+    deliveryDate: "2024-08-09T00:00:00.000Z",
+    paymentStatus: "pending",
+    quantity: 23,
+    rated: false,
+    status: "request",
+    totalPrice: 319700,
+    updatedAt: "2024-08-09T13:58:02.244Z",
+    user: {
+      _id: "66b1bab240926ccb54d78d1f",
+      image:
+        "https://res.cloudinary.com/demmgc49v/image/upload/v1695969739/default-avatar_scnpps.jpg",
+      userId: {},
+    },
+    vendor: { _id: "66b0a43cd0dd5ec0bb0156af", businessName: "BC" },
+  };
   return (
     <>
-      {get_single_cake_data ? (
-        <View style={styles.container}>
+      {get_single_order_history_data ? (
+        <View
+          style={{
+            flex: 1,
+            padding: 20,
+            justifyContent: "center",
+            // alignItems: "center",
+          }}
+        >
           {/* Image Grid */}
+          <ScrollView contentContainerStyle={{}}>
+            <Text style={styles.title}>Order Details</Text>
 
-          <View style={{ marginVertical: 30 }}>
-            <View
-              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
-            >
-              <Image
-                source={{
-                  uri: get_single_cake_data?.cake?.images[0]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                }}
-                style={{
-                  width: "45%",
-
-                  height: 200,
-
-                  borderRadius: 10,
-                  // margin: 10,
-                }}
-              />
-
-              <View
-                style={{
-                  width: "45%",
-                  gap: 10,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    //   justifyContent: "space-between",
-                    //   flexWrap: "wrap",
-                    gap: 5,
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: get_single_cake_data?.cake?.images[1]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                      //"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                    }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      // margin: 10,
-                    }}
-                  />
-                  <Image
-                    source={{
-                      uri: get_single_cake_data?.cake?.images[2]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                    }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      // margin: 10,
-                    }}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    //   justifyContent: "space-between",
-                    //   flexWrap: "wrap",
-                    gap: 5,
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: get_single_cake_data?.cake?.images[2]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                    }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      // margin: 10,
-                    }}
-                  />
-                  <Image
-                    source={{
-                      uri: get_single_cake_data?.cake?.images[2]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-                    }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 10,
-                      // margin: 10,
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* Description Section */}
-
-          <View
-            style={{
-              marginVertical: 20,
-            }}
-          >
-            <Text style={styles.title}>{get_single_cake_data?.cake?.name}</Text>
-
-            <Text style={styles.description}>
-              {get_single_cake_data?.cake?.description}
-            </Text>
-          </View>
-
-          {/* Size and Price Section */}
-          <View style={styles.sizePriceContainer}>
             <View
               style={{
-                width: "40%",
-                marginVertical: 10,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              <View style={styles.sizeSection}>
-                <Text>Size</Text>
-                <Text>{get_single_cake_data?.cake?.cakeSize} inches</Text>
-              </View>
-              <View style={styles.sizeSection}>
-                <Text>Layers</Text>
-                <Text>{get_single_cake_data?.cake?.numberOfLayers}</Text>
-              </View>
-              <View style={styles.sizeSection}>
-                <Text>Color</Text>
-                <Text>e.g., Blue</Text>
-              </View>
+              <Text style={styles.label}>Cake:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.cake?.name}
+              </Text>
             </View>
-            <Text style={styles.price}>
-              ₦{get_single_cake_data?.cake?.price}
-            </Text>
-          </View>
 
-          {/* Action Buttons */}
-          <View
-            style={{
-              width: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-              marginVertical: 20,
-            }}
-          >
-            <View style={{ width: "80%", gap: 40 }}>
-              <TouchableOpacity
-                style={styles.orderButton}
-                onPress={() => {
-                  setdata1(true);
-                }}
-              >
-                <Text style={styles.buttonText}>Order</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.customizeButton}>
-                <Text style={styles.customizeText}>Customize Cakes</Text>
-              </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Cake Text:</Text>
+
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order.cakeText}
+              </Text>
             </View>
-          </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Quantity:</Text>
+
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.quantity}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Commission:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.commission}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Total Price:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.totalPrice}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Payment Status:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.paymentStatus}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Order Status:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.status}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Vendor:</Text>
+              <Text style={styles.value}>
+                {get_single_order_history_data?.order?.vendor.businessName}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.label}>Delivery Date:</Text>
+              <Text style={styles.value}>
+                {new Date(
+                  get_single_order_history_data?.order?.deliveryDate
+                ).toLocaleDateString()}
+              </Text>
+            </View>
+
+            <Text style={styles.label}>Address:</Text>
+            <Text style={styles.value}>
+              {get_single_order_history_data?.order?.address}
+            </Text>
+
+            {}
+
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: 20,
+              }}
+            >
+              <View style={{ width: "80%", gap: 40 }}>
+                <TouchableOpacity
+                  style={styles.orderButton}
+                  onPress={() => {
+                    setdata1(true);
+                  }}
+                >
+                  <Text style={styles.buttonText}>PAY</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
         </View>
       ) : (
-        <Text>
-          <ActivityIndicator size="large" color="#860B34" />
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>
+            <ActivityIndicator size="large" color="#860B34" />
+          </Text>
+        </View>
       )}
     </>
   );
@@ -765,6 +791,29 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+
+  userImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: "center",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  value: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
 });
 
-export default CakeDetails;
+export default BuyerOrderDetails;

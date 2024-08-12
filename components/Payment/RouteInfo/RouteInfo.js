@@ -30,14 +30,6 @@ const Paystack_Secret_Key = process.env.EXPO_PUBLIC_Paystack_Secret_Key;
 
 const Paystack_Public_Key = process.env.EXPO_PUBLIC_Paystack_Public_Key;
 
-console.log({
-  aaa: API_Paystack,
-  kaka: "sdsdsd",
-  Paystack_Secret_Key,
-  Paystack_Public_Key,
-  lll: "sdsdsd",
-});
-
 const RouteInfo = () => {
   const navigation = useNavigation();
 

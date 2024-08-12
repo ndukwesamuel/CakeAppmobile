@@ -182,9 +182,7 @@ const SignIn = ({ onSetAuth }) => {
               marginBottom: 20,
             }}
           >
-            <TouchableOpacity
-              onPress={() => dispatch(authScreenChange("FORGOTTENPASSWOD"))}
-            >
+            <TouchableOpacity onPress={() => onSetAuth("forgot-password")}>
               <Text
                 style={{
                   fontSize: 14,
@@ -221,7 +219,6 @@ const SignIn = ({ onSetAuth }) => {
           >
             Click To verify your email {otpemail}
           </Text>
-          {/* <Text style={{ fontWeight: "500" }}>{otpemail}</Text> */}
         </TouchableOpacity>
       )}
 

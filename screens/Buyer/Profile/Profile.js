@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
-    dispatch(Get_All_Order_HIstory_Fun());
+    dispatch(Get_All_Order_HIstory_Fun(""));
   }, []);
 
   return (

@@ -18,22 +18,16 @@ const initialState = {
   get_all_order_history_isLoading: false,
   get_all_order_history_message: null,
 
-  Get_All_trip_data: null,
-  Get_All_trip_isError: false,
-  Get_All_trip_isSuccess: false,
-  Get_All_trip_isLoading: false,
-  Get_All_trip_message: null,
-
-  Get_single_trip_data: null,
-  Get_single_trip_isError: false,
-  Get_single_trip_isSuccess: false,
-  Get_single_trip_isLoading: false,
-  Get_single_trip_message: null,
+  get_single_order_history_data: null,
+  get_single_order_history_isError: false,
+  get_single_order_history_isSuccess: false,
+  get_single_order_history_isLoading: false,
+  get_single_order_history_message: null,
 };
 
 export const Get_All_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_All_Order_HIstory_Fun",
-  async (_, thunkAPI) => {
+  async (status, thunkAPI) => {
     try {
       let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
 
@@ -46,7 +40,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
       };
 
       const response = await axios.get(
-        `${API_BASEURL}v1/order?page=1&perPage=100000000`,
+        `${API_BASEURL}v1/order?page=1&status=${status}&perPage=20000000`,
         config
       );
 
@@ -59,37 +53,15 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
   }
 );
 
-export const Get_all_Trip_Fun = createAsyncThunk(
-  "TripSLice/Get_all_Trip_Fun",
-  async (_, thunkAPI) => {
-    try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.token;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const response = await axios.get(`${API_BASEURL}api/trip`, config);
-
-      return response.data;
-    } catch (error) {
-      const errorMessage = handleApiError(error);
-
-      return thunkAPI.rejectWithValue(errorMessage);
-    }
-  }
-);
-
-export const Get_single_Trip_Fun = createAsyncThunk(
+export const Get_single__Order_HIstory_Fun = createAsyncThunk(
   "TripSLice/Get_single_Trip_Fun",
   async (id, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.token;
-
+      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let url = `${API_BASEURL}v1/order/${id}`;
+      console.log({
+        url,
+      });
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +70,10 @@ export const Get_single_Trip_Fun = createAsyncThunk(
         },
       };
 
-      const response = await axios.get(`${API_BASEURL}api/trip/${id}`, config);
-
+      const response = await axios.get(`${API_BASEURL}v1/order/${id}`, config);
+      console.log({
+        zzz: response.data,
+      });
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -113,10 +87,13 @@ export const OrderSlice = createSlice({
   name: "OrderSlice",
   initialState,
   reducers: {
-    reset_TripSLice: (state) => initialState,
-
-    UserBookSeats_fun: (state, action) => {
-      state.UserBookSeats_data = action.payload;
+    reset_OrderSlice: (state) => initialState,
+    reset_Get_Single_Order_HIstory_Fun: (state) => {
+      state.get_single_order_history_data = null;
+      state.get_single_order_history_isError = false;
+      state.get_single_order_history_isSuccess = false;
+      state.get_single_order_history_isLoading = false;
+      state.get_single_order_history_message = null;
     },
   },
   extraReducers: (builder) => {
@@ -140,24 +117,28 @@ export const OrderSlice = createSlice({
         state.get_all_order_history_data = null;
       })
 
-      .addCase(Get_single_Trip_Fun.pending, (state) => {
-        state.Get_single_trip_isLoading = true;
+      .addCase(Get_single__Order_HIstory_Fun.pending, (state) => {
+        state.get_single_order_history_isLoading = true;
       })
-      .addCase(Get_single_Trip_Fun.fulfilled, (state, action) => {
-        state.Get_single_trip_isLoading = false;
-        state.Get_single_trip_isSuccess = true;
-        state.Get_single_trip_isError = false;
-        state.Get_single_trip_data = action.payload;
+      .addCase(Get_single__Order_HIstory_Fun.fulfilled, (state, action) => {
+        state.get_single_order_history_isLoading = false;
+        state.get_single_order_history_isSuccess = true;
+        state.get_single_order_history_isError = false;
+
+        state.get_single_order_history_data = action.payload;
+        state.get_single_order_history_message = null;
       })
-      .addCase(Get_single_Trip_Fun.rejected, (state, action) => {
-        state.Get_single_trip_isLoading = false;
-        state.Get_single_trip_isSuccess = false;
-        state.Get_single_trip_isError = true;
-        state.Get_single_trip_message = action.payload;
+      .addCase(Get_single__Order_HIstory_Fun.rejected, (state, action) => {
+        state.get_single_order_history_isLoading = false;
+        state.get_single_order_history_isSuccess = false;
+        state.get_single_order_history_isError = true;
+        state.get_single_order_history_message = action.payload;
+        state.get_single_order_history_data = null;
       });
   },
 });
 
-export const { reset_TripSLice } = OrderSlice.actions;
+export const { reset_OrderSlice, reset_Get_Single_Order_HIstory_Fun } =
+  OrderSlice.actions;
 
 export default OrderSlice.reducer;
