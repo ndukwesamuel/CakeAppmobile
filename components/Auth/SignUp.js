@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const backgroundImg = require("../../assets/cakeImages/background2.png");
 
 const SignUp = ({ onSetAuth }) => {
   const { width } = useWindowDimensions();
@@ -273,34 +274,12 @@ const WelcomeScreen = ({ data1, setdata }) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View>
-      <View
-        style={{
-          width,
-
-          flex: 1,
-          backgroundColor: "#FFF0F0",
-          margin: 0,
-        }}
-      >
-        <Image
-          source={{
-            flex: 1,
-            marginTop: -10,
-          }}
-          style={{ width, resizeMode: "stretch", flex: 1.2, marginTop: -10 }}
-        />
-        <View
-          style={{
-            flex: 2,
-            gap: 10,
-            backgroundColor: "white",
-            width: "95%",
-            margin: "auto",
-            paddingVertical: 30,
-          }}
-        >
-          <View style={{ paddingHorizontal: 20 }}>
+    // <>
+      <View style={[styles2.container, { width }]}>
+        <Image source={backgroundImg} style={[styles2.image, { width }]} />
+        <View style={{ flex: 1, padding: 20, marginTop: -200 }}>
+          <View style={[styles2.form, { flexDirection: "column", gap: 20 }]}>
+            {/* text */}
             <Text
               style={{
                 color: "#1E0000",
@@ -309,66 +288,62 @@ const WelcomeScreen = ({ data1, setdata }) => {
                 textAlign: "left",
               }}
             >
-              item?.title
+              Welcome
             </Text>
             <Text
               style={{
                 color: "#1E0000",
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: "400",
                 textAlign: "left",
+                marginTop:-15
               }}
             >
-              item?.description
+              Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+              ipsam voluptatem quia v
             </Text>
-          </View>
-          <View
-            style={{
-              // flex: ,
-              marginTop: 20,
-              justifyContent: "space-evenly",
-              paddingHorizontal: 10,
-            }}
-          >
-            <View style={{ flexDirection: "column", gap: 20 }}>
-              <Pressable
-                style={{
-                  padding: 10,
-                  borderRadius: 5,
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                  borderColor: "#330111",
-                  borderRadius: 10,
-                  borderStyle: "solid",
-                }}
-                // onPress={handleSkip}
-              >
-                <Text style={{ textAlign: "left" }}>Cake Maker</Text>
-              </Pressable>
-              <Pressable
-                style={{
-                  padding: 10,
-                  borderRadius: 5,
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                  borderColor: "#330111",
-                  borderRadius: 10,
-                  borderStyle: "solid",
-                }}
-                // onPress={handleSkip}
-              >
-                <Text style={{ textAlign: "left" }}>Buyer</Text>
-              </Pressable>
-            </View>
+            {/* buttons */}
             <Pressable
               style={{
-                padding: 10,
+                paddingHorizontal: 20,
+                paddingVertical: 12,
                 borderRadius: 10,
-                backgroundColor: "#DD293E",
-                marginTop: 210,
+                backgroundColor: "white",
+                borderColor: "#330111",
+                borderWidth: 1,
+                borderStyle: "solid",
+                marginTop:10,
               }}
               onPress={() => setdata(false)}
-              // onPress={handleSkip}
+            >
+              <Text style={{ textAlign: "left", color: "#292D32", fontSize:16,}}>
+                Cake Maker
+              </Text>
+            </Pressable>
+            <Pressable
+              style={{
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderRadius: 10,
+                backgroundColor: "white",
+                borderColor: "#330111",
+                borderWidth: 1,
+                borderStyle: "solid",
+              }}
+              onPress={() => setdata(false)}
+            >
+              <Text style={{ textAlign: "left", color: "#292D32", fontSize: 16, }}>Buyer</Text>
+            </Pressable>
+            {/*  proceed button*/}
+            <Pressable
+              style={{
+                paddingHorizontal: 20,
+                paddingVertical: 12,
+                borderRadius: 40,
+                backgroundColor: "#DD293E",
+                marginTop: 140,
+              }}
+              onPress={() => setdata(false)}
             >
               <Text style={{ textAlign: "center", color: "white" }}>
                 Proceed
@@ -377,6 +352,32 @@ const WelcomeScreen = ({ data1, setdata }) => {
           </View>
         </View>
       </View>
-    </View>
+    // </>
   );
 };
+const styles2 = StyleSheet.create({
+  container: {
+    // marginTop:-50,
+    height:100,
+    marginLeft:-20,
+    padding: 0,
+    flex: 1,
+    backgroundColor: "#FFF0F0",
+    // margin: 0,
+  },
+  image: {
+    padding: 0,
+    flex: 1,
+    marginTop: -50,
+    marginLeft: -20,
+    resizeMode: "stretch",
+  },
+  form: {
+    borderRadius: 10,
+    backgroundColor: "white",
+    padding: 20,
+    margin:"auto"
+  },
+
+  button: {},
+});
