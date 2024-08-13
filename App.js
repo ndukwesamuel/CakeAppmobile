@@ -20,6 +20,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnBoardingPage from "./screens/OnboardingPage";
 import Auth from "./screens/Auth";
 import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
+import { reset_isOnboarding } from "./Redux/OnboardingSlice";
+import { reset_login } from "./Redux/AuthSlice";
 
 const queryClient = new QueryClient();
 
@@ -115,15 +117,27 @@ const MainScreen = () => {
 
   const dispatch = useDispatch();
 
+  // console.log({
+  //   condition: ["user"].includes(user_data?.user?.roles),
+  //   zzzz: user_data?.user?.roles,
+  // });
+
+  console.log({
+    condition: user_data?.user?.roles?.includes("user"),
+    zzzz: user_data?.user?.roles,
+  });
+
   useEffect(() => {
-    if (!["driver", "user"].includes(user_data?.user?.role)) {
+    if (
+      !["user", "vendor"].some((role) => user_data?.user?.roles?.includes(role))
+    ) {
       dispatch(reset_isOnboarding());
       dispatch(reset_login());
-      // console.log("this is user data", user_data);
+      console.log("Logging out. User data:", user_data);
     }
 
     return () => {};
-  }, []);
+  }, [user_data]);
 
   return (
     <>
