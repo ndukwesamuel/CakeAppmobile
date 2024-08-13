@@ -24,6 +24,7 @@ import {
   setOtpEmail,
 } from "../Redux/OnboardingSlice";
 import { reset_login } from "../Redux/AuthSlice";
+import Mainborder from "../components/shared/Mainborder";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const OtpScreen = ({ navigation, onSetAuth }) => {
@@ -33,6 +34,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
   const dispatch = useDispatch();
   console.log({
     otpdata,
+    otpemail,
   });
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -146,45 +148,46 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
 
   return (
     <AppScreen>
-      <TouchableOpacity
-        style={{
-          position: "relative",
-          top: 10,
-          left: 30,
-          borderWidth: 1,
-          padding: 5,
-          borderRadius: 10,
-          width: 35,
-        }}
-        onPress={() => {
-          console.log("this is otpemail", otpemail);
-          dispatch(checkOtp(false));
-          onSetAuth("sign-in");
-          dispatch(reset_login());
-        }}
-      >
-        <Ionicons name="arrow-back-sharp" size={24} color="black" />
-      </TouchableOpacity>
-      <View style={styles.container}>
-        <View style={{ gap: 30 }}>
-          <Text style={styles.heading}>E-mail Verification</Text>
+      <Mainborder>
+        <TouchableOpacity
+          style={{
+            position: "relative",
+            top: 10,
+            left: 30,
+            borderWidth: 1,
+            padding: 5,
+            borderRadius: 10,
+            width: 35,
+          }}
+          onPress={() => {
+            console.log("this is otpemail", otpemail);
+            dispatch(checkOtp(false));
+            onSetAuth("sign-in");
+            dispatch(reset_login());
+          }}
+        >
+          <Ionicons name="arrow-back-sharp" size={24} color="black" />
+        </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={{ gap: 30 }}>
+            <Text style={styles.heading}>E-mail Verification</Text>
 
-          {/* phone numbers */}
-          <View style={{ gap: 10 }}>
-            <Text
-              style={{
-                color: "#06094F",
-                fontSize: 16,
-                lineHeight: 23,
-                fontWeight: 400,
-                textAlign: "center",
-              }}
-            >
-              Enter the 4- digit code sent to{" "}
-              <Text style={{ fontWeight: "500" }}>Email</Text>
-            </Text>
+            {/* phone numbers */}
+            <View style={{ gap: 10 }}>
+              <Text
+                style={{
+                  color: "#06094F",
+                  fontSize: 16,
+                  lineHeight: 23,
+                  fontWeight: 400,
+                  textAlign: "center",
+                }}
+              >
+                Enter the 4- digit code sent to{" "}
+                <Text style={{ fontWeight: "500" }}>Email</Text>
+              </Text>
 
-            {/* <Text
+              {/* <Text
             style={{
               color: "#06094F",
               textDecorationLine: "underline",
@@ -194,92 +197,93 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
           >
             Edit Phone Number
           </Text> */}
-          </View>
-
-          {/* otp form */}
-          <View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {[...Array(length)].map((_, index) => (
-                <TextInput
-                  key={index}
-                  ref={(ref) => (inputRefs.current[index] = ref)}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: "black",
-                    width: 60,
-                    height: 60,
-                    textAlign: "center",
-                    margin: 10,
-                    borderRadius: 10,
-                  }}
-                  keyboardType="numeric"
-                  maxLength={1}
-                  onChangeText={(value) => handleChange(index, value)}
-                  value={code[index] || ""}
-                  editable={!loading}
-                />
-              ))}
             </View>
 
-            {code.length === length && (
+            {/* otp form */}
+            <View>
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: 20,
                 }}
               >
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "#DD293E",
-                    width: "70%",
-                    borderRadius: 30,
-                  }}
-                  onPress={() => Verify_Mutation.mutate()}
-                >
-                  {Verify_Mutation?.isLoading ? (
-                    <ActivityIndicator size="large" color="blue" />
-                  ) : (
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        padding: 10,
-                      }}
-                    >
-                      Submit
-                    </Text>
-                  )}
-                </TouchableOpacity>
+                {[...Array(length)].map((_, index) => (
+                  <TextInput
+                    key={index}
+                    ref={(ref) => (inputRefs.current[index] = ref)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "black",
+                      width: 60,
+                      height: 60,
+                      textAlign: "center",
+                      margin: 10,
+                      borderRadius: 10,
+                    }}
+                    keyboardType="numeric"
+                    maxLength={1}
+                    onChangeText={(value) => handleChange(index, value)}
+                    value={code[index] || ""}
+                    editable={!loading}
+                  />
+                ))}
               </View>
-            )}
-          </View>
 
-          {/* resend */}
-          <Pressable
-            onPress={() =>
-              Resend_Mutation.mutate({
-                email: otpemail,
-              })
-            }
-          >
-            <Text style={styles.resend}>
-              Didn’t receive a code?{" "}
-              <Text style={{ fontWeight: "500" }}>Resend</Text>
-              {Resend_Mutation.isLoading && (
-                <ActivityIndicator color="blue" size="small" />
+              {code.length === length && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 20,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#DD293E",
+                      width: "70%",
+                      borderRadius: 30,
+                    }}
+                    onPress={() => Verify_Mutation.mutate()}
+                  >
+                    {Verify_Mutation?.isLoading ? (
+                      <ActivityIndicator size="large" color="blue" />
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "white",
+                          padding: 10,
+                        }}
+                      >
+                        Submit
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
               )}
-            </Text>
-          </Pressable>
+            </View>
+
+            {/* resend */}
+            <Pressable
+              onPress={() =>
+                Resend_Mutation.mutate({
+                  email: otpemail,
+                })
+              }
+            >
+              <Text style={styles.resend}>
+                Didn’t receive a code?{" "}
+                <Text style={{ fontWeight: "500" }}>Resend</Text>
+                {Resend_Mutation.isLoading && (
+                  <ActivityIndicator color="blue" size="small" />
+                )}
+              </Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
+      </Mainborder>
     </AppScreen>
   );
 };

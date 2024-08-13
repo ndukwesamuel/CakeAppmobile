@@ -7,11 +7,11 @@ import AppScreen from "../components/shared/AppScreen";
 
 const Auth = () => {
   return (
-    <AppScreen>
-      <Mainborder>
-        <AuthContainer />
-      </Mainborder>
-    </AppScreen>
+    // <AppScreen>
+    //   <Mainborder>
+    <AuthContainer />
+    //   </Mainborder>
+    // </AppScreen>
   );
 };
 

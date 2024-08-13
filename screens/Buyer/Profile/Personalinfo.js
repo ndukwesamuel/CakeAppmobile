@@ -5,6 +5,7 @@ import { reset_login } from "../../../Redux/AuthSlice";
 import { reset_VendorSlice } from "../../../Redux/Buyer/VendorSlice";
 import { reset_OrderSlice } from "../../../Redux/Buyer/OrderSlice";
 import { reset_CakeSlice } from "../../../Redux/Buyer/CakeSlice";
+import { reset_isOnboarding } from "../../../Redux/OnboardingSlice";
 
 const Personalinfo = () => {
   const { user } = useSelector((state) => state.Auth.user_profile_data);
@@ -15,6 +16,7 @@ const Personalinfo = () => {
     dispatch(reset_VendorSlice());
     dispatch(reset_OrderSlice());
     dispatch(reset_CakeSlice());
+    dispatch(reset_isOnboarding());
   };
 
   return (

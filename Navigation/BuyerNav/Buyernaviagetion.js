@@ -1,60 +1,36 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { AntDesign } from "@expo/vector-icons";
 import BuyerTabNavigation from "./BuyerTabNavigation";
-import { screens } from "./ScreenArray";
+import { screens } from "./ScreenArray"; // Ensure screens is correctly defined and imported
 
 const Stack = createNativeStackNavigator();
 
-const SingleScreenWithBackButton = (screenName, component, title) => {
-  return {
-    name: screenName,
-    component: component,
-    options: ({ navigation }) => ({
-      headerShown: false,
-      // title: title,
-      // headerStyle: {
-      //   backgroundColor: "white",
-      // },
-      // headerLeft: () => (
-      //   <TouchableOpacity
-      //     onPress={() => navigation.goBack()}
-      //     style={{
-      //       marginLeft: 10,
-      //     }}
-      //   >
-      //     <AntDesign name="arrowleft" size={24} color="black" />
-      //   </TouchableOpacity>
-      // ),
-    }),
-  };
-};
+const SingleScreenWithBackButton = (screenName, component, title) => ({
+  name: screenName,
+  component: component,
+  options: ({ navigation }) => ({
+    headerShown: false,
+  }),
+});
 
-const createScreen = (name, component, title) => {
-  return (
+const createScreen = (name, component, title) => (
+  <Stack.Screen
+    key={name}
+    {...SingleScreenWithBackButton(name, component, title)}
+  />
+);
+
+const Buyernaviagetion = () => (
+  <Stack.Navigator initialRouteName="BuyerTabNavigation">
     <Stack.Screen
-      key={name}
-      {...SingleScreenWithBackButton(name, component, title)}
+      name="BuyerTabNavigation"
+      component={BuyerTabNavigation}
+      options={{ headerShown: false }}
     />
-  );
-};
+    {screens.map((screen) =>
+      createScreen(screen.name, screen.component, screen.title)
+    )}
+  </Stack.Navigator>
+);
 
-export const Buyernaviagetion = () => {
-  return (
-    <Stack.Navigator initialRouteName="BuyerTabNavigation">
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="BuyerTabNavigation"
-        component={BuyerTabNavigation}
-      />
-
-      {screens.map((screen) =>
-        createScreen(screen.name, screen.component, screen.title)
-      )}
-    </Stack.Navigator>
-  );
-};
+export default Buyernaviagetion;
