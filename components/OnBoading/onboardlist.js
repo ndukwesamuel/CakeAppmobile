@@ -14,11 +14,4 @@ export const list = [
     description: "Get ready for a splendid cake adventure .....",
     image: image1,
   },
-  // {
-  //   id: 3,
-  //   title: "Welcome",
-  //   description:
-  //     "Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia",
-  //   image: image2,
-  // },
 ];

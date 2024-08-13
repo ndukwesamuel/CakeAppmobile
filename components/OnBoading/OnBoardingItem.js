@@ -190,7 +190,7 @@
 //         </View>
 //       )}
 
-//       {/* OnBoading Text */}
+//       {/* OnBoading Text */}Date of Time:
 
 //       {/* Onboarding Buttons */}
 //     </View>

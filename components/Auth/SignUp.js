@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   useWindowDimensions,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import axios from "axios";
@@ -240,6 +241,109 @@ const SignUp = ({ onSetAuth }) => {
 
 export default SignUp;
 
+const WelcomeScreen = ({ data1, setdata }) => {
+  const { width } = useWindowDimensions();
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#F3F4F6",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {/* Background Image */}
+      <Image
+        source={require("../../assets/cakeImages/background2.png")} // Update the path accordingly
+        style={{
+          width: width,
+          resizeMode: "stretch",
+          flex: 1.2,
+          marginTop: -10,
+        }}
+      />
+
+      {/* Welcome Box */}
+      <View
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: 20,
+          padding: 20,
+          width: width * 0.85,
+          alignItems: "center",
+          marginTop: -50,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#9B111E",
+            marginBottom: 10,
+          }}
+        >
+          Welcome
+        </Text>
+        <Text
+          style={{
+            fontSize: 14,
+            color: "#6B7280",
+            textAlign: "center",
+            marginBottom: 20,
+          }}
+        >
+          Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+          voluptatem quia v
+        </Text>
+
+        {/* Buttons */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#ffffff",
+            borderColor: "#9B111E",
+            borderWidth: 1,
+            borderRadius: 10,
+            paddingVertical: 12,
+            paddingHorizontal: 20,
+            width: "100%",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Text style={{ color: "#9B111E", fontSize: 16 }}>Cake Maker</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#9B111E",
+            borderRadius: 10,
+            paddingVertical: 12,
+            paddingHorizontal: 20,
+            width: "100%",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Text style={{ color: "#ffffff", fontSize: 16 }}>Buyer</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#9B111E",
+            borderRadius: 50,
+            paddingVertical: 15,
+            paddingHorizontal: 50,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#ffffff", fontSize: 18 }}>Proceed</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -247,6 +351,13 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingHorizontal: 10,
     gap: 20,
+  },
+
+  container1: {
+    flex: 1,
+    backgroundColor: "white",
+    margin: 0,
+    gap: 40,
   },
 
   inputGroup: {
@@ -267,116 +378,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 7,
   },
+  image: {
+    flex: 1,
+    marginTop: -10,
+    width: "100%",
+  },
 });
-
-const WelcomeScreen = ({ data1, setdata }) => {
-  const { width } = useWindowDimensions();
-
-  return (
-    <View>
-      <View
-        style={{
-          width,
-
-          flex: 1,
-          backgroundColor: "#FFF0F0",
-          margin: 0,
-        }}
-      >
-        <Image
-          source={{
-            flex: 1,
-            marginTop: -10,
-          }}
-          style={{ width, resizeMode: "stretch", flex: 1.2, marginTop: -10 }}
-        />
-        <View
-          style={{
-            flex: 2,
-            gap: 10,
-            backgroundColor: "white",
-            width: "95%",
-            margin: "auto",
-            paddingVertical: 30,
-          }}
-        >
-          <View style={{ paddingHorizontal: 20 }}>
-            <Text
-              style={{
-                color: "#1E0000",
-                fontSize: 32,
-                fontWeight: "700",
-                textAlign: "left",
-              }}
-            >
-              item?.title
-            </Text>
-            <Text
-              style={{
-                color: "#1E0000",
-                fontSize: 16,
-                fontWeight: "400",
-                textAlign: "left",
-              }}
-            >
-              item?.description
-            </Text>
-          </View>
-          <View
-            style={{
-              // flex: ,
-              marginTop: 20,
-              justifyContent: "space-evenly",
-              paddingHorizontal: 10,
-            }}
-          >
-            <View style={{ flexDirection: "column", gap: 20 }}>
-              <Pressable
-                style={{
-                  padding: 10,
-                  borderRadius: 5,
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                  borderColor: "#330111",
-                  borderRadius: 10,
-                  borderStyle: "solid",
-                }}
-                // onPress={handleSkip}
-              >
-                <Text style={{ textAlign: "left" }}>Cake Maker</Text>
-              </Pressable>
-              <Pressable
-                style={{
-                  padding: 10,
-                  borderRadius: 5,
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                  borderColor: "#330111",
-                  borderRadius: 10,
-                  borderStyle: "solid",
-                }}
-                // onPress={handleSkip}
-              >
-                <Text style={{ textAlign: "left" }}>Buyer</Text>
-              </Pressable>
-            </View>
-            <Pressable
-              style={{
-                padding: 10,
-                borderRadius: 10,
-                backgroundColor: "#DD293E",
-                marginTop: 210,
-              }}
-              onPress={() => setdata(false)}
-              // onPress={handleSkip}
-            >
-              <Text style={{ textAlign: "center", color: "white" }}>
-                Proceed
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};

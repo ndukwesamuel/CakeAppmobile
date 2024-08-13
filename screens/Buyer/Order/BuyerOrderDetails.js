@@ -1,5 +1,6 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { WebView } from "react-native-webview";
 import {
   View,
   FlatList,
@@ -18,6 +19,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
+import axios from "axios";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   Get_Single_Cake_Fun,
@@ -32,7 +35,6 @@ import {
 import { Forminput } from "../../../components/shared/InputForm";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
-import axios from "axios";
 import {
   Get_single__Order_HIstory_Fun,
   reset_Get_Single_Order_HIstory_Fun,
@@ -45,10 +47,6 @@ const BuyerOrderDetails = () => {
   const { get_single_cake_data } = useSelector((state) => state.CakeSlice);
 
   const dispatch = useDispatch();
-
-  console.log({
-    dataroute: dataroute?.item?._id,
-  });
 
   const [preview, setpreview] = useState(false);
 
@@ -75,35 +73,63 @@ const Details = ({ data1, setdata1 }) => {
   const { get_single_order_history_data } = useSelector(
     (state) => state.OrderSlice
   );
+
+  const { user_data } = useSelector((state) => state.Auth);
+
   console.log({
-    xxx: get_single_order_history_data?.order?._id,
-    cake: get_single_order_history_data?.order?.cake,
+    dataroute: get_single_order_history_data?.order?.status,
   });
 
-  const data = {
-    __v: 0,
-    _id: "66b6206ac3b34f7482f07772",
-    address: "Sidiek",
-    cake: { _id: "66b0ae3c8ff79bf05f1461b0", name: "SuperCake" },
-    cakeText: "Kakaka",
-    commission: 1390,
-    createdAt: "2024-08-09T13:58:02.244Z",
-    customized: true,
-    deliveryDate: "2024-08-09T00:00:00.000Z",
-    paymentStatus: "pending",
-    quantity: 23,
-    rated: false,
-    status: "request",
-    totalPrice: 319700,
-    updatedAt: "2024-08-09T13:58:02.244Z",
-    user: {
-      _id: "66b1bab240926ccb54d78d1f",
-      image:
-        "https://res.cloudinary.com/demmgc49v/image/upload/v1695969739/default-avatar_scnpps.jpg",
-      userId: {},
+  const [paystackInfo, setPaystackInfo] = useState(null);
+
+  console.log({
+    paystackInfo,
+  });
+
+  const StartPAy = useMutation(
+    (data_info) => {
+      let url = `${API_BASEURL}v1/order/pay/${get_single_order_history_data?.order?._id}`;
+
+      console.log({
+        url,
+        datas: get_single_order_history_data?.order?._id,
+      });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          //   "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user_data?.user?.token}`,
+        },
+      };
+
+      return axios.post(url, {}, config);
     },
-    vendor: { _id: "66b0a43cd0dd5ec0bb0156af", businessName: "BC" },
-  };
+    {
+      onSuccess: (success) => {
+        console.log({
+          sa: success?.data,
+        });
+
+        setPaystackInfo(success?.data?.authorizationUrl);
+        Toast.show({
+          type: "success",
+          text1: `success `,
+        });
+      },
+
+      onError: (error) => {
+        console.log({
+          error: error,
+        });
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
   return (
     <>
       {get_single_order_history_data ? (
@@ -115,158 +141,171 @@ const Details = ({ data1, setdata1 }) => {
             // alignItems: "center",
           }}
         >
-          {/* Image Grid */}
-          <ScrollView contentContainerStyle={{}}>
-            <Text style={styles.title}>Order Details</Text>
-
-            <View
+          {paystackInfo ? (
+            <WebView
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
+                flex: 1,
               }}
-            >
-              <Text style={styles.label}>Cake:</Text>
+              source={{ uri: paystackInfo }}
+            />
+          ) : (
+            <ScrollView contentContainerStyle={{}}>
+              <Text style={styles.title}>Order Details</Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Cake:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.cake?.name}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Cake Text:</Text>
+
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order.cakeText}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Quantity:</Text>
+
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.quantity}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Commission:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.commission}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Total Price:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.totalPrice}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Payment Status:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.paymentStatus}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Order Status:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.status}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Vendor:</Text>
+                <Text style={styles.value}>
+                  {get_single_order_history_data?.order?.vendor.businessName}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.label}>Delivery Date:</Text>
+                <Text style={styles.value}>
+                  {new Date(
+                    get_single_order_history_data?.order?.deliveryDate
+                  ).toLocaleDateString()}
+                </Text>
+              </View>
+
+              <Text style={styles.label}>Address:</Text>
               <Text style={styles.value}>
-                {get_single_order_history_data?.order?.cake?.name}
+                {get_single_order_history_data?.order?.address}
               </Text>
-            </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Cake Text:</Text>
-
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order.cakeText}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Quantity:</Text>
-
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.quantity}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Commission:</Text>
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.commission}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Total Price:</Text>
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.totalPrice}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Payment Status:</Text>
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.paymentStatus}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Order Status:</Text>
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.status}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Vendor:</Text>
-              <Text style={styles.value}>
-                {get_single_order_history_data?.order?.vendor.businessName}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.label}>Delivery Date:</Text>
-              <Text style={styles.value}>
-                {new Date(
-                  get_single_order_history_data?.order?.deliveryDate
-                ).toLocaleDateString()}
-              </Text>
-            </View>
-
-            <Text style={styles.label}>Address:</Text>
-            <Text style={styles.value}>
-              {get_single_order_history_data?.order?.address}
-            </Text>
-
-            {}
-
-            <View
-              style={{
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                marginVertical: 20,
-              }}
-            >
-              <View style={{ width: "80%", gap: 40 }}>
-                <TouchableOpacity
-                  style={styles.orderButton}
-                  onPress={() => {
-                    setdata1(true);
+              {get_single_order_history_data?.order?.status === "accepted" && (
+                <View
+                  style={{
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginVertical: 20,
                   }}
                 >
-                  <Text style={styles.buttonText}>PAY</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
+                  <View style={{ width: "80%", gap: 40 }}>
+                    {StartPAy.isLoading ? (
+                      <ActivityIndicator color="red" size={29} />
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.orderButton}
+                        onPress={() => {
+                          // setdata1(true);
+                          StartPAy.mutate();
+                        }}
+                      >
+                        <Text style={styles.buttonText}>PAY</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+              )}
+            </ScrollView>
+          )}
         </View>
       ) : (
         <View

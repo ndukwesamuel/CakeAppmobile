@@ -8,7 +8,7 @@ import AuthSlice from "./AuthSlice";
 import RouteSlice from "./Rider/RouteSlice";
 import TripSLice from "./Rider/TripSLice";
 import DriverTripSLice from "./Driver/DriverTripSLice";
-import { DontwantToResetSlice } from "./DontwantToResetSlice";
+import DontwantToResetSlice from "./DontwantToResetSlice";
 import OrderSlice from "./Buyer/OrderSlice";
 import VendorSlice from "./Buyer/VendorSlice";
 import CakeSlice from "./Buyer/CakeSlice";
@@ -20,15 +20,9 @@ const reducers = combineReducers({
   OrderSlice: OrderSlice,
   VendorSlice: VendorSlice,
   CakeSlice: CakeSlice,
-
-  // this is for the old one
-  OnboardingSlice: OnboardingSlice,
-  BookATripSlice: BookATripSlice,
-  RouteSlice: RouteSlice,
-  TripSLice: TripSLice,
-  DriverTripSLice: DriverTripSLice,
-
   DontwantToResetSlice: DontwantToResetSlice,
+
+  OnboardingSlice: OnboardingSlice,
 });
 
 const persistConfig = {

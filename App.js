@@ -15,58 +15,11 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // onBoarding screen and actions
-import { onBoaringAction, reset_isOnboarding } from "./Redux/OnboardingSlice";
 import OnBoardingPage from "./screens/OnboardingPage";
 import Auth from "./screens/Auth";
-
-// otp screen
-import OtpScreen from "./screens/OtpScreen";
-
-// Main Screens
-import HomeScreen from "./screens/RiderScreen/HomeScreen";
-// booking screens
-import BookATripScreen from "./screens/Booking/BookATripScreen";
-import AvailabeBusScreen from "./screens/Booking/AvailabeBusScreen";
-import SelectedRouteScreen from "./screens/Booking/SelectedRouteScreen";
-import SelectSeatScreen from "./screens/Booking/SelectSeatScreen";
-
-// payment screens
-import RouteInfoScreen from "./screens/Payment/RouteInfoScreen";
-import PaymentTypeScreen from "./screens/Payment/PaymentTypeScreen";
-import PayWithCardScreen from "./screens/Payment/PayWithCardScreen";
-import PayWithTransferScreen from "./screens/Payment/PayWithTransferScreen";
-
-// trip screens
-import OngoingTripScreen from "./screens/Trip/OngoingTripScreen";
-import ArrivingScreen from "./screens/Trip/ArrivingScreen";
-import RatingScreen from "./screens/Trip/RatingScreen";
-import ReportScreen from "./screens/Trip/ReportScreen";
-
-// drawer nav screens
-import ProfileScreen from "./screens/DrawerScreens/ProfileScreen";
-import NotificationScreen from "./screens/DrawerScreens/NotificationScreen";
-import TransactionScreen from "./screens/DrawerScreens/TransactionScreen";
-import BookingsScreen from "./screens/DrawerScreens/BookingsScreen";
-import { reset_login } from "./Redux/AuthSlice";
-import { BookATripSlice_reset } from "./Redux/BookATripSlice";
-
-// driver screens
-import DriverHomeScreen from "./screens/DriverScreens/Home/DriverHomeScreen";
-import StartATripScreen from "./screens/DriverScreens/StartTrip/StartATripScreen";
-import AvailableRouteScreen from "./screens/DriverScreens/StartTrip/AvailableRouteScreen";
-import TripDetailsScreen from "./screens/DriverScreens/StartTrip/TripDetailsScreen";
-import BeginTripScreen from "./screens/DriverScreens/StartTrip/BeginTripScreen";
-import DOnGoingTripScreen from "./screens/DriverScreens/StartTrip/DOnGoingTripScreen";
-import DriverNavigation from "./Navigation/DriverNavigation";
-import RiderNavigation from "./Navigation/RiderNavigation";
-import RideDrawer from "./Navigation/RideDrawer";
-import DriverDrawer from "./Navigation/DriverDrawer";
-import BuyerDrawer from "./Navigation/BuyerDrawer";
-import BuyerTabNavigation from "./Navigation/BuyerNav/BuyerTabNavigation";
-import { Buyernaviagetion } from "./Navigation/BuyerNav/Buyernaviagetion";
+import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 
 const queryClient = new QueryClient();
 
@@ -131,7 +84,7 @@ export const StartScreen = ({}) => {
 
   const dispatch = useDispatch();
 
-  return <>{isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
   // return <Auth />;
 };
 
@@ -166,7 +119,6 @@ const MainScreen = () => {
     if (!["driver", "user"].includes(user_data?.user?.role)) {
       dispatch(reset_isOnboarding());
       dispatch(reset_login());
-      dispatch(BookATripSlice_reset());
       // console.log("this is user data", user_data);
     }
 
