@@ -123,12 +123,13 @@ export default OrderHistory;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    gap: 10,
+    gap: 15,
     paddingTop: 40,
   },
   textGroup: {
     backgroundColor: "white",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical:20,
     gap: 5,
     borderRadius: 8,
   },

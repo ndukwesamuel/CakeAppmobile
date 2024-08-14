@@ -14,7 +14,7 @@ export default function ApplicationForm() {
     const [descritption, setDescritption] = useState('')
 
   return (
-    <AppScreenTwo>
+    <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
         <Text style={styles.title}>Application Form</Text>
         <View style={{marginTop:10, gap:15}}>
@@ -81,7 +81,7 @@ export default function ApplicationForm() {
                 />
             </View>
             <Pressable style={styles.button}>
-                <Text style={{textAlign:"center", color:"white"}}>Proceed</Text>
+                <Text style={{textAlign:"center", color:"white", fontSize:16, fontWeight:"400"}}>Proceed</Text>
             </Pressable>
         </View>
       </View>
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
 
   }, 
   label:{
-    fontSize:16
+    fontSize:16,
+    fontWeight:"400"
   },
   button:{
     paddingHorizontal:20,

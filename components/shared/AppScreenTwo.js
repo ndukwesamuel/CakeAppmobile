@@ -11,7 +11,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
-const AppScreenTwo = ({ arrrow, children }) => {
+const AppScreenTwo = ({ arrrow, children, notification }) => {
   const navigation = useNavigation();
   return (
     <View
@@ -53,16 +53,18 @@ const AppScreenTwo = ({ arrrow, children }) => {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            top: 40,
-            right: 20,
-            zIndex: 1,
-          }}
-        >
-          <MaterialIcons name="notifications-on" size={24} color="black" />
-        </TouchableOpacity>
+        {notification === "true" && (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: 40,
+              right: 20,
+              zIndex: 1,
+            }}
+          >
+            <MaterialIcons name="notifications-on" size={24} color="black" />
+          </TouchableOpacity>
+        )}
         {children}
       </SafeAreaView>
     </View>
