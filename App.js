@@ -22,6 +22,7 @@ import Auth from "./screens/Auth";
 import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 import { reset_isOnboarding } from "./Redux/OnboardingSlice";
 import { reset_login } from "./Redux/AuthSlice";
+import ApplicationForm from "./screens/Vendor/ApplicationForm";
 
 const queryClient = new QueryClient();
 
@@ -86,7 +87,8 @@ export const StartScreen = ({}) => {
 
   const dispatch = useDispatch();
 
-  return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  // return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  <ApplicationForm/>
   // return <Auth />;
 };
 
@@ -105,8 +107,9 @@ export const NavigationScreen = () => {
   return (
     <NavigationContainer>
       {/* <StartScreen /> */}
-      {user_data?.user?.token && <MainScreen />}
-      {!user_data?.user?.token && <StartScreen />}
+      <ApplicationForm/>
+      {/* {user_data?.user?.token && <MainScreen />}
+      {!user_data?.user?.token && <StartScreen />} */}
       <Toast />
     </NavigationContainer>
   );
@@ -141,7 +144,8 @@ const MainScreen = () => {
 
   return (
     <>
-      {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />}
+    <ApplicationForm/>
+      {/* {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />} */}
 
       {/* {user_data?.role === "driver" && <DriverDrawer />}
       {user_data?.role === "user" && <RideDrawer />} */}
