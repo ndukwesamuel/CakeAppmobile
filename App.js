@@ -23,6 +23,9 @@ import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 import { reset_isOnboarding } from "./Redux/OnboardingSlice";
 import { reset_login } from "./Redux/AuthSlice";
 import ApplicationForm from "./screens/Vendor/ApplicationForm";
+import Home from "./screens/Vendor/Home";
+import PersonalInformation from "./screens/Vendor/Profile/PersonalInformation";
+import Profile from "./screens/Vendor/Profile/Profile";
 
 const queryClient = new QueryClient();
 
@@ -107,7 +110,10 @@ export const NavigationScreen = () => {
   return (
     <NavigationContainer>
       {/* <StartScreen /> */}
-      <ApplicationForm/>
+      {/* <ApplicationForm/> */}
+      {/* <Home></Home> */}
+      {/* <PersonalInformation/> */}
+      <Profile/>
       {/* {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />} */}
       <Toast />

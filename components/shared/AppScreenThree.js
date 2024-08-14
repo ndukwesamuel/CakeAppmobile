@@ -11,7 +11,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
-const AppScreenTwo = ({ arrrow, children }) => {
+const AppScreenThree = ({ arrrow, children }) => {
   const navigation = useNavigation();
   return (
     <View
@@ -69,4 +69,4 @@ const AppScreenTwo = ({ arrrow, children }) => {
   );
 };
 
-export default AppScreenTwo;
+export default AppScreenThree;
