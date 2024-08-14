@@ -1,9 +1,18 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppScreenTwo from "../../components/shared/AppScreenTwo";
 
 export default function ApplicationForm() {
+    const [businessName, setBusinessName] = useState('')
+    const [businessOwner, setBusinessOwner] = useState('')
+    const [cacNo, setcacNo] = useState('')
+    const [businessEmail, setBusinessEmail] = useState('')
+    const [businessCallLine, setBusinessCallLine] = useState('')
+    const [yearsOfExperience, setYearsOfExperience] = useState('')
+    const [nationality, setNationality] = useState('')
+    const [descritption, setDescritption] = useState('')
+
   return (
     <AppScreenTwo>
       <View style={styles.container}>
@@ -13,49 +22,63 @@ export default function ApplicationForm() {
                 <Text style={styles.label}>Business Name</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={businessName}
+                onChangeText={(text)=> setBusinessName(text)}/>
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Name of Business Owner </Text>
                 <TextInput
                 style={styles.input}
-                placeholder=""/>
+                value={businessOwner}
+                onChangeText={(text) => setBusinessOwner(text)}/>
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>C.A.C No:</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={cacNo}
+                onChangeText={(text) => setcacNo(text)}
+                />
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Business Email</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={businessEmail}
+                onChangeText={(text) => setBusinessEmail(text)}
+                />
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Business Call Line</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={businessCallLine}
+                onChangeText={(text) => setBusinessCallLine(text)}
+                />
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Years of Experience</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={yearsOfExperience}
+                onChangeText={(text) => setYearsOfExperience(text)}
+                />
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Nationality</Text>
                 <TextInput
                 style={styles.input}
-                placeholder="hello "/>
+                value={nationality}
+                onChangeText={(text) => setNationality(text)}
+                />
             </View>
             <View style={styles.formGroup}>
                 <Text style={styles.label}>Business Description</Text>
                 <TextInput
                 style={[styles.input, {height:70}]}
-                placeholder="hello "/>
+                value={descritption}
+                onChangeText={(text) => setDescritption(text)}
+                />
             </View>
             <Pressable style={styles.button}>
                 <Text style={{textAlign:"center", color:"white"}}>Proceed</Text>
