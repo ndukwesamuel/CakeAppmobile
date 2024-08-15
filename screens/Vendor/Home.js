@@ -1,20 +1,24 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import AppScreenTwo from "../../components/shared/AppScreenTwo";
 const profileImage = require("../../assets/cakeImages/Ellipse.png");
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
+    const navigation = useNavigation();
   return (
     <AppScreenTwo notification={"true"}>
       <View style={styles.container}>
-        <Text style={[styles.upload, { padding: 20 }]}>Upload Product</Text>
+        <TouchableOpacity onPress={() =>navigation.navigate("uploadProduct")}>
+          <Text style={[styles.upload, { padding: 20 }]}>Upload Product</Text>
+        </TouchableOpacity>
         <View
           style={{
-            margin:"auto",
+            margin: "auto",
             marginTop: 10,
             flexDirection: "column",
             // justifyContent: "center",
-            alignItems:"center"
+            alignItems: "center",
           }}
         >
           <Image source={profileImage} />
@@ -24,7 +28,7 @@ const Home = () => {
               color: "#4C0016",
               fontSize: 12,
               fontWeight: "600",
-              marginTop:5
+              marginTop: 5,
             }}
           >
             Momore Cakes
@@ -55,8 +59,8 @@ const Home = () => {
             marginTop: 20,
             backgroundColor: "white",
             paddingVertical: 20,
-            paddingLeft:30,
-            paddingRight:50,
+            paddingLeft: 30,
+            paddingRight: 50,
             gap: 5,
           }}
         >
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     color: "#DD293E",
   },
   subContainer: {
-    marginTop:30,
+    marginTop: 30,
     backgroundColor: "white",
     padding: 30,
     gap: 10,

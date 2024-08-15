@@ -29,7 +29,8 @@ import Profile from "./screens/Vendor/Profile/Profile";
 import UploadProduct from "./screens/Vendor/Home/UploadProduct";
 import CakeDetails from "./screens/Buyer/Home.js/CakeDetails";
 import CakePreview from "./screens/Vendor/Home/CakePreview";
-import VendorTabNavigation from "./Navigation/VendorNav/ScreenArray";
+import VendorTabNavigation from "./Navigation/VendorNav/VendorTabNavigation";
+import VendorNavigation from "./Navigation/VendorNav/VendorNavigation";
 
 const queryClient = new QueryClient();
 
@@ -120,7 +121,8 @@ export const NavigationScreen = () => {
       {/* <Profile/> */}
       {/* <UploadProduct/> */}
       {/* <CakePreview/> */}
-<VendorTabNavigation/>
+{/* <VendorTabNavigation/> */}
+<VendorNavigation/>
       {/* {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />} */}
       <Toast />
