@@ -5,7 +5,7 @@ const profileImage = require("../../assets/cakeImages/Ellipse.png");
 
 const Home = () => {
   return (
-    <AppScreenTwo>
+    <AppScreenTwo notification={"true"}>
       <View style={styles.container}>
         <Text style={[styles.upload, { padding: 20 }]}>Upload Product</Text>
         <View

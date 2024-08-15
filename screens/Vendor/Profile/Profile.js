@@ -9,7 +9,7 @@ const profileImage = require("../../../assets/cakeImages/profile.png");
 const Profile = () => {
   const [profletab, setprofletab] = useState("order");
   return (
-    <AppScreenTwo>
+    <AppScreenTwo notification={"true"}>
       <View style={{ flex: 1 }}>
         <View style={{ alignItems: "center", paddingTop: 100 }}>
           <Image
