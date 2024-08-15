@@ -95,8 +95,8 @@ export const StartScreen = ({}) => {
 
   const dispatch = useDispatch();
 
-  // return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
-  <ApplicationForm/>
+  return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  // <ApplicationForm />;
   // return <Auth />;
 };
 
@@ -109,6 +109,8 @@ export const NavigationScreen = () => {
   console.log({
     asdd: user_data,
   });
+  // dispatch(reset_isOnboarding());
+  // dispatch(reset_login());
 
   // const [country, setCountry] = useState("Loading...");
 
@@ -121,10 +123,10 @@ export const NavigationScreen = () => {
       {/* <Profile/> */}
       {/* <UploadProduct/> */}
       {/* <CakePreview/> */}
-{/* <VendorTabNavigation/> */}
-<VendorNavigation/>
-      {/* {user_data?.user?.token && <MainScreen />}
-      {!user_data?.user?.token && <StartScreen />} */}
+      {/* <VendorTabNavigation/> */}
+      {/* <VendorNavigation /> */}
+      {user_data?.user?.token && <MainScreen />}
+      {!user_data?.user?.token && <StartScreen />}
       <Toast />
     </NavigationContainer>
   );
@@ -159,11 +161,8 @@ const MainScreen = () => {
 
   return (
     <>
-    <ApplicationForm/>
-      {/* {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />} */}
-
-      {/* {user_data?.role === "driver" && <DriverDrawer />}
-      {user_data?.role === "user" && <RideDrawer />} */}
+      {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />}
+      {user_data?.user?.roles[0] === "vendor" && <VendorNavigation />}
     </>
   );
 };

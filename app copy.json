@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "busapp",
-    "slug": "busapp",
+    "name": "CakeExpress",
+    "slug": "CakeExpress",
     "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,15 +31,13 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.samheart.busapp"
+      "package": "com.CakeExpress.CakeExpress"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "eas": {
-        "projectId": "043aa058-fce8-4b43-a407-fffa3f0478c1"
-      }
+
     }
   }
 }
