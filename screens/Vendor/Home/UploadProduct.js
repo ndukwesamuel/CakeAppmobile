@@ -1,8 +1,14 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 
 const UploadProduct = () => {
+    const [cakeName, setCakeName] = useState("")
+    const [price, setPrice] = useState("")
+    const [descritption, setDescritption] = useState("")
+    const [pictures, setPictures] = useState("")
+    const [size, setsize] = useState("")
+    const [flavour, setFlavour] = useState("")
   return (
     <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
@@ -13,48 +19,48 @@ const UploadProduct = () => {
               <Text style={styles.label}>Name of Cake</Text>
               <TextInput
                 style={styles.input}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={cakeName}
+                onChangeText={(text)=> setCakeName(text)}
               />
             </View>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Price</Text>
               <TextInput
                 style={styles.input}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={price}
+                onChangeText={(text)=> setPrice(text)}
               />
             </View>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Description</Text>
               <TextInput
                 style={[styles.input, { height: 80 }]}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={descritption}
+                onChangeText={(text)=> setDescritption(text)}
               />
             </View>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Upload Pictures</Text>
               <TextInput
                 style={[styles.input, { height: 70 }]}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={pictures}
+                onChangeText={(text)=> setPictures(text)}
               />
             </View>
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Price</Text>
+              <Text style={styles.label}>Size</Text>
               <TextInput
                 style={styles.input}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={size}
+                onChangeText={(text)=> setsize(text)}
               />
             </View>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Flavours Available</Text>
               <TextInput
                 style={styles.input}
-                // value={businessName}
-                // onChangeText={(text)=> setBusinessName(text)}
+                value={flavour}
+                onChangeText={(text)=> setFlavour(text)}
               />
             </View>
           </View>
