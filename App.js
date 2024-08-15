@@ -22,6 +22,15 @@ import Auth from "./screens/Auth";
 import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 import { reset_isOnboarding } from "./Redux/OnboardingSlice";
 import { reset_login } from "./Redux/AuthSlice";
+import ApplicationForm from "./screens/Vendor/ApplicationForm";
+import Home from "./screens/Vendor/Home";
+import PersonalInformation from "./screens/Vendor/Profile/PersonalInformation";
+import Profile from "./screens/Vendor/Profile/Profile";
+import UploadProduct from "./screens/Vendor/Home/UploadProduct";
+import CakeDetails from "./screens/Buyer/Home.js/CakeDetails";
+import CakePreview from "./screens/Vendor/Home/CakePreview";
+import VendorTabNavigation from "./Navigation/VendorNav/VendorTabNavigation";
+import VendorNavigation from "./Navigation/VendorNav/VendorNavigation";
 
 const queryClient = new QueryClient();
 
@@ -87,6 +96,7 @@ export const StartScreen = ({}) => {
   const dispatch = useDispatch();
 
   return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  // <ApplicationForm />;
   // return <Auth />;
 };
 
@@ -99,12 +109,22 @@ export const NavigationScreen = () => {
   console.log({
     asdd: user_data,
   });
+  // dispatch(reset_isOnboarding());
+  // dispatch(reset_login());
 
   // const [country, setCountry] = useState("Loading...");
 
   return (
     <NavigationContainer>
       {/* <StartScreen /> */}
+      {/* <ApplicationForm/> */}
+      {/* <Home></Home> */}
+      {/* <PersonalInformation/> */}
+      {/* <Profile/> */}
+      {/* <UploadProduct/> */}
+      {/* <CakePreview/> */}
+      {/* <VendorTabNavigation/> */}
+      {/* <VendorNavigation /> */}
       {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />}
       <Toast />
@@ -142,9 +162,7 @@ const MainScreen = () => {
   return (
     <>
       {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />}
-
-      {/* {user_data?.role === "driver" && <DriverDrawer />}
-      {user_data?.role === "user" && <RideDrawer />} */}
+      {user_data?.user?.roles[0] === "vendor" && <VendorNavigation />}
     </>
   );
 };

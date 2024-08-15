@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "busapp",
-    "slug": "busapp",
+    "name": "CakeExpress",
+    "slug": "CakeExpress",
     "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -48,7 +48,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.samheart.busapp",
+      "package": "com.CakeExpress.CakeExpress",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
@@ -57,7 +57,9 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-    
+      "eas": {
+        "projectId": "ce9c5749-f94a-4001-945b-945edd3a21f4"
+      }
     }
   }
 }
