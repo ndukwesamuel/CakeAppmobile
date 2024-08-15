@@ -27,6 +27,8 @@ import Home from "./screens/Vendor/Home";
 import PersonalInformation from "./screens/Vendor/Profile/PersonalInformation";
 import Profile from "./screens/Vendor/Profile/Profile";
 import UploadProduct from "./screens/Vendor/Home/UploadProduct";
+import CakeDetails from "./screens/Buyer/Home.js/CakeDetails";
+import CakePreview from "./screens/Vendor/Home/CakePreview";
 
 const queryClient = new QueryClient();
 
@@ -115,7 +117,8 @@ export const NavigationScreen = () => {
       {/* <Home></Home> */}
       {/* <PersonalInformation/> */}
       {/* <Profile/> */}
-      <UploadProduct/>
+      {/* <UploadProduct/> */}
+      <CakePreview/>
       {/* {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />} */}
       <Toast />
