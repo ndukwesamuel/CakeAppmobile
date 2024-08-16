@@ -49,6 +49,9 @@ const SignUp = ({ onSetAuth }) => {
   const Registration_Mutation = useMutation(
     (data_info) => {
       let url = `${API_BASEURL}v1/auth/signup`;
+      console.log({
+        kk: url,
+      });
 
       const config = {
         headers: {
@@ -73,6 +76,8 @@ const SignUp = ({ onSetAuth }) => {
       },
 
       onError: (error) => {
+        console.log({ error: error.message });
+
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
