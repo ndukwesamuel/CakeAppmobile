@@ -3,38 +3,39 @@ import React from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 
 const cakeImg = require("../../../assets/cakeImages/cake.png");
+import { useRoute } from "@react-navigation/native";
 
 const CakePreview = () => {
+  const route = useRoute();
+  const { formData } = route.params;
   return (
     <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
         <Image
-          source={cakeImg}
+          source={formData?.picture||cakeImg}
           style={{ width: "95%", height: "35%", resizeMode: "stretch", top:10 }}
         />
         <View style={{ backgroundColor: "white", padding: 20, top:30, gap:10 }}>
           <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Cake Name</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>Blueberry Cake</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.cakeName}</Text>
           </View>
           <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Flavour</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>Blueberry</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.flavour}</Text>
           </View>
           <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
-            <Text style={{ fontSize: 16, fontWeight: 400 }}>Sizes</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>15 Inches</Text>
+            <Text style={{ fontSize: 16, fontWeight: 400 }}>Size</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.size}</Text>
           </View>
           <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Price</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>#12,000</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.price}</Text>
           </View>
           <View style={{ flexDirection:"row",justifyContent:"space-between",}}>
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Description</Text>
-            <Text style={{textAlign:"right" ,fontSize: 16, fontWeight: 600, width:"50%", }}>This is a birthday 
-                cake made with bluberry 
-                and banna filling</Text>
+            <Text style={{textAlign:"right" ,fontSize: 16, fontWeight: 600, width:"50%", }}>{formData?.description}</Text>
           </View>
         </View>
         <View>

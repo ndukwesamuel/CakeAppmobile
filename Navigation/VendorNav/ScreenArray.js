@@ -1,3 +1,4 @@
+import CakePreview from "../../screens/Vendor/Home/CakePreview";
 import UploadProduct from "../../screens/Vendor/Home/UploadProduct";
 
 export const screens = [
@@ -6,4 +7,9 @@ export const screens = [
         component: UploadProduct,
         title:"",
     },
+    {
+        name: "previewPage",
+        component: CakePreview,
+        title:""
+    }
 ]

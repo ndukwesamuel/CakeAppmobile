@@ -156,6 +156,9 @@ const MainScreen = () => {
       console.log("Logging out. User data:", user_data);
     }
 
+    // dispatch(reset_isOnboarding());
+    // dispatch(reset_login());
+
     return () => {};
   }, [user_data]);
 
