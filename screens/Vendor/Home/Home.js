@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import AppScreenTwo from "../../components/shared/AppScreenTwo";
-const profileImage = require("../../assets/cakeImages/Ellipse.png");
+import AppScreenTwo from "../../../components/shared/AppScreenTwo";
+const profileImage = require("../../../assets/cakeImages/Ellipse.png");
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <AppScreenTwo notification={"true"}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() =>navigation.navigate("uploadProduct")}>
+        <TouchableOpacity onPress={() => navigation.navigate("uploadProduct")}>
           <Text style={[styles.upload, { padding: 20 }]}>Upload Product</Text>
         </TouchableOpacity>
         <View

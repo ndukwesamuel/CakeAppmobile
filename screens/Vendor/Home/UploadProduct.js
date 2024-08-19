@@ -37,7 +37,7 @@ const UploadProduct = () => {
       {/* <ScrollView> */}
         <View style={styles.container}>
           <Text style={{ fontSize: 32, fontWeight: "700" }}>
-            Add More Cakes
+            Add Cake
           </Text>
           <View style={{ flexDirection: "column", gap: 70 }}>
             <View style={{ marginTop: 10, gap: 15 }}>

@@ -22,8 +22,8 @@ import Auth from "./screens/Auth";
 import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 import { reset_isOnboarding } from "./Redux/OnboardingSlice";
 import { reset_login } from "./Redux/AuthSlice";
-import ApplicationForm from "./screens/Vendor/ApplicationForm";
-import Home from "./screens/Vendor/Home";
+import ApplicationForm from "./screens/Vendor/Applications/ApplicationForm";
+import Home from "./screens/Vendor/Home/Home";
 import PersonalInformation from "./screens/Vendor/Profile/PersonalInformation";
 import Profile from "./screens/Vendor/Profile/Profile";
 import UploadProduct from "./screens/Vendor/Home/UploadProduct";
@@ -31,6 +31,7 @@ import CakeDetails from "./screens/Buyer/Home.js/CakeDetails";
 import CakePreview from "./screens/Vendor/Home/CakePreview";
 import VendorTabNavigation from "./Navigation/VendorNav/VendorTabNavigation";
 import VendorNavigation from "./Navigation/VendorNav/VendorNavigation";
+import ApplicationPreview from "./screens/Vendor/Applications/ApplicationPreview";
 
 const queryClient = new QueryClient();
 
@@ -125,9 +126,10 @@ export const NavigationScreen = () => {
       {/* <CakePreview/> */}
       {/* <VendorTabNavigation/> */}
       {/* <VendorNavigation /> */}
-      {user_data?.user?.token && <MainScreen />}
+      <ApplicationPreview/>
+      {/* {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />}
-      <Toast />
+      <Toast /> */}
     </NavigationContainer>
   );
 };
