@@ -76,7 +76,7 @@ export default ApplicationPreview;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 90,
+    marginTop: 100,
     padding: 20,
   },
   title: {
