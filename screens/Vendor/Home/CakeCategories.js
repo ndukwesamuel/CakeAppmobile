@@ -84,6 +84,7 @@ const CakeCategories = () => {
           style={{
             backgroundColor: "#fff",
             padding: 15,
+            marginTop:20
           }}
         >
           <View>

@@ -49,18 +49,16 @@ const Home = () => {
         <View
           style={{
             margin: "auto",
-            // marginTop: ,
             flexDirection: "column",
-            // justifyContent: "center",
             alignItems: "center",
           }}
         >
           <Image
             source={{ uri: vendor_profile_data1?.image }}
             style={{
-              width: 100,
-              height: 100,
-              borderRadius:50
+              width: 80,
+              height: 80,
+              borderRadius:40
             }}
           />
           <Text
@@ -102,7 +100,7 @@ const Home = () => {
         <View
           style={{
             marginTop: 10,
-            backgroundColor: "white",
+            // backgroundColor: "white",
             paddingVertical: 20,
             paddingLeft: 30,
             paddingRight: 50,
@@ -126,7 +124,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
+    marginTop: 80,
     // padding:20
   },
   upload: {
