@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 import { Get_Vendor_Profile } from "../../../Redux/Vendor/ProfileSlice";
 import { Get_All_Order_HIstory_Fun } from "../../../Redux/Vendor/OrderSlice";
+import CakeCategories from "./CakeCategories";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Home = () => {
   );
   const vendor_profile_data = useSelector(
     (state) =>
-      state?.VendorsSlice?.ProfileSlice?.vendor_profile_data.vendorProfile
+      state?.VendorsSlice?.ProfileSlice?.vendor_profile_data?.vendorProfile
   );
   const get_all_order_history_data = useSelector(
     (state) => state?.VendorsSlice.OrderSlice.get_all_order_history_data.orders
@@ -30,7 +31,7 @@ const Home = () => {
   useEffect(() => {
     if (get_all_order_history_data) {
       // Filter orders with status 'completed' and get the length
-      const completedOrders = get_all_order_history_data.filter(
+      const completedOrders = get_all_order_history_data?.filter(
         (order) => order.status === "completed"
       );
       setCompletedOrdersCount(completedOrders.length);
@@ -112,9 +113,10 @@ const Home = () => {
             Description
           </Text>
           <Text style={{ color: "black" }}>
-            {vendor_profile_data.description || "Our vanilla vintage cake is the best option for a classy lunch date/picnic ,to match the ambience of your event.ur event."}
+            {vendor_profile_data?.description || "Our vanilla vintage cake is the best option for a classy lunch date/picnic ,to match the ambience of your event.ur event."}
           </Text>
         </View>
+        <CakeCategories/>
       </View>
     </AppScreenTwo>
   );
