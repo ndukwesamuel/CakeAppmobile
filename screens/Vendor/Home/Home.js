@@ -1,10 +1,43 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 const profileImage = require("../../../assets/cakeImages/Ellipse.png");
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { UserProfile_Fun } from "../../../Redux/AuthSlice";
+import { Get_Vendor_Profile } from "../../../Redux/Vendor/ProfileSlice";
+import { Get_All_Order_HIstory_Fun } from "../../../Redux/Vendor/OrderSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const [completedOrdersCount, setCompletedOrdersCount] = useState(0);
+  const vendor_profile_data1 = useSelector(
+    (state) => state?.VendorsSlice?.ProfileSlice?.vendor_profile_data
+  );
+  const vendor_profile_data = useSelector(
+    (state) =>
+      state?.VendorsSlice?.ProfileSlice?.vendor_profile_data.vendorProfile
+  );
+  const get_all_order_history_data = useSelector(
+    (state) => state?.VendorsSlice.OrderSlice.get_all_order_history_data.orders
+  );
+  console.log({ hello: vendor_profile_data1 });
+  useEffect(() => {
+    dispatch(Get_Vendor_Profile());
+    dispatch(Get_All_Order_HIstory_Fun());
+    return () => {};
+  }, []);
+  useEffect(() => {
+    if (get_all_order_history_data) {
+      // Filter orders with status 'completed' and get the length
+      const completedOrders = get_all_order_history_data.filter(
+        (order) => order.status === "completed"
+      );
+      setCompletedOrdersCount(completedOrders.length);
+      console.log(completedOrdersCount);
+    }
+  }, [get_all_order_history_data]);
+
   const navigation = useNavigation();
   return (
     <AppScreenTwo notification={"true"}>
@@ -15,13 +48,20 @@ const Home = () => {
         <View
           style={{
             margin: "auto",
-            marginTop: 10,
+            // marginTop: ,
             flexDirection: "column",
             // justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Image source={profileImage} />
+          <Image
+            source={{ uri: vendor_profile_data1?.image }}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius:50
+            }}
+          />
           <Text
             style={{
               textAlign: "center",
@@ -31,7 +71,7 @@ const Home = () => {
               marginTop: 5,
             }}
           >
-            Momore Cakes
+            {vendor_profile_data?.businessName}
           </Text>
         </View>
         <View style={[styles.subContainer]}>
@@ -39,24 +79,28 @@ const Home = () => {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.subtitle}>Number of Orders</Text>
-            <Text style={styles.value}>23</Text>
+            <Text style={styles.value}>
+              {get_all_order_history_data?.length}
+            </Text>
           </View>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.subtitle}>Completed Orders</Text>
-            <Text style={styles.value}>23</Text>
+            <Text style={styles.value}>{completedOrdersCount}</Text>
           </View>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={styles.subtitle}>Years of experience</Text>
-            <Text style={styles.value}>23 years of experience</Text>
+            <Text style={styles.value}>
+              {vendor_profile_data?.yearsOfExperience || "null"}
+            </Text>
           </View>
         </View>
         <View
           style={{
-            marginTop: 20,
+            marginTop: 10,
             backgroundColor: "white",
             paddingVertical: 20,
             paddingLeft: 30,
@@ -68,8 +112,7 @@ const Home = () => {
             Description
           </Text>
           <Text style={{ color: "black" }}>
-            Our vanilla vintage cake is the best option for a classy lunch
-            date/picnic ,to match the ambience of your event.ur event.
+            {vendor_profile_data.description || "Our vanilla vintage cake is the best option for a classy lunch date/picnic ,to match the ambience of your event.ur event."}
           </Text>
         </View>
       </View>
@@ -91,7 +134,7 @@ const styles = StyleSheet.create({
     color: "#DD293E",
   },
   subContainer: {
-    marginTop: 30,
+    marginTop: 10,
     backgroundColor: "white",
     padding: 30,
     gap: 10,

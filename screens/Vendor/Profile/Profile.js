@@ -3,21 +3,21 @@ import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import PersonalInformation from "./PersonalInformation";
 import OrderHistory from "./OrderHistory";
-// import { useDispatch, useSelector } from "react-redux";
-// import { UserProfile_Fun } from "../../../Redux/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 
 const profileImage = require("../../../assets/cakeImages/profile.png");
 
 const Profile = () => {
   const [profletab, setprofletab] = useState("order");
-  // const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state?.Auth?.user_profile_data);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state?.Auth?.user_profile_data);
 
-  // useEffect(() => {
-  //   dispatch(UserProfile_Fun());
+  useEffect(() => {
+    dispatch(UserProfile_Fun());
 
-  //   return () => {};
-  // }, []);
+    return () => {};
+  }, []);
 
   return (
     <AppScreenTwo notification={"true"}>
