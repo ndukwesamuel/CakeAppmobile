@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     gap: 20,
-    paddingTop: 20,
+    paddingTop:0,
   },
   textGroup: {
     backgroundColor: "white",

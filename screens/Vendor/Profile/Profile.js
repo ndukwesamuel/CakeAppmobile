@@ -25,7 +25,7 @@ const Profile = () => {
         <View style={{ alignItems: "center", paddingTop: 100 }}>
           <Image
             style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={profileImage}
+            source={{uri: user.image}}
           />
         </View>
         <View

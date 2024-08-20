@@ -6,7 +6,7 @@ import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 const PersonalInformation = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.Auth?.user_profile_data.user);
-  console.log({ user });
+  console.log({ userrrrrrr:user });
 
   return (
     <View style={styles.container}>

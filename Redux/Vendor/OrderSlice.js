@@ -18,6 +18,12 @@ const initialState = {
   get_all_order_history_isLoading: false,
   get_all_order_history_message: null,
 
+  get_order_history_data: null,
+  get_order_history_isError: false,
+  get_order_history_isSuccess: false,
+  get_order_history_isLoading: false,
+  get_order_history_message: null,
+
   get_single_order_history_data: null,
   get_single_order_history_isError: false,
   get_single_order_history_isSuccess: false,
@@ -39,6 +45,29 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/vendor/order`, config);
+
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+export const Get_Order_HIstory_Fun = createAsyncThunk(
+  "OrderSlice/Get_Order_HIstory_Fun",
+  async (status, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(`${API_BASEURL}v1/vendor/order?page=1&status=${status}&perPage= 20000000`, config);
 
       return response.data;
     } catch (error) {
@@ -113,7 +142,24 @@ export const OrderSlice = createSlice({
         state.get_all_order_history_message = action.payload;
         state.get_all_order_history_data = null;
       })
+      .addCase(Get_Order_HIstory_Fun.pending, (state) => {
+        state.get_order_history_isLoading = true
+      }) 
+      .addCase(Get_Order_HIstory_Fun.fulfilled, (state, action) =>{
+        state.get_order_history_isLoading = false;
+        state.get_order_history_isSuccess = true;
+        state.get_order_history_isError = false;
 
+        state.get_order_history_data = action.payload;
+        state.get_order_history_message = null;
+      })
+      .addCase(Get_Order_HIstory_Fun.rejected, (state, action) =>{
+        state.get_order_history_isLoading = false;
+        state.get_order_history_isSuccess = false;
+        state.get_order_history_isError = true;
+        state.get_order_history_message = action.payload;
+        state.get_order_history_data = null;
+      })
       .addCase(Get_single__Order_HIstory_Fun.pending, (state) => {
         state.get_single_order_history_isLoading = true;
       })
