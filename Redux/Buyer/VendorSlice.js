@@ -90,8 +90,20 @@ export const Get_Single_Vendor_Fun = createAsyncThunk(
 export const Get_vendor_Cake_Fun = createAsyncThunk(
   "VendorSlice/Get_vendor_Cake_Fun",
   async (data, thunkAPI) => {
+    console.log({
+      da: data,
+    });
     try {
-      let url = `${API_BASEURL}v1/cake?category=${data?.option}&vendor=${data?.vendorId}&page=1&perPage=10000000`;
+      let url;
+
+      if (data?.option) {
+        url = `${API_BASEURL}v1/cake?vendor=${data?.vendorId}&category=${data?.option}&page=1&perPage=10000000`;
+      } else {
+        url = `${API_BASEURL}v1/cake?vendor=${data?.vendorId}&page=1&perPage=10000000`;
+      }
+
+      // let url =
+      // `${API_BASEURL}v1/cake?category=&vendor=${data?.vendorId}&page=1&perPage=10000000`;
 
       let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
 
@@ -105,6 +117,9 @@ export const Get_vendor_Cake_Fun = createAsyncThunk(
 
       const response = await axios.get(url, config);
 
+      console.log({
+        mymymy: response.data,
+      });
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);
