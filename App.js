@@ -22,8 +22,8 @@ import Auth from "./screens/Auth";
 import Buyernaviagetion from "./Navigation/BuyerNav/Buyernaviagetion";
 import { reset_isOnboarding } from "./Redux/OnboardingSlice";
 import { reset_login } from "./Redux/AuthSlice";
-import ApplicationForm from "./screens/Vendor/ApplicationForm";
-import Home from "./screens/Vendor/Home";
+import ApplicationForm from "./screens/Vendor/Applications/ApplicationForm";
+import Home from "./screens/Vendor/Home/Home";
 import PersonalInformation from "./screens/Vendor/Profile/PersonalInformation";
 import Profile from "./screens/Vendor/Profile/Profile";
 import UploadProduct from "./screens/Vendor/Home/UploadProduct";
@@ -155,6 +155,9 @@ const MainScreen = () => {
       dispatch(reset_login());
       console.log("Logging out. User data:", user_data);
     }
+
+    // dispatch(reset_isOnboarding());
+    // dispatch(reset_login());
 
     return () => {};
   }, [user_data]);

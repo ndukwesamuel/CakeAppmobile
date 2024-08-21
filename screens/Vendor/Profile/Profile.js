@@ -1,20 +1,31 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import PersonalInformation from "./PersonalInformation";
 import OrderHistory from "./OrderHistory";
+import { useDispatch, useSelector } from "react-redux";
+import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 
 const profileImage = require("../../../assets/cakeImages/profile.png");
 
 const Profile = () => {
   const [profletab, setprofletab] = useState("order");
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state?.Auth?.user_profile_data);
+
+  useEffect(() => {
+    dispatch(UserProfile_Fun());
+
+    return () => {};
+  }, []);
+
   return (
     <AppScreenTwo notification={"true"}>
       <View style={{ flex: 1 }}>
         <View style={{ alignItems: "center", paddingTop: 100 }}>
           <Image
             style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={profileImage}
+            source={{uri: user.image}}
           />
         </View>
         <View

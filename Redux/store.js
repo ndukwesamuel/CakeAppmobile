@@ -9,6 +9,7 @@ import DontwantToResetSlice from "./DontwantToResetSlice";
 import OrderSlice from "./Buyer/OrderSlice";
 import VendorSlice from "./Buyer/VendorSlice";
 import CakeSlice from "./Buyer/CakeSlice";
+import VendorsSlice from "./VendorSlice";
 
 // import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   VendorSlice: VendorSlice,
   CakeSlice: CakeSlice,
   DontwantToResetSlice: DontwantToResetSlice,
+  VendorsSlice:VendorsSlice,
 
   OnboardingSlice: OnboardingSlice,
 });

@@ -3,7 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Tabcomponent } from "../../components/shared/naviagetion";
 import { StyleSheet } from "react-native";
 import Profile from "../../screens/Vendor/Profile/Profile";
-import Home from "../../screens/Vendor/Home";
+import Home from "../../screens/Vendor/Home/Home";
+import Orders from "../../screens/Vendor/Order/Orders";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +50,7 @@ const VendorTabNavigation = () => {
 
       <Tab.Screen
         name="Order"
-        component={''}
+        component={Orders}
         options={{
           title: "Order",
           tabBarActiveTintColor: "#005091",
