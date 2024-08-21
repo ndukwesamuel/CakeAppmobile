@@ -45,8 +45,7 @@ const OnBoarding = () => {
           ref={slidesRef}
         />
       </View>
-      {/* <Text style={{ top: -50 }}>Hello</Text> */}
-      {/* <OnBoardingItem /> */}
+
       <Paginator data={list} scrollX={scrollX} />
     </View>
   );

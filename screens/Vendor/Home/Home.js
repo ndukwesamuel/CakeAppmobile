@@ -4,7 +4,6 @@ import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 const profileImage = require("../../../assets/cakeImages/Ellipse.png");
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 import { Get_Vendor_Profile } from "../../../Redux/Vendor/ProfileSlice";
 import { Get_All_Order_HIstory_Fun } from "../../../Redux/Vendor/OrderSlice";
 import CakeCategories from "./CakeCategories";
@@ -22,99 +21,53 @@ const Home = () => {
   const get_all_order_history_data = useSelector(
     (state) => state?.VendorsSlice?.OrderSlice?.get_all_order_history_data?.orders
   );
-  console.log({ hello: vendor_profile_data1 });
+
   useEffect(() => {
     dispatch(Get_Vendor_Profile());
     dispatch(Get_All_Order_HIstory_Fun());
     return () => {};
   }, []);
+
   useEffect(() => {
     if (get_all_order_history_data) {
-      // Filter orders with status 'completed' and get the length
       const completedOrders = get_all_order_history_data?.filter(
         (order) => order.status === "completed"
       );
       setCompletedOrdersCount(completedOrders.length);
-      console.log(completedOrdersCount);
     }
   }, [get_all_order_history_data]);
 
   const navigation = useNavigation();
   return (
-    <AppScreenTwo notification={"true"}>
+    <AppScreenTwo notification={"true"} style={{ flex: 1 }}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("uploadProduct")}>
-          <Text style={[styles.upload, { padding: 20 }]}>Upload Product</Text>
+          <Text style={[styles.upload]}>Upload Product</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            margin: "auto",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.profileContainer}>
           <Image
             source={{ uri: vendor_profile_data1?.image }}
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius:40
-            }}
+            style={styles.profileImage}
           />
-          <Text
-            style={{
-              textAlign: "center",
-              color: "#4C0016",
-              fontSize: 12,
-              fontWeight: "600",
-              marginTop: 5,
-            }}
-          >
+          <Text style={styles.profileName}>
             {vendor_profile_data?.businessName}
           </Text>
         </View>
         <View style={[styles.subContainer]}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+          <View style={styles.infoRow}>
             <Text style={styles.subtitle}>Number of Orders</Text>
             <Text style={styles.value}>
               {get_all_order_history_data?.length}
             </Text>
           </View>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+          <View style={styles.infoRow}>
             <Text style={styles.subtitle}>Completed Orders</Text>
             <Text style={styles.value}>{completedOrdersCount}</Text>
           </View>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={styles.subtitle}>Years of experience</Text>
-            <Text style={styles.value}>
-              {vendor_profile_data?.yearsOfExperience || "null"}
-            </Text>
-          </View>
         </View>
-        <View
-          style={{
-            marginTop: 10,
-            // backgroundColor: "white",
-            paddingVertical: 20,
-            paddingLeft: 30,
-            paddingRight: 50,
-            gap: 5,
-          }}
-        >
-          <Text style={{ color: "#4C0016", fontWeight: "500" }}>
-            Description
-          </Text>
-          <Text style={{ color: "black" }}>
-            {vendor_profile_data?.description || "Our vanilla vintage cake is the best option for a classy lunch date/picnic ,to match the ambience of your event.ur event."}
-          </Text>
+        <View style={styles.categoriesContainer}>
+          <CakeCategories />
         </View>
-        <CakeCategories/>
       </View>
     </AppScreenTwo>
   );
@@ -124,20 +77,44 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 80,
-    // padding:20
+    paddingHorizontal:15
   },
   upload: {
     textAlign: "right",
     fontSize: 12,
     fontWeight: "500",
     color: "#DD293E",
+    paddingTop:20
+  },
+  profileContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginVertical: 15,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileName: {
+    textAlign: "center",
+    color: "#4C0016",
+    fontSize: 12,
+    fontWeight: "600",
+    marginTop: 5,
   },
   subContainer: {
-    marginTop: 10,
     backgroundColor: "white",
-    padding: 30,
-    gap: 10,
+    padding: 20,
+    borderRadius:10
+    // marginBottom: 20,
+  },
+  infoRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 14,
@@ -148,5 +125,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     color: "#4C0016",
+  },
+  categoriesContainer: {
+    flex: 1,
   },
 });

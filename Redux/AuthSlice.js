@@ -22,6 +22,12 @@ const initialState = {
   user_profile_isSuccess: false,
   user_profile_isLoading: false,
   user_profile_message: null,
+
+  current_vendor_profile_data: null,
+  current_vendor_profile_isError: false,
+  current_vendor_profile_isSuccess: false,
+  current_vendor_profile_isLoading: false,
+  current_vendor_profile_message: null,
 };
 
 const Login_Fun_Service = async (data) => {
@@ -29,7 +35,6 @@ const Login_Fun_Service = async (data) => {
 
   try {
     const response = await axios.post(url, data);
-    console.log({ response: response.data });
     return response.data;
   } catch (error) {
     throw error;
@@ -53,9 +58,7 @@ export const UserProfile_Fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
-      console.log({
-        token,
-      });
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -64,9 +67,35 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/auth`, config);
-      console.log({
-        response: response.data,
-      });
+
+      return response.data;
+
+      // return await Login_Fun_Service(data);
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const Current_vendor_profile_Fun = createAsyncThunk(
+  "auth/Current_vendor_profile_Fun",
+  async (_, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${API_BASEURL}v1/vendor/profile`,
+        config
+      );
+
       return response.data;
 
       // return await Login_Fun_Service(data);
@@ -126,6 +155,24 @@ export const AuthSlice = createSlice({
         state.user_profile_message = action.payload;
         state.user_profile_data = null;
         state.user_profile_isSuccess = false;
+      })
+
+      .addCase(Current_vendor_profile_Fun.pending, (state) => {
+        state.current_vendor_profile_isLoading = true;
+      })
+      .addCase(Current_vendor_profile_Fun.fulfilled, (state, action) => {
+        state.current_vendor_profile_isLoading = false;
+        state.current_vendor_profile_isSuccess = true;
+        state.user_profile_isError = false;
+        state.current_vendor_profile_message = null;
+        state.current_vendor_profile_data = action.payload;
+      })
+      .addCase(Current_vendor_profile_Fun.rejected, (state, action) => {
+        state.current_vendor_profile_isLoading = false;
+        state.current_vendor_profile_isError = true;
+        state.current_vendor_profile_message = action.payload;
+        state.current_vendor_profile_data = null;
+        state.current_vendor_profile_isSuccess = false;
       });
   },
 });
