@@ -20,7 +20,7 @@ const Home = () => {
       state?.VendorsSlice?.ProfileSlice?.vendor_profile_data?.vendorProfile
   );
   const get_all_order_history_data = useSelector(
-    (state) => state?.VendorsSlice.OrderSlice.get_all_order_history_data.orders
+    (state) => state?.VendorsSlice?.OrderSlice?.get_all_order_history_data?.orders
   );
   console.log({ hello: vendor_profile_data1 });
   useEffect(() => {

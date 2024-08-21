@@ -14,7 +14,7 @@ const Orders = () => {
   const get_order_history_data = useSelector(
     (state) => state.VendorsSlice.OrderSlice.get_order_history_data
   );
-  console.log(get_order_history_data);
+  console.log(get_order_history_data?.orders);
 
   useEffect(() => {
     dispatch(Get_Order_HIstory_Fun(activeTab));
@@ -135,7 +135,7 @@ const Orders = () => {
         <FlatList
           data={get_order_history_data?.orders}
           renderItem={renderOrder}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

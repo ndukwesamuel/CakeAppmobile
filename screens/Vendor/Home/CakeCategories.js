@@ -18,8 +18,8 @@ const CakeCategories = () => {
   const get_vendor_Cake_data = useSelector(
     (state) => state?.VendorSlice?.get_vendor_Cake_data
   );
-  const user = useSelector((state) => state.Auth?.user_profile_data?.user);
-  console.log(user.id);
+  const user = useSelector((state) => state?.Auth?.user_profile_data?.user);
+  console.log(user?.id);
   console.log(get_vendor_Cake_data);
 
   //   Cake Categories
@@ -49,7 +49,7 @@ const CakeCategories = () => {
     dispatch(
       Get_vendor_Cake_Fun({
         option,
-        vendorId: user.id,
+        vendorId: user?.id,
       })
     );
 
@@ -126,7 +126,7 @@ const CakeCategories = () => {
                 renderItem={({ item }) => (
                   <ImageCard item={item} onclose={handleColsemodal} />
                 )}
-                keyExtractor={(item) => item._id}
+                keyExtractor={(item) => item?._id}
                 numColumns={2} // Set the number of columns per row
                 key={2} // Change key prop to force re-render if necessary
                 contentContainerStyle={{
