@@ -17,6 +17,7 @@ import {
   UserProfile_Fun,
 } from "../../../Redux/AuthSlice";
 import { ImageCard } from "../../Buyer/Home.js/CakeCategories";
+import { useNavigation } from "@react-navigation/native";
 
 const CakeCategories = () => {
   const dispatch = useDispatch();
@@ -53,10 +54,6 @@ const CakeCategories = () => {
       setOption("");
     }, 2000);
   };
-
-  console.log({
-    ff: option,
-  });
   useEffect(() => {
     dispatch(
       Get_vendor_Cake_Fun({
@@ -100,6 +97,7 @@ const CakeCategories = () => {
           backgroundColor: "#fff",
           padding: 15,
           marginTop: 20,
+          borderRadius:10
         }}
       >
         <View>
@@ -178,5 +176,4 @@ const CakeCategories = () => {
 };
 
 export default CakeCategories;
-
-const styles = StyleSheet.create({});
+//

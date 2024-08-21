@@ -11,7 +11,8 @@ const profileImage = require("../../../assets/cakeImages/profile.png");
 const Profile = () => {
   const [profletab, setprofletab] = useState("order");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state?.Auth?.user_profile_data);
+  const  user  = useSelector((state) => state?.Auth?.user_profile_data?.user);
+  // console.log({userrrrrrrr:user})
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
@@ -25,7 +26,7 @@ const Profile = () => {
         <View style={{ alignItems: "center", paddingTop: 100 }}>
           <Image
             style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={{uri: user.image}}
+            source={{uri: user?.image}}
           />
         </View>
         <View

@@ -5,7 +5,7 @@ import { Get_All_Order_HIstory_Fun } from "../../../Redux/Vendor/OrderSlice";
 
 const OrderHistory = () => {
   const get_all_order_history_data = useSelector(
-    (state) => state?.VendorsSlice.OrderSlice.get_all_order_history_data.orders
+    (state) => state?.VendorsSlice?.OrderSlice?.get_all_order_history_data?.orders
   );
   console.log(get_all_order_history_data);
 
@@ -52,7 +52,7 @@ const OrderHistory = () => {
               Cake 'n' bake
             </Text>
             <Text style={{ fontSize: 12, fontWeight: "500" }}>
-              {item.cake.name}
+              {item?.cake?.name}
             </Text>
           </View>
         </View>
@@ -64,7 +64,7 @@ const OrderHistory = () => {
       <FlatList
         data={get_all_order_history_data}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item?._id}
       />
     </View>
   );
