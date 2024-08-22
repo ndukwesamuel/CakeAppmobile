@@ -5,13 +5,15 @@ import PersonalInformation from "./PersonalInformation";
 import OrderHistory from "./OrderHistory";
 import { useDispatch, useSelector } from "react-redux";
 import { UserProfile_Fun } from "../../../Redux/AuthSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const profileImage = require("../../../assets/cakeImages/profile.png");
 
 const Profile = () => {
+  const navigation = useNavigation();
   const [profletab, setprofletab] = useState("order");
   const dispatch = useDispatch();
-  const  user  = useSelector((state) => state?.Auth?.user_profile_data?.user);
+  const user = useSelector((state) => state?.Auth?.user_profile_data?.user);
   // console.log({userrrrrrrr:user})
 
   useEffect(() => {
@@ -23,10 +25,17 @@ const Profile = () => {
   return (
     <AppScreenTwo notification={"true"}>
       <View style={{ flex: 1 }}>
-        <View style={{ alignItems: "center", paddingTop: 100 }}>
+      <TouchableOpacity
+            onPress={() => navigation.navigate("applicationForm")}
+            style={{paddingTop: 80}}
+          >
+            <Text style={styles.applicationform}>Update Application Form</Text>
+          </TouchableOpacity>
+        <View style={{ alignItems: "center",  }}>
+          
           <Image
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={{uri: user?.image}}
+            style={{ width: 100, height: 100, borderRadius: 50, marginTop:20 }}
+            source={{ uri: user?.image }}
           />
         </View>
         <View
@@ -103,4 +112,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
   },
+  applicationform:{
+    textAlign:"right",
+    color:"#DD293E",
+    marginRight:20
+
+  }
 });

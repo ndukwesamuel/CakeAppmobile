@@ -44,6 +44,7 @@ const Home = () => {
         <TouchableOpacity onPress={() => navigation.navigate("uploadProduct")}>
           <Text style={[styles.upload]}>Upload Product</Text>
         </TouchableOpacity>
+        
         <View style={styles.profileContainer}>
           <Image
             source={{ uri: vendor_profile_data1?.image }}

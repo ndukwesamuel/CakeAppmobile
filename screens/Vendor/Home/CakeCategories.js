@@ -159,6 +159,7 @@ const CakeCategories = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     flex: 1,
+                    marginTop: 20
                   }}
                 >
                   <Text style={{ fontWeight: "500", fontSize: 16 }}>
