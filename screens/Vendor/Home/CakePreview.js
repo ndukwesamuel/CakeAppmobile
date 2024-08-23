@@ -8,12 +8,14 @@ import { useRoute } from "@react-navigation/native";
 const CakePreview = () => {
   const route = useRoute();
   const { formData } = route.params;
+
+  
   return (
     <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
         <Image
-          source={formData?.images[0] || cakeImg}
+          source={{uri: formData?.images[0] }}
           style={{
             width: "95%",
             height: "35%",
