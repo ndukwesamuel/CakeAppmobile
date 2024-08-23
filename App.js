@@ -96,12 +96,9 @@ export const StartScreen = ({}) => {
   const dispatch = useDispatch();
 
   return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
-  // <ApplicationForm />;
-  // return <Auth />;
 };
 
 export const NavigationScreen = () => {
-  // const isAuth = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const { user_data } = useSelector((state) => state?.Auth);
@@ -109,22 +106,9 @@ export const NavigationScreen = () => {
   console.log({
     asdd: user_data,
   });
-  // dispatch(reset_isOnboarding());
-  // dispatch(reset_login());
-
-  // const [country, setCountry] = useState("Loading...");
 
   return (
     <NavigationContainer>
-      {/* <StartScreen /> */}
-      {/* <ApplicationForm/> */}
-      {/* <Home></Home> */}
-      {/* <PersonalInformation/> */}
-      {/* <Profile/> */}
-      {/* <UploadProduct/> */}
-      {/* <CakePreview/> */}
-      {/* <VendorTabNavigation/> */}
-      {/* <VendorNavigation /> */}
       {user_data?.user?.token && <MainScreen />}
       {!user_data?.user?.token && <StartScreen />}
       <Toast />
