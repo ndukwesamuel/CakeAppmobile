@@ -42,7 +42,8 @@ const ApplicationPreview = () => {
         })
       },
         onError: (error) => {
-  
+
+          console.log(error)
           Toast.show({
             type: "error",
             text1: `${error?.response?.data?.message} `,
