@@ -7,24 +7,23 @@ import { useNavigation } from "@react-navigation/native";
 export default function ApplicationForm() {
   const navigation = useNavigation()
   const [businessName, setBusinessName] = useState("");
-  const [businessOwner, setBusinessOwner] = useState("");
-  const [cacNo, setcacNo] = useState("");
+  const [businessOwnerName, setBusinessOwnerName] = useState("");
+  const [cacNumber, setcacNumber] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
   const [businessCallLine, setBusinessCallLine] = useState("");
   const [yearsOfExperience, setYearsOfExperience] = useState("");
   const [nationality, setNationality] = useState("");
-  const [descritption, setDescritption] = useState("");
+  const [businessDescription, setBusinessDescription] = useState("");
 
   const applicationFormHandler = () =>{
     const formData = {
       businessName: businessName,
-      businessOwner: businessOwner,
-      cacNo: cacNo,
+      businessOwnerName: businessOwnerName,
+      cacNumber: cacNumber,
       businessEmail: businessEmail,
       businessCallLine: businessCallLine,
-      yearsOfExperience: yearsOfExperience,
       nationality: nationality,
-      descritption: descritption
+      businessDescription:businessDescription
     }
     navigation.navigate("applicationPreviewPage", {formData: formData})
     
@@ -47,16 +46,16 @@ export default function ApplicationForm() {
             <Text style={styles.label}>Name of Business Owner </Text>
             <TextInput
               style={styles.input}
-              value={businessOwner}
-              onChangeText={(text) => setBusinessOwner(text)}
+              value={businessOwnerName}
+              onChangeText={(text) => setBusinessOwnerName(text)}
             />
           </View>
           <View style={styles.formGroup}>
             <Text style={styles.label}>C.A.C No:</Text>
             <TextInput
               style={styles.input}
-              value={cacNo}
-              onChangeText={(text) => setcacNo(text)}
+              value={cacNumber}
+              onChangeText={(text) => setcacNumber(text)}
             />
           </View>
           <View style={styles.formGroup}>
@@ -75,14 +74,14 @@ export default function ApplicationForm() {
               onChangeText={(text) => setBusinessCallLine(text)}
             />
           </View>
-          <View style={styles.formGroup}>
+          {/* <View style={styles.formGroup}>
             <Text style={styles.label}>Years of Experience</Text>
             <TextInput
               style={styles.input}
               value={yearsOfExperience}
               onChangeText={(text) => setYearsOfExperience(text)}
             />
-          </View>
+          </View> */}
           <View style={styles.formGroup}>
             <Text style={styles.label}>Nationality</Text>
             <TextInput
@@ -95,8 +94,8 @@ export default function ApplicationForm() {
             <Text style={styles.label}>Business Description</Text>
             <TextInput
               style={[styles.input, { height: 70 }]}
-              value={descritption}
-              onChangeText={(text) => setDescritption(text)}
+              value={businessDescription}
+              onChangeText={(text) => setBusinessDescription(text)}
             />
           </View>
           <Pressable style={styles.button} onPress={applicationFormHandler}>
