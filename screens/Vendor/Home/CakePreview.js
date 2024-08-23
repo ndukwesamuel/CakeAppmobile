@@ -7,6 +7,7 @@ import { useRoute } from "@react-navigation/native";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { useSelector } from "react-redux";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 const CakePreview = () => {
   const route = useRoute();
