@@ -4,18 +4,53 @@ import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 
 const cakeImg = require("../../../assets/cakeImages/cake.png");
 import { useRoute } from "@react-navigation/native";
-
+import { useMutation } from "react-query";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 const CakePreview = () => {
   const route = useRoute();
   const { formData } = route.params;
+  const token = useSelector((state) => state?.Auth?.user_data?.user?.token);
 
-  
+  const UploadCake_Mutation = useMutation(
+    async ({ formData, token }) => {
+      try {
+        const response = await axios.post(
+          `${API_BASEURL}v1/vendor/cake`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `Upload successfull`,
+        });
+      },
+      onError: (error) => {
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
   return (
     <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
         <Image
-          source={{uri: formData?.images[0] }}
+          source={{ uri: formData?.images[0] }}
           style={{
             width: "95%",
             height: "35%",
@@ -83,7 +118,10 @@ const CakePreview = () => {
           </View>
         </View>
         <View>
-          <Pressable style={styles.button}>
+          <Pressable
+            style={styles.button}
+            onPress={UploadCake_Mutation.mutate({ formData, token })}
+          >
             <Text
               style={{
                 textAlign: "center",
