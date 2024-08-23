@@ -13,7 +13,7 @@ const CakePreview = () => {
       <View style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
         <Image
-          source={formData?.picture || cakeImg}
+          source={formData?.images[0] || cakeImg}
           style={{
             width: "95%",
             height: "35%",
