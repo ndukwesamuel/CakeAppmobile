@@ -61,77 +61,88 @@ const UploadProduct = () => {
 
   return (
     <AppScreenTwo arrrow={"true"}>
-      {/* <ScrollView> */}
-      <View style={styles.container}>
-        <Text style={{ fontSize: 32, fontWeight: "700" }}>Add Cake</Text>
-        <View style={{ flexDirection: "column", gap: 70 }}>
-          <View style={{ marginTop: 10, gap: 15 }}>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Name of Cake</Text>
-              <TextInput
-                style={styles.input}
-                value={cakeName}
-                onChangeText={(text) => setCakeName(text)}
-              />
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Price</Text>
-              <TextInput
-                style={styles.input}
-                value={price}
-                onChangeText={(text) => setPrice(text)}
-              />
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Description</Text>
-              <TextInput
-                style={[styles.input, { height: 80 }]}
-                value={description}
-                onChangeText={(text) => setDescription(text)}
-              />
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Upload Pictures</Text>
-              <TextInput
-                style={[styles.input, { height: 70 }]}
-                value={pictures}
-                onChangeText={(text) => setPictures(text)}
-              />
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Size</Text>
-              <TextInput
-                style={styles.input}
-                value={size}
-                onChangeText={(text) => setsize(text)}
-              />
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Flavours Available</Text>
-              <TextInput
-                style={styles.input}
-                value={flavour}
-                onChangeText={(text) => setFlavour(text)}
-              />
-            </View>
-          </View>
-          <View>
-            <Pressable style={styles.button} onPress={uploadProductHandler}>
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "white",
-                  fontSize: 16,
-                  fontWeight: "400",
-                }}
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={{ fontSize: 32, fontWeight: "700" }}>Add Cake</Text>
+          <View style={{ flexDirection: "column", gap: 50 }}>
+            <View style={{ marginTop: 10, gap: 15 }}>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Name of Cake</Text>
+                <TextInput
+                  style={styles.input}
+                  value={cakeName}
+                  onChangeText={(text) => setCakeName(text)}
+                />
+              </View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Price</Text>
+                <TextInput
+                  style={styles.input}
+                  value={price}
+                  onChangeText={(text) => setPrice(text)}
+                />
+              </View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Description</Text>
+                <TextInput
+                  style={[styles.input, { height: 80 }]}
+                  value={description}
+                  onChangeText={(text) => setDescription(text)}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.uploadContainer}
+                onPress={pickImage}
               >
-                Preview
-              </Text>
-            </Pressable>
+                {image ? (
+                  <Image source={{ uri: image }} style={styles.uploadedImage} />
+                ) : (
+                  <View style={styles.uploadContent}>
+                    <Image
+                      source={{ uri: "https://example.com/upload-icon.png" }} // Replace with your upload icon URL
+                      style={styles.icon}
+                    />
+                    <Text style={styles.uploadText}>upload</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Size</Text>
+                <TextInput
+                  style={styles.input}
+                  value={size}
+                  onChangeText={(text) => setsize(text)}
+                />
+              </View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Flavours Available</Text>
+                <TextInput
+                  style={styles.input}
+                  value={flavour}
+                  onChangeText={(text) => setFlavour(text)}
+                />
+              </View>
+            </View>
+
+            <View>
+              <Pressable style={styles.button} onPress={uploadProductHandler}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontSize: 16,
+                    fontWeight: "400",
+                  }}
+                >
+                  Preview
+                </Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
-      {/* </ScrollView> */}
+      </ScrollView>
     </AppScreenTwo>
   );
 };
@@ -158,6 +169,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   button: {
+    // marginTop:0,
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: "#DD293E",
@@ -166,7 +178,7 @@ const styles = StyleSheet.create({
 
   uploadContainer: {
     height: 100,
-    width: 200,
+    width: "100%",
     borderWidth: 1,
     borderColor: "#FF0000", // Red dashed border
     borderStyle: "dashed",
