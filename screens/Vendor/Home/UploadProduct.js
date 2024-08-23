@@ -1,42 +1,41 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
-  Pressable,
   ScrollView,
   TouchableOpacity,
   Image,
   FlatList,
   Modal,
 } from "react-native";
-import React, { useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+
 const UploadProduct = () => {
   const navigation = useNavigation();
   const [cakeName, setCakeName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [pictures, setPictures] = useState("");
-  const [size, setsize] = useState("");
-  const [flavour, setFlavour] = useState("");
+  const [pictures, setPictures] = useState([]);
+  const [size, setSize] = useState("");
+  const [layers, setLayers] = useState("");
 
   const uploadProductHandler = () => {
     const formData = {
-      cakeName: cakeName,
+      name: cakeName,
       price: price,
       description: description,
-      pictures: pictures,
-      size: size,
-      flavour: flavour,
+      cakeSize: size,
+      category: selectedStatus,
+      numberOfLayers: layers,
+      images: pictures,
     };
-
+    console.log({ cakePreview: formData });
     navigation.navigate("previewPage", { formData: formData });
   };
-
-  const [image, setImage] = useState(null);
 
   const pickImage = async () => {
     // Request permission to access the gallery
@@ -57,8 +56,13 @@ const UploadProduct = () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setPictures([...pictures, result.assets[0].uri]);
     }
+  };
+
+  const removeImage = (index) => {
+    const updatedPictures = pictures.filter((_, i) => i !== index);
+    setPictures(updatedPictures);
   };
 
   const [selectedStatus, setSelectedStatus] = useState("anniversary");
@@ -112,50 +116,46 @@ const UploadProduct = () => {
               style={styles.uploadContainer}
               onPress={pickImage}
             >
-              {image ? (
-                <Image source={{ uri: image }} style={styles.uploadedImage} />
-              ) : (
-                <View style={styles.uploadContent}>
-                  <Image
-                    source={{ uri: "https://example.com/upload-icon.png" }} // Replace with your upload icon URL
-                    style={styles.icon}
-                  />
-                  <Text style={styles.uploadText}>upload</Text>
+              <View style={styles.uploadContent}>
+                <Image
+                  source={{ uri: "https://example.com/upload-icon.png" }} // Replace with your upload icon URL
+                  style={styles.icon}
+                />
+                <Text style={styles.uploadText}>Upload Images</Text>
+              </View>
+            </TouchableOpacity>
+
+            <FlatList
+              data={pictures}
+              horizontal
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <View style={styles.imageContainer}>
+                  <Image source={{ uri: item }} style={styles.uploadedImage} />
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(index)}
+                  >
+                    <Text style={styles.removeButtonText}>X</Text>
+                  </TouchableOpacity>
                 </View>
               )}
-            </TouchableOpacity>
+            />
 
             <View style={styles.formGroup}>
               <Text style={styles.label}>Size</Text>
               <TextInput
                 style={styles.input}
                 value={size}
-                onChangeText={(text) => setsize(text)}
+                onChangeText={(text) => setSize(text)}
               />
-            </View>
-
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                paddingHorizontal: 20,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginBottom: 10,
-                }}
-              >
-                Select Status:
-              </Text>
             </View>
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Flavours Available</Text>
+              <Text style={styles.label}>layers</Text>
               <TextInput
                 style={styles.input}
-                value={flavour}
-                onChangeText={(text) => setFlavour(text)}
+                value={layers}
+                onChangeText={(text) => setLayers(text)}
               />
             </View>
 
@@ -172,7 +172,7 @@ const UploadProduct = () => {
                   marginBottom: 10,
                 }}
               >
-                Select Status:
+                Select Category:
               </Text>
               <TouchableOpacity
                 style={{
@@ -247,6 +247,7 @@ const UploadProduct = () => {
               padding: 10,
               borderRadius: 20,
             }}
+            onPress={uploadProductHandler}
           >
             <Text
               style={{
@@ -287,14 +288,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
   },
-  button: {
-    // marginTop:0,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "#DD293E",
-    borderRadius: 42,
-  },
-
   uploadContainer: {
     height: 100,
     width: "100%",
@@ -321,8 +314,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   uploadedImage: {
-    height: "100%",
-    width: "100%",
+    height: 100,
+    width: 100,
     borderRadius: 5,
+    marginRight: 10,
+  },
+  imageContainer: {
+    position: "relative",
+  },
+  removeButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    backgroundColor: "rgba(255, 0, 0, 0.7)",
+    borderRadius: 50,
+    padding: 5,
+  },
+  removeButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

@@ -13,45 +13,87 @@ const CakePreview = () => {
       <View style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
         <Image
-          source={formData?.picture||cakeImg}
-          style={{ width: "95%", height: "35%", resizeMode: "stretch", top:10 }}
+          source={formData?.picture || cakeImg}
+          style={{
+            width: "95%",
+            height: "35%",
+            resizeMode: "stretch",
+            top: 10,
+          }}
         />
-        <View style={{ backgroundColor: "white", padding: 20, top:30, gap:10 }}>
-          <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
+        <View
+          style={{ backgroundColor: "white", padding: 20, top: 30, gap: 10 }}
+        >
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Cake Name</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.cakeName}</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+              {formData?.name}
+            </Text>
           </View>
-          <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
-            <Text style={{ fontSize: 16, fontWeight: 400 }}>Flavour</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.flavour}</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: 400 }}>Layers</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+              {formData?.numberOfLayers}
+            </Text>
           </View>
-          <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Size</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.size}</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+              {formData?.cakeSize}
+            </Text>
           </View>
-          <View style={{ flexDirection:"row",justifyContent:"space-between"}}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: 400 }}>Category</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+              {formData?.category}
+            </Text>
+          </View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Price</Text>
-            <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData?.price}</Text>
+            <Text style={{ fontSize: 16, fontWeight: 600 }}>
+              {formData?.price}
+            </Text>
           </View>
-          <View style={{ flexDirection:"row",justifyContent:"space-between",}}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text style={{ fontSize: 16, fontWeight: 400 }}>Description</Text>
-            <Text style={{textAlign:"right" ,fontSize: 16, fontWeight: 600, width:"50%", }}>{formData?.description}</Text>
+            <Text
+              style={{
+                textAlign: "right",
+                fontSize: 16,
+                fontWeight: 600,
+                width: "50%",
+              }}
+            >
+              {formData?.description}
+            </Text>
           </View>
         </View>
         <View>
-            <Pressable style={styles.button}>
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "white",
-                  fontSize: 16,
-                  fontWeight: "400",
-                }}
-              >
-                Submit
-              </Text>
-            </Pressable>
-          </View>
+          <Pressable style={styles.button}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 16,
+                fontWeight: "400",
+              }}
+            >
+              Submit
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </AppScreenTwo>
   );
@@ -70,6 +112,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: "#DD293E",
     borderRadius: 42,
-    top:80
+    top: 80,
   },
 });
