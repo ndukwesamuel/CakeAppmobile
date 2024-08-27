@@ -13,6 +13,7 @@ const CakePreview = () => {
   const route = useRoute();
   const { formData } = route.params;
   const token = useSelector((state) => state?.Auth?.user_data?.user?.token);
+  // console.log({token:token})a
 
   const UploadCake_Mutation = useMutation(
     async ({ formData, token }) => {
@@ -46,6 +47,9 @@ const CakePreview = () => {
       },
     }
   );
+  const handleSubmit = () => {
+    UploadCake_Mutation.mutate({ formData, token });
+  };
   return (
     <AppScreenTwo arrrow={"true"}>
       <View style={styles.container}>
@@ -119,10 +123,7 @@ const CakePreview = () => {
           </View>
         </View>
         <View>
-          <Pressable
-            style={styles.button}
-            onPress={UploadCake_Mutation.mutate({ formData, token })}
-          >
+          <Pressable style={styles.button} onPress={handleSubmit}>
             <Text
               style={{
                 textAlign: "center",

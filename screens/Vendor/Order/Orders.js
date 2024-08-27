@@ -14,7 +14,7 @@ const Orders = () => {
   const get_order_history_data = useSelector(
     (state) => state.VendorsSlice.OrderSlice.get_order_history_data
   );
-  console.log(get_order_history_data?.orders);
+  // console.log(get_order_history_data?.orders);
 
   useEffect(() => {
     dispatch(Get_Order_HIstory_Fun(activeTab));

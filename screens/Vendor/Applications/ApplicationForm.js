@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderColor: "#4C060E",
     borderRadius: 10,
     paddingHorizontal: 10,
+    height:40,
   },
   label: {
     fontSize: 16,

@@ -55,6 +55,8 @@ const CakeCategories = () => {
     }, 2000);
   };
   useEffect(() => {
+    dispatch(UserProfile_Fun());
+    dispatch(Current_vendor_profile_Fun());
     dispatch(
       Get_vendor_Cake_Fun({
         option,
@@ -62,8 +64,7 @@ const CakeCategories = () => {
       })
     );
 
-    dispatch(UserProfile_Fun());
-    dispatch(Current_vendor_profile_Fun());
+    
 
     return () => {};
   }, [option]);
@@ -97,7 +98,7 @@ const CakeCategories = () => {
           backgroundColor: "#fff",
           padding: 15,
           marginTop: 20,
-          borderRadius:10
+          borderRadius: 10,
         }}
       >
         <View>
@@ -159,7 +160,7 @@ const CakeCategories = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     flex: 1,
-                    marginTop: 20
+                    marginTop: 20,
                   }}
                 >
                   <Text style={{ fontWeight: "500", fontSize: 16 }}>

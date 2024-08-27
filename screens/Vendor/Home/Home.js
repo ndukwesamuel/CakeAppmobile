@@ -18,6 +18,9 @@ const Home = () => {
     (state) =>
       state?.VendorsSlice?.ProfileSlice?.vendor_profile_data?.vendorProfile
   );
+  const { user_data } = useSelector((state) => state?.Auth)
+
+  console.log({data:vendor_profile_data})
   const get_all_order_history_data = useSelector(
     (state) => state?.VendorsSlice?.OrderSlice?.get_all_order_history_data?.orders
   );

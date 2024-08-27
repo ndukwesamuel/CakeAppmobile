@@ -32,6 +32,7 @@ const UploadProduct = () => {
       category: selectedStatus,
       numberOfLayers: layers,
       images: pictures,
+      timeFrame:2
     };
     console.log({ cakePreview: formData });
     navigation.navigate("previewPage", { formData: formData });
@@ -86,7 +87,7 @@ const UploadProduct = () => {
       <ScrollView style={styles.container}>
         <Text style={{ fontSize: 32, fontWeight: "700" }}>Add Cake</Text>
         <View style={{ flexDirection: "column", gap: 50 }}>
-          <View style={{ marginTop: 10, gap: 15 }}>
+          <View style={{ marginTop: 30, gap: 15 }}>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Name of Cake</Text>
               <TextInput
@@ -246,6 +247,7 @@ const UploadProduct = () => {
               backgroundColor: "#DD293E",
               padding: 10,
               borderRadius: 20,
+              marginBottom:20
             }}
             onPress={uploadProductHandler}
           >
@@ -272,7 +274,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 80,
+    marginTop: 100,
   },
   formGroup: {
     flexDirection: "column",
@@ -283,6 +285,7 @@ const styles = StyleSheet.create({
     borderColor: "#4C060E",
     borderRadius: 10,
     paddingHorizontal: 10,
+    height:40
   },
   label: {
     fontSize: 16,

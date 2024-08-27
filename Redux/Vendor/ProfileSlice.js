@@ -13,7 +13,7 @@ const initialState = {
 
 export const Get_Vendor_Profile = createAsyncThunk(
   "ProfileSlice/Get_Vendor_Profile",
-  async (status, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
     
@@ -29,9 +29,10 @@ export const Get_Vendor_Profile = createAsyncThunk(
         `${API_BASEURL}v1/vendor/profile`,
         config
       );
-      console.log(response.data)
+      // console.log(response.data)
       return response.data;
     } catch(error) {
+      console.log({error: error})
       const errorMessage = handleApiError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
