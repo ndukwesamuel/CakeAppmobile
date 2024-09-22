@@ -7,6 +7,9 @@ import {
   Pressable,
   ActivityIndicator,
   TouchableOpacity,
+  Image,
+  useWindowDimensions,
+  Button,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +23,7 @@ import AppScreen from "../shared/AppScreen";
 import Mainborder from "../shared/Mainborder";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
+const backgroundImg = require("../../assets/images/signIn.png");
 
 const SignIn = ({ onSetAuth }) => {
   const navigation = useNavigation();
@@ -39,7 +43,7 @@ const SignIn = ({ onSetAuth }) => {
   const { user_isLoading, user_data, user_message } = useSelector(
     (state) => state?.Auth
   );
-
+  const { width } = useWindowDimensions();
   const handleLogin = () => {
     // Dispatch the login action with username and password
     dispatch(setOtpEmail(email));
@@ -98,111 +102,260 @@ const SignIn = ({ onSetAuth }) => {
   );
 
   return (
-    <AppScreen>
-      <Mainborder>
-        <View style={styles.container}>
-          {/* inputs container*/}
-          <View style={styles.inputGroup}>
-            {/* heading texts */}
-            <View style={{ gap: 10 }}>
-              <Text style={{ fontSize: 24, lineHeight: 36, fontWeight: "900" }}>
-                Welcome back
-              </Text>
+    // <AppScreen>
+    // <Mainborder>
+    //   <View style={styles.container}>
+    //     {/* inputs container*/}
+    //     <View style={styles.inputGroup}>
+    //       {/* heading texts */}
+    //       <View style={{ gap: 10 }}>
+    //         <Text style={{ fontSize: 24, lineHeight: 36, fontWeight: "900" }}>
+    //           Welcome back
+    //         </Text>
 
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                }}
-              >
-                Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                ipsam voluptatem quia v
-              </Text>
-            </View>
+    //         <Text
+    //           style={{
+    //             fontSize: 12,
+    //             fontWeight: "400",
+    //           }}
+    //         >
+    //           Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+    //           ipsam voluptatem quia v
+    //         </Text>
+    //       </View>
 
-            {/* username */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Email</Text>
+    //       {/* username */}
+    //       <View style={styles.inputContainer}>
+    //         <Text style={styles.labels}>Email</Text>
+    //         <TextInput
+    //           style={styles.inputs}
+    //           value={email}
+    //           onChangeText={(text) => setEmail(text)}
+    //           placeholder="Enter your email"
+    //         />
+    //       </View>
+
+    //       {/* password */}
+    //       <View style={styles.inputContainer}>
+    //         <Text style={styles.labels}>Password</Text>
+    //         <TextInput
+    //           style={styles.inputs}
+    //           value={password}
+    //           onChangeText={(text) => setPassword(text)}
+    //           secureTextEntry
+    //         />
+    //       </View>
+
+    //       <View
+    //         style={{
+    //           flexDirection: "row",
+    //           justifyContent: "space-between",
+    //           alignItems: "center",
+    //         }}
+    //       >
+    //         <TouchableOpacity
+    //           onPress={() => setRemember(!remember)}
+    //           style={{
+    //             flexDirection: "row",
+    //             alignItems: "center",
+    //             gap: 10,
+    //             marginBottom: 20,
+    //           }}
+    //         >
+    //           <Ionicons
+    //             name={`${
+    //               remember
+    //                 ? "checkmark-circle-sharp"
+    //                 : "checkmark-circle-outline"
+    //             }`}
+    //             size={24}
+    //             color={`${remember ? "#4C0016" : "gray"}`}
+    //           />
+
+    //           <Text
+    //             style={{
+    //               fontSize: 14,
+    //               fontWeight: "400",
+    //               fontFamily: "RobotoSlab-Regular",
+    //             }}
+    //           >
+    //             Remember me
+    //           </Text>
+    //         </TouchableOpacity>
+
+    //         <TouchableOpacity
+    //           onPress={() => setRemember(!remember)}
+    //           style={{
+    //             flexDirection: "row",
+    //             alignItems: "center",
+    //             gap: 10,
+    //             marginBottom: 20,
+    //           }}
+    //         >
+    //           <TouchableOpacity onPress={() => onSetAuth("forgot-password")}>
+    //             <Text
+    //               style={{
+    //                 fontSize: 14,
+    //                 fontWeight: "400",
+    //                 fontFamily: "RobotoSlab-Regular",
+    //               }}
+    //             >
+    //               Forgot password ?
+    //             </Text>
+    //           </TouchableOpacity>
+    //         </TouchableOpacity>
+    //       </View>
+    //     </View>
+
+    //     {Resend_Mutation?.isLoading && (
+    //       <ActivityIndicator size="large" color="blue" />
+    //     )}
+
+    //     {user_message === "Email not verified!" && (
+    //       <TouchableOpacity
+    //         onPress={() =>
+    //           Resend_Mutation.mutate({
+    //             email: otpemail,
+    //           })
+    //         }
+    //       >
+    //         <Text
+    //           style={{
+    //             fontSize: 16,
+    //             color: "#06094F",
+    //             fontWeight: "400",
+    //             lineHeight: 23,
+    //           }}
+    //         >
+    //           Click To verify your email {otpemail}
+    //         </Text>
+    //       </TouchableOpacity>
+    //     )}
+
+    //     {/* action buttons */}
+    //     <View
+    //       style={{
+    //         justifyContent: "flex-end",
+    //         alignContent: "flex-center",
+    //         flex: 3,
+    //         paddingVertical: 30,
+    //         gap: 10,
+    //       }}
+    //     >
+    //       <Pressable
+    //         onPress={handleLogin} // Call handleLogin function on button press
+    //         style={{
+    //           padding: 10,
+    //           borderRadius: 40,
+    //           backgroundColor: "#DD293E",
+    //         }}
+    //       >
+    //         {user_isLoading ? (
+    //           <ActivityIndicator size="small" color="white" />
+    //         ) : (
+    //           <Text
+    //             style={{
+    //               textAlign: "center",
+    //               color: "white",
+    //               fontSize: 16,
+    //               fontWeight: "700",
+    //               lineHeight: 24.05,
+    //             }}
+    //           >
+    //             Log In
+    //           </Text>
+    //         )}
+    //       </Pressable>
+    //       <View style={{ justifyContent: "center" }}>
+    //         <Pressable style={{}}>
+    //           <Text style={{ fontSize: 14, lineHeight: 22.4 }}>
+    //             You do not have an account?
+    //             <Text
+    //               onPress={() => onSetAuth("sign-up")}
+    //               style={{
+    //                 fontSize: 16,
+    //                 fontWeight: "500",
+    //                 lineHeight: 25.6,
+    //               }}
+    //             >
+    //               Sign Up
+    //             </Text>
+    //           </Text>
+    //         </Pressable>
+    //       </View>
+    //     </View>
+    //   </View>
+    // </Mainborder>
+    // </AppScreen>
+    <>
+      <View style={styles.container}>
+        <Image
+          source={backgroundImg}
+          style={[styles.backgroundImage, { width }]}
+        />
+        <View style={[styles.displayArea, { width }]}>
+          <View>
+            <Text style={[styles.text, { fontSize: 32, fontWeight: "700" }]}>
+              Welcome Back
+            </Text>
+            <Text style={[styles.text, { fontSize: 12 }]}>
+              Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim{" "}
+            </Text>
+          </View>
+          {/* inputs */}
+          <View style={{ marginTop: 20, gap: 10 }}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Email</Text>
               <TextInput
-                style={styles.inputs}
+                style={styles.input}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
-                placeholder="Enter your email"
               />
             </View>
-
-            {/* password */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.labels}>Password</Text>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Password</Text>
               <TextInput
-                style={styles.inputs}
+                style={styles.input}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry
               />
             </View>
-
-            <View
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 1,
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => setRemember(!remember)}
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
                 alignItems: "center",
+                gap: 10,
+                // marginBottom: 20,
               }}
             >
-              <TouchableOpacity
-                onPress={() => setRemember(!remember)}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 20,
-                }}
-              >
-                <Ionicons
-                  name={`${
-                    remember
-                      ? "checkmark-circle-sharp"
-                      : "checkmark-circle-outline"
-                  }`}
-                  size={24}
-                  color={`${remember ? "#4C0016" : "gray"}`}
-                />
-
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "400",
-                    fontFamily: "RobotoSlab-Regular",
-                  }}
-                >
-                  Remember me
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => setRemember(!remember)}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 20,
-                }}
-              >
-                <TouchableOpacity onPress={() => onSetAuth("forgot-password")}>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "400",
-                      fontFamily: "RobotoSlab-Regular",
-                    }}
-                  >
-                    Forgot password ?
-                  </Text>
-                </TouchableOpacity>
-              </TouchableOpacity>
-            </View>
+              <Ionicons
+                name={`${
+                  remember
+                    ? "checkmark-circle-sharp"
+                    : "checkmark-circle-outline"
+                }`}
+                size={24}
+                color={`${remember ? "#6904EC" : "black"}`}
+              />
+              <Text style={[styles.text, { fontSize: 12 }]}>Remember me</Text>
+            </TouchableOpacity>
+            <Pressable onPress={() => onSetAuth("forgot-password")}>
+              <Text style={[styles.text, { fontSize: 12 }]}>
+                Forgot password?
+              </Text>
+            </Pressable>
           </View>
-
           {Resend_Mutation?.isLoading && (
             <ActivityIndicator size="large" color="blue" />
           )}
@@ -227,62 +380,46 @@ const SignIn = ({ onSetAuth }) => {
               </Text>
             </TouchableOpacity>
           )}
-
-          {/* action buttons */}
+          <Pressable
+            style={styles.button}
+            onPress={handleLogin} // Call handleLogin function on button press
+          >
+            {user_isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "500",
+                  textAlign: "center",
+                }}
+              >
+                Log In
+              </Text>
+            )}
+          </Pressable>
           <View
             style={{
-              justifyContent: "flex-end",
-              alignContent: "flex-center",
-              flex: 3,
-              paddingVertical: 30,
+              flexDirection: "row",
+              justifyContent: "center",
               gap: 10,
+              marginTop: 10,
             }}
           >
-            <Pressable
-              onPress={handleLogin} // Call handleLogin function on button press
-              style={{
-                padding: 10,
-                borderRadius: 40,
-                backgroundColor: "#DD293E",
-              }}
-            >
-              {user_isLoading ? (
-                <ActivityIndicator size="small" color="white" />
-              ) : (
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 16,
-                    fontWeight: "700",
-                    lineHeight: 24.05,
-                  }}
-                >
-                  Log In
-                </Text>
-              )}
+            <Text>You Do Not Have An Account?</Text>
+            <Pressable>
+              <Text
+                style={[styles.text, { fontWeight: "600", fontSize: 16 }]}
+                onPress={() => onSetAuth("sign-up")}
+              >
+                Sign Up
+              </Text>
             </Pressable>
-            <View style={{ justifyContent: "center" }}>
-              <Pressable style={{}}>
-                <Text style={{ fontSize: 14, lineHeight: 22.4 }}>
-                  You do not have an account?
-                  <Text
-                    onPress={() => onSetAuth("sign-up")}
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "500",
-                      lineHeight: 25.6,
-                    }}
-                  >
-                    Sign Up
-                  </Text>
-                </Text>
-              </Pressable>
-            </View>
           </View>
         </View>
-      </Mainborder>
-    </AppScreen>
+      </View>
+    </>
   );
 };
 
@@ -291,28 +428,65 @@ export default SignIn;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    paddingHorizontal: 10,
-    gap: 20,
-    justifyContent: "space-between",
+    height: 100,
+    padding: 0,
+    backgroundColor: "rgba(240, 249, 255, 1)",
   },
-
+  backgroundImage: {
+    resizeMode: "cover",
+    flex: 0.9,
+  },
+  displayArea: {
+    backgroundColor: "white",
+    position: "absolute",
+    marginTop: 360,
+    borderRadius: 20,
+    padding: 20,
+  },
   inputGroup: {
     gap: 10,
   },
-
-  inputContainer: {
-    gap: 5,
-  },
-
-  labels: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-
-  inputs: {
+  input: {
     borderWidth: 0.5,
-    borderRadius: 8,
-    padding: 7,
+    borderColor: "rgba(76, 6, 14, 1)",
+    height: 48,
+    borderRadius: 10,
   },
+  inputLabel: {
+    color: "rgba(43, 2, 95, 1)",
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  text: {
+    color: "rgba(43, 2, 95, 1)",
+  },
+  button: {
+    backgroundColor: "rgba(105, 4, 236, 1)",
+    paddingVertical: 10,
+    borderRadius: 40,
+    marginTop: 50,
+  },
+
+  // container: {
+  //   flex: 1,
+  //   paddingTop: 40,
+  //   paddingHorizontal: 10,
+  //   gap: 20,
+  //   justifyContent: "space-between",
+  // },
+
+  // inputContainer: {
+  //   gap: 5,
+  // },
+
+  // labels: {
+  //   fontSize: 14,
+  //   fontWeight: "500",
+  // },
+
+  // inputs: {
+  //   borderWidth: 0.5,
+  //   borderRadius: 8,
+  //   padding: 7,
+  // },
 });

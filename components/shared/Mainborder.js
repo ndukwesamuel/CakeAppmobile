@@ -7,7 +7,7 @@ const Mainborder = ({ children }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: "white",
+        // backgroundColor: "white",
         borderRadius: 12,
         marginHorizontal: 20,
         marginVertical: 30,

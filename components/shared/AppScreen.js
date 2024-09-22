@@ -6,10 +6,10 @@ const AppScreen = ({ children }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#FFF0F0B2",
+        backgroundColor: "#F0F9FF",
       }}
     >
-      <StatusBar backgroundColor="#001272" barStyle="light-content" />
+      <StatusBar backgroundColor="#F0F9FF" barStyle="light-content" />
       {children}
     </SafeAreaView>
   );
