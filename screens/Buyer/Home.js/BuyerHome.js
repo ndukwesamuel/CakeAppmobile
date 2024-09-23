@@ -116,7 +116,7 @@ const BuyerHome = () => {
       <View style={styles.container}>
         <View style={{backgroundColor:"white", padding:10, flexDirection:"row"}}>
           <View>
-            <Text>Hello {userData?.firstName}</Text>
+            <Text style={{color:"#2E1400", fontSize:20, fontWeight:"700"}}>Hello {userData?.firstName}</Text>
           </View>
           <View>
             

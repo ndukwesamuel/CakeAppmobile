@@ -8,9 +8,13 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Get_All_Cake_Fun } from "../../../Redux/Buyer/CakeSlice";
+import {
+  Get_All_Cake_Fun,
+  Get_All_Categories_Fun,
+} from "../../../Redux/Buyer/CakeSlice";
 import { truncateDescription } from "../../../utills/Word";
 import { useNavigation } from "@react-navigation/native";
 
@@ -35,12 +39,13 @@ const CakeCategories = () => {
   const { get_all_vendor_data } = useSelector((state) => state.VendorSlice);
 
   const { get_all_cake_data } = useSelector((state) => state.CakeSlice);
+  const { get_all_categories_data } = useSelector((state) => state.CakeSlice);
   const [option, setOption] = useState("");
   const dispatch = useDispatch();
 
   const [refreshing, setRefreshing] = useState(false);
 
-  console.log({cakesssss: get_all_cake_data?.data?.cakes})
+  console.log({ cakesssss: get_all_cake_data?.data?.cakes });
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -52,10 +57,19 @@ const CakeCategories = () => {
   };
 
   useEffect(() => {
+    dispatch(Get_All_Categories_Fun());
     dispatch(Get_All_Cake_Fun(option));
 
     return () => {};
   }, [option]);
+
+  // useEffect(() =>{
+  //   dispatch(Get_All_Categories_Fun());
+
+  //   return () => {}
+  // }, [])
+
+  console.log({ categories: get_all_categories_data?.data?.categories });
 
   const [activeStatus, setActiveStatus] = useState(null);
 
@@ -81,7 +95,7 @@ const CakeCategories = () => {
     <View style={styles.container}>
       {/* <StatusList /> */}
 
-      <View style={{ flexDirection: "row" }}>
+      {/* <View style={{ flexDirection: "row" }}>
         <FlatList
           data={statuses}
           horizontal
@@ -109,10 +123,10 @@ const CakeCategories = () => {
             </TouchableOpacity>
           )}
         />
-      </View>
-      <View style={{ flex: 1 }}>
+      </View> */}
+      <ScrollView style={{ flex: 1, marginTop: 10 }}>
         <FlatList
-          data={get_all_cake_data?.data?.cakes}
+          data={get_all_categories_data?.data?.categories}
           renderItem={({ item }) => <ImageCard item={item} />}
           keyExtractor={(item) => item._id}
           numColumns={2} // Set the number of columns per row
@@ -134,7 +148,7 @@ const CakeCategories = () => {
             </View>
           }
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -146,8 +160,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   listContainer: {
-    // paddingHorizontal: 10,
-    // alignItems: "center",
     gap: 10,
   },
   circle: {
@@ -179,52 +191,26 @@ export const ImageCard = ({ item }) => {
     <TouchableOpacity
       style={{
         width: "48%",
-        height: 300,
-        borderRadius: 15,
-        overflow: "hidden",
-        marginVertical: 10,
-        elevation: 5, // Shadow for Android
-        shadowColor: "#000", // Shadow for iOS
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
+        // height: 125,
+        paddingVertical:50,
+        backgroundColor: "white",
       }}
-      onPress={() => navigation.navigate("cakeDetails", { item })}
+      onPress={() => navigation.navigate("categoryCakes", { item })}
     >
-      <ImageBackground
-        source={{
-          uri: item?.images[0]?.url, // "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR1bGGi3JK4IknHua3xDucgbe1ah0T2s2aQcm6AeXC5jEgRKKBz",
-        }}
-        style={{ width: "100%", height: "100%", justifyContent: "flex-end" }}
-      >
-        <View
+      <View style={{flexDirection:"column", gap:10, alignItems:"center", justifyContent:"center"}}>
+        <Image source={require("../../../assets/icons/cake.png")} />
+        <Text
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            padding: 10,
-            borderRadius: 10,
-            margin: 10,
+            textAlign: "center",
+            fontSize: 18,
+            fontWeight: "500",
+            color: "#020D44",
+            textTransform:"capitalize"
           }}
         >
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 18,
-              fontWeight: "bold",
-            }}
-          >
-            {item?.name}
-          </Text>
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 14,
-              marginTop: 5,
-            }}
-          >
-            {truncateDescription(item?.description)}
-          </Text>
-        </View>
-      </ImageBackground>
+          {item?.name}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };

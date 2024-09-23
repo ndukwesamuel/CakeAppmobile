@@ -1,4 +1,5 @@
 import CakeDetails from "../../screens/Buyer/Home.js/CakeDetails";
+import CategoryCakes from "../../screens/Buyer/Home.js/CategoryCakes";
 import VendorDetails from "../../screens/Buyer/Home.js/VendorDetails";
 import BuyerOrderDetails from "../../screens/Buyer/Order/BuyerOrderDetails";
 
@@ -18,6 +19,11 @@ export const screens = [
   {
     name: "BuyerOrderDetails",
     component: BuyerOrderDetails,
+    title: "",
+  },
+  {
+    name: "categoryCakes",
+    component: CategoryCakes,
     title: "",
   },
 ];

@@ -8,6 +8,12 @@ import { handleApiError } from "../shareApi";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const initialState = {
+  get_all_categories_data: null,
+  get_all_categories_isError: false,
+  get_all_categories_isSuccess: false,
+  get_all_categories_isLoading: false,
+  get_all_categories_message: null,
+
   get_all_cake_data: null,
   get_all_cake_isError: false,
   get_all_cake_isSuccess: false,
@@ -20,6 +26,30 @@ const initialState = {
   get_single_cake_isLoading: false,
   get_single_cake_message: null,
 };
+export const Get_All_Categories_Fun = createAsyncThunk(
+  "CakeSlice/Get_All_Categories_Fun",
+  async (_, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token
+      console.log({token:token})
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(`${API_BASEURL}v1/categories/`, config);
+      console.log({response: response.data})
+      return response.data;
+
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
 
 export const Get_All_Cake_Fun = createAsyncThunk(
   "CakeSlice/Get_All_Cake_Fun",
@@ -130,6 +160,23 @@ export const CakeSlice = createSlice({
         state.get_single_cake_isSuccess = false;
         state.get_single_cake_data = null;
         state.get_single_cake_message = action.payload;
+      })
+      .addCase(Get_All_Categories_Fun.pending, (state) => {
+        state.get_all_categories_isLoading = true;
+      })
+      .addCase(Get_All_Categories_Fun.fulfilled, (state, action) => {
+        state.get_all_categories_isLoading = false;
+        state.get_all_categories_isError = false;
+        state.get_all_categories_isSuccess = true;
+        state.get_all_categories_data = action.payload;
+        state.get_all_categories_message = null;
+      })
+      .addCase(Get_All_Categories_Fun.rejected, (state, action) => {
+        state.get_all_categories_isLoading = false;
+        state.get_all_categories_isError = true;
+        state.get_all_categories_isSuccess = true;
+        state.get_all_categories_message = action.payload;
+        state.get_all_categories_data = null;
       });
   },
 });
