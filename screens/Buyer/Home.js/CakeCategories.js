@@ -45,7 +45,7 @@ const CakeCategories = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  console.log({ cakesssss: get_all_cake_data?.data?.cakes });
+  // console.log({ cakesssss: get_all_cake_data?.data?.cakes });
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -69,22 +69,22 @@ const CakeCategories = () => {
   //   return () => {}
   // }, [])
 
-  console.log({ categories: get_all_categories_data?.data?.categories });
+  // console.log({ categories: get_all_categories_data?.data?.categories });
 
   const [activeStatus, setActiveStatus] = useState(null);
 
   const handlePress = (status) => {
     setActiveStatus(status);
 
-    console.log({
-      status1: status,
-    });
+    // console.log({
+    //   status1: status,
+    // });
 
     let status_small_letter = status.split(" ")[0].toLowerCase();
 
-    console.log({
-      status: status_small_letter,
-    });
+    // console.log({
+    //   status: status_small_letter,
+    // });
 
     setOption(status_small_letter);
   };

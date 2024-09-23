@@ -11,7 +11,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
-const AppScreenThree = ({ arrrow, children, notification }) => {
+const AppScreenThree = ({ arrrow, children, notification, title }) => {
   const navigation = useNavigation();
   return (
     <View
@@ -19,51 +19,64 @@ const AppScreenThree = ({ arrrow, children, notification }) => {
         flex: 1,
       }}
     >
-      <Image
-        style={{
-          width: "120%",
-          height: 120,
-          position: "absolute",
-          top: 0,
-          // zIndex: 1,
-        }}
-        source={require("../../assets/headerVector1.png")}
-      />
-
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: "#FFF0F0B2",
-          borderWidth: 1,
+          backgroundColor: "#F0F9FF",
+          // borderWidth: 1,
           // borderColor: "red",
           zIndex: 1,
         }}
       >
-        {arrrow === "true" && (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View>
+            {arrrow === "true" && (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  left: 20,
+                  zIndex: 1,
+                }}
+              >
+                <AntDesign name="arrowleft" size={24} color="black" />
+              </TouchableOpacity>
+            )}
+          </View>
+          <Text
+            style={{
+              position: "absolute",
+              top: 20,
+              left: 100,
+              zIndex: 1,
+              fontSize:18,
+              color:"#012100",
+              fontWeight:"500",
+              textTransform:"capitalize"
+            }}
+          >
+            {title}
+          </Text>
+        </View>
+
+        {notification === "true" && (
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
             style={{
               position: "absolute",
               top: 40,
-              left: 20,
+              right: 20,
               zIndex: 1,
             }}
           >
-            <AntDesign name="arrowleft" size={24} color="black" />
+            <MaterialIcons name="notifications-on" size={24} color="black" />
           </TouchableOpacity>
-        )}
-
-        {notification === 'true' && (
-          <TouchableOpacity
-          style={{
-            position: "absolute",
-            top: 40,
-            right: 20,
-            zIndex: 1,
-          }}
-        >
-          <MaterialIcons name="notifications-on" size={24} color="black" />
-        </TouchableOpacity>
         )}
         {children}
       </SafeAreaView>
