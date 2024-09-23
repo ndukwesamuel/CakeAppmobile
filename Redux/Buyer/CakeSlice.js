@@ -25,7 +25,7 @@ export const Get_All_Cake_Fun = createAsyncThunk(
   "CakeSlice/Get_All_Cake_Fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.user?.token;
 
       const config = {
         headers: {
@@ -56,7 +56,7 @@ export const Get_Single_Cake_Fun = createAsyncThunk(
   "CakeSlice/Get_Single_Cake_Fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.user?.token;
 
       const config = {
         headers: {

@@ -109,8 +109,8 @@ export const NavigationScreen = () => {
 
   return (
     <NavigationContainer>
-      {user_data?.user?.token && <MainScreen />}
-      {!user_data?.user?.token && <StartScreen />}
+      {user_data?.data?.token && <MainScreen />}
+      {!user_data?.data?.token && <StartScreen />}
       <Toast />
     </NavigationContainer>
   );
@@ -127,13 +127,13 @@ const MainScreen = () => {
   // });
 
   console.log({
-    condition: user_data?.user?.roles?.includes("user"),
-    zzzz: user_data?.user?.roles,
+    condition: user_data?.data?.roles?.includes("user"),
+    zzzz: user_data?.data?.user?.roles,
   });
 
   useEffect(() => {
     if (
-      !["user", "vendor"].some((role) => user_data?.user?.roles?.includes(role))
+      !["user", "vendor"].some((role) => user_data?.data?.user?.roles?.includes(role))
     ) {
       dispatch(reset_isOnboarding());
       dispatch(reset_login());
@@ -148,8 +148,8 @@ const MainScreen = () => {
 
   return (
     <>
-      {user_data?.user?.roles[0] === "user" && <Buyernaviagetion />}
-      {user_data?.user?.roles[0] === "vendor" && <VendorNavigation />}
+      {user_data?.data?.user?.roles[0] === "user" && <Buyernaviagetion />}
+      {user_data?.data?.user?.roles[0] === "vendor" && <VendorNavigation />}
     </>
   );
 };

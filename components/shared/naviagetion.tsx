@@ -27,7 +27,7 @@ export const Tabcomponent = ({ focused,
             <Image source={iconUnfocused} style={{ width: 25, height: 25 }} />
         )}
         <Text style={[texttStyle, {
-            fontWeight: "400", fontFamily: "Inter-Regular", color: focused ? "#DD293E" : "gray",
+            fontWeight: focused? "700":"400", fontSize:14, fontFamily: "Inter-Regular", color: focused ? "#2B025F" : "#2B025F",
 
         }]}>{label}</Text>
     </View>

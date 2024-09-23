@@ -31,7 +31,7 @@ const BuyerTabNavigation = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "white",
-          height: 65,
+          height: 60,
           ...styles.shadow,
         },
         tabBarLabelStyle: {
@@ -49,13 +49,13 @@ const BuyerTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/home-2.png")}
+              iconFocused={require("../../assets/icons/home-2.png")}
               iconUnfocused={require("../../assets/home.png")}
               label="Home"
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",
-                top: 10,
+                // top: 10,
               }}
               texttStyle={{ color: "#000000" }}
             />
@@ -79,7 +79,7 @@ const BuyerTabNavigation = () => {
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",
-                top: 10,
+                // top: 10,
               }}
               texttStyle={{ color: "#000000" }}
             />
@@ -103,7 +103,7 @@ const BuyerTabNavigation = () => {
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",
-                top: 10,
+                // top: 10,
               }}
               texttStyle={{ color: "#000000" }}
             />

@@ -118,7 +118,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         },
       };
 
-      return axios.post(url, datas, config);
+      return axios.post(url, data_info, config);
     },
     {
       onSuccess: (success) => {
@@ -135,7 +135,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
 
       onError: (error) => {
         console.log({
-          error: error,
+          errorrrrrr: error?.response,
         });
         Toast.show({
           type: "error",
@@ -245,7 +245,10 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                       width: "70%",
                       borderRadius: 30,
                     }}
-                    onPress={() => Verify_Mutation.mutate()}
+                    onPress={() => Verify_Mutation.mutate({
+                      email: otpemail,
+                      otp: code
+                    })}
                   >
                     {Verify_Mutation?.isLoading ? (
                       <ActivityIndicator size="large" color="blue" />

@@ -40,6 +40,8 @@ const CakeCategories = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
+  console.log({cakesssss: get_all_cake_data?.data?.cakes})
+
   const onRefresh = () => {
     setRefreshing(true);
     // Simulate a network request or some async operation
@@ -110,7 +112,7 @@ const CakeCategories = () => {
       </View>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={get_all_cake_data?.cakes}
+          data={get_all_cake_data?.data?.cakes}
           renderItem={({ item }) => <ImageCard item={item} />}
           keyExtractor={(item) => item._id}
           numColumns={2} // Set the number of columns per row
