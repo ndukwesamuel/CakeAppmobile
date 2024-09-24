@@ -65,9 +65,9 @@ const CakeDetails = () => {
 
   const dispatch = useDispatch();
 
-  console.log({
-    dataroute: cakeData,
-  });
+  // console.log({
+  //   dataroute: cakeData,
+  // });
 
   const [preview, setpreview] = useState(false);
 
