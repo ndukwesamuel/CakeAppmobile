@@ -27,8 +27,8 @@ export default function CategoryCakes() {
     dispatch(Get_All_Cake_Fun(dataRoute?.item?.name));
     return () => {};
   }, [dataRoute]);
-  console.log({ option: option });
-  console.log({ data: get_all_cake_data?.data?.cakes });
+//   console.log({ option: option });
+//   console.log({ data: get_all_cake_data?.data?.cakes });
   return (
     <AppScreenThree arrrow={"true"} title={dataRoute?.item?.name}>
       <View style={styles.container} id="container">
@@ -66,7 +66,7 @@ const ImageCard = ({ item }) => {
         <Text style={styles2.cardTitle}>{item.price}</Text>
         <Pressable
           style={styles2.button}
-          onPress={() => navigation.navigate("cakeDetails")}
+          onPress={() => navigation.navigate("cakeDetails", {item})}
         >
           <Text
             style={{
