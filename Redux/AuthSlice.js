@@ -57,7 +57,7 @@ export const UserProfile_Fun = createAsyncThunk(
   "auth/UserProfile_Fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
@@ -67,6 +67,7 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/auth`, config);
+      console.log({profile:response.data})
 
       return response.data;
 
@@ -82,7 +83,7 @@ export const Current_vendor_profile_Fun = createAsyncThunk(
   "auth/Current_vendor_profile_Fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
