@@ -40,10 +40,10 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
       };
 
       const response = await axios.get(
-        `${API_BASEURL}v1/order?page=1&perPage=20000000`,
+        `${API_BASEURL}v1/order?page=1&status=${status}&perPage=20000000`,
         config
       );
-      // console.log({orders:response.data})
+      console.log({orders:response.data})
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);

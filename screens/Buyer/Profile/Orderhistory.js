@@ -16,6 +16,7 @@ import { formatDate, formatTime } from "../../../utills/DateTime";
 import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
 
 const Orderhistory = () => {
+  const [status, setstatus] = useState('')
   const { user_profile_data } = useSelector(
     (state) => state.Auth.user_profile_data
   );
@@ -33,11 +34,11 @@ const Orderhistory = () => {
     setRefreshing(false);
   };
 
-  console.log({ orderssss: get_all_order_history_data.data.orders[0].vendor });
+  console.log({ orderssss: get_all_order_history_data?.data?.orders[0]?.vendor });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(Get_All_Order_HIstory_Fun({ status: "request" }));
+    dispatch(Get_All_Order_HIstory_Fun(status));
     return () => {};
   }, []);
 
@@ -128,19 +129,19 @@ const Orderhistory = () => {
           <View style={styles.container}>
             <View style={styles.groupContainer}>
               <Text style={styles.groupKey}>Vendor</Text>
-              <Text style={styles.groupValue}>{item.vendor.businessName}</Text>
+              <Text style={styles.groupValue}>{item?.vendor?.businessName}</Text>
             </View>
             <View style={styles.groupContainer}>
               <Text style={styles.groupKey}>Name of Cake</Text>
-              <Text style={styles.groupValue}>{item.cake.name}</Text>
+              <Text style={styles.groupValue}>{item?.cake?.name}</Text>
             </View>
             <View style={styles.groupContainer}>
               <Text style={styles.groupKey}>Quantity</Text>
-              <Text style={styles.groupValue}>{item.quantity}</Text>
+              <Text style={styles.groupValue}>{item?.quantity}</Text>
             </View>
             <View style={styles.groupContainer}>
               <Text style={styles.groupKey}>Status</Text>
-              <Text style={styles.groupValue}>{item.status}</Text>
+              <Text style={styles.groupValue}>{item?.status}</Text>
             </View>
           </View>
         )}

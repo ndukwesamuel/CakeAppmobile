@@ -22,13 +22,13 @@ export default function BuyerOrder() {
   const navigation = useNavigation();
 
   const { get_all_order_history_data } = useSelector(
-    (state) => state.OrderSlice
+    (state) => state?.OrderSlice
   );
 
-  console.log({ azzz: get_all_order_history_data?.orders[0] });
+  console.log({ azzz: get_all_order_history_data?.data?.orders });
 
   useEffect(() => {
-    dispatch(UserProfile_Fun());
+    // dispatch(UserProfile_Fun());
     dispatch(Get_All_Order_HIstory_Fun(activeTab));
   }, [activeTab]);
 
@@ -85,10 +85,10 @@ export default function BuyerOrder() {
         />
         <View style={{ flex: 1 }}>
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-            {item.cake?.name}
+            {item?.cake?.name}
           </Text>
           <Text style={{ color: "#8A8A8A", marginVertical: 5 }}>
-            {truncateDescription(item.cake?.description)}
+            {truncateDescription(item?.cake?.description)}
           </Text>
           <View
             style={{
@@ -99,7 +99,7 @@ export default function BuyerOrder() {
           >
             {/* <Text style={{ color: "#8A8A8A" }}>{item.progress}%</Text> */}
           </View>
-          <Text style={{ color: "#8A8A8A" }}>{item.status}</Text>
+          <Text style={{ color: "#8A8A8A" }}>{item?.status}</Text>
 
           {/* <ProgressBarAndroid
           styleAttr="Horizontal"
@@ -109,7 +109,7 @@ export default function BuyerOrder() {
         /> */}
         </View>
         <Text style={{ color: "#8A8A8A", fontSize: 12 }}>
-          {formatDate(item.updatedAt)}
+          {formatDate(item?.updatedAt)}
         </Text>
       </TouchableOpacity>
       <View
@@ -167,9 +167,9 @@ export default function BuyerOrder() {
         </View>
 
         <FlatList
-          data={get_all_order_history_data?.orders}
+          data={get_all_order_history_data?.data?.orders}
           renderItem={renderOrder}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item?.id}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
