@@ -14,7 +14,7 @@ import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
 import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { truncateDescription } from "../../../utills/Word";
-import { formatDate, formatDateString } from "../../../utills/DateTime";
+import { formatDate, formatDateString, formatTime } from "../../../utills/DateTime";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation } from "@react-navigation/native";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
@@ -124,10 +124,10 @@ export default function BuyerOrder() {
 
       {/* Cake Name and Description */}
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{ color: "#2B025F", fontSize: 20, fontWeight: "600" }}>
+        <Text style={{ color: "#2B025F", fontSize: 20, fontWeight: "600", alignItems:"center" }}>
           {item?.cake?.name}
         </Text>
-        <Text></Text>
+        <Text>{formatTime(item?.updatedAt)}</Text>
       </View>
 
       <Text style={{ color: "#2B025F", fontSize: 14, fontWeight: "400" }}>
@@ -136,7 +136,7 @@ export default function BuyerOrder() {
 
       {/* Conditionally render Make Payment button if status is "accepted" */}
       {item?.status === "accepted" && (
-        <TouchableOpacity style={[styles.button, { alignSelf: "flex-end" }]}>
+        <TouchableOpacity style={[styles.button, { alignSelf: "flex-end" }]} onPress={()=> navigation.navigate('payment')}>
           <Text style={{ color: "white", textAlign: "center" }}>
             Make Payment
           </Text>
@@ -148,6 +148,16 @@ export default function BuyerOrder() {
             Mark as delivered
           </Text>
         </TouchableOpacity>
+      )}
+      {item?.status === "request" && (
+        <View style={{gap:10}}>
+          <View>
+            <Text style={{color:"#2B025F", fontSize:16, fontWeight:"400"}}>Ongoing</Text>
+          </View>
+          <View style={{backgroundColor:"#6904EC", height:15, borderRadius:20}}>
+
+          </View>
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -267,7 +277,7 @@ export default function BuyerOrder() {
             )}
           />
         </View>
-        <View>
+        <View style={{marginTop:20, marginBottom:100}}>
           <FlatList
             data={get_all_order_history_data?.data?.orders}
             renderItem={renderOrder}
@@ -285,7 +295,7 @@ export default function BuyerOrder() {
                   flex: 1,
                 }}
               >
-                <Text style={{ fontWeight: "500", fontSize: 16 }}>
+                <Text style={{ fontWeight: "600", fontSize: 20, color:"#2B025F", marginTop:60 }}>
                   No Order History
                 </Text>
               </View>

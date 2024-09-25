@@ -3,6 +3,7 @@ import CakeDetails from "../../screens/Buyer/Home.js/CakeDetails";
 import CategoryCakes from "../../screens/Buyer/Home.js/CategoryCakes";
 import VendorDetails from "../../screens/Buyer/Home.js/VendorDetails";
 import BuyerOrderDetails from "../../screens/Buyer/Order/BuyerOrderDetails";
+import PaymentPage from "../../screens/Buyer/Order/PaymentPage";
 
 export const screens = [
   {
@@ -30,6 +31,11 @@ export const screens = [
   {
     name: "additionalInformation",
     component: AdditionalInfo,
+    title:"",
+  },
+  {
+    name:"paymentForm",
+    component: PaymentPage,
     title:"",
   },
 ];
