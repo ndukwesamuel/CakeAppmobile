@@ -1,3 +1,4 @@
+import AdditionalInfo from "../../screens/Buyer/Home.js/AdditionalInfo";
 import CakeDetails from "../../screens/Buyer/Home.js/CakeDetails";
 import CategoryCakes from "../../screens/Buyer/Home.js/CategoryCakes";
 import VendorDetails from "../../screens/Buyer/Home.js/VendorDetails";
@@ -25,5 +26,10 @@ export const screens = [
     name: "categoryCakes",
     component: CategoryCakes,
     title: "",
+  },
+  {
+    name: "additionalInformation",
+    component: AdditionalInfo,
+    title:"",
   },
 ];

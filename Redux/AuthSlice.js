@@ -60,27 +60,27 @@ const fetchResponsData = async (url, thunkAPI) => {
   }
 };
 
-export const UserProfile_Fun = createAsyncThunk(
-  "auth/UserProfile_Fun",
+// export const UserProfile_Fun = createAsyncThunk(
+//   "auth/UserProfile_Fun",
 
-  async (query, thunkAPI) => {
-    let url = "v1/auth";
+//   async (query, thunkAPI) => {
+//     let url = "v1/auth";
 
-    try {
-      // Call fetchResponsData within a try/catch block
-      const response = await fetchResponsData(url, thunkAPI);
+//     try {
+//       // Call fetchResponsData within a try/catch block
+//       const response = await fetchResponsData(url, thunkAPI);
 
-      return response; // Return the successful response
-    } catch (error) {
-      // Log the error and reject the async thunk
+//       return response; // Return the successful response
+//     } catch (error) {
+//       // Log the error and reject the async thunk
 
-      // You can return a rejection with a custom message
-      return thunkAPI.rejectWithValue(
-        error.message || "An error occurred while fetching vendor profile"
-      );
-    }
-  }
-);
+//       // You can return a rejection with a custom message
+//       return thunkAPI.rejectWithValue(
+//         error.message || "An error occurred while fetching vendor profile"
+//       );
+//     }
+//   }
+// );
 
 const Login_Fun_Service = async (data) => {
   let url = `${API_BASEURL}v1/auth/signin`;
@@ -105,11 +105,37 @@ export const Login_Fun = createAsyncThunk(
   }
 );
 
+export const UserProfile_Fun = createAsyncThunk(
+  "auth/UserProfile_Fun",
+  async (_, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(`${API_BASEURL}v1/auth`, config);
+      console.log({ profile: response.data });
+
+      return response.data;
+
+      // return await Login_Fun_Service(data);
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const Current_vendor_profile_Fun = createAsyncThunk(
   "auth/Current_vendor_profile_Fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {

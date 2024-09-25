@@ -36,9 +36,9 @@ const SignIn = ({ onSetAuth }) => {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
 
-  console.log({
-    s: API_BASEURL,
-  });
+  // console.log({
+  //   s: API_BASEURL,
+  // });
 
   const { user_isLoading, user_data, user_message } = useSelector(
     (state) => state?.Auth

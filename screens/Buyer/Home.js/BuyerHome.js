@@ -25,7 +25,7 @@ const BuyerHome = () => {
     dispatch(Get_All_Vendor_Fun());
   }, []);
 
-  console.log({user:userData})
+  // console.log({user:userData})
 
   return (
     // <AppScreenTwo>

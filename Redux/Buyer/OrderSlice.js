@@ -29,7 +29,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_All_Order_HIstory_Fun",
   async (status, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
@@ -43,7 +43,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
         `${API_BASEURL}v1/order?page=1&status=${status}&perPage=20000000`,
         config
       );
-
+      console.log({orders:response.data})
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -57,7 +57,7 @@ export const Get_single__Order_HIstory_Fun = createAsyncThunk(
   "TripSLice/Get_single_Trip_Fun",
   async (id, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
       let url = `${API_BASEURL}v1/order/${id}`;
       console.log({
         url,
@@ -71,9 +71,9 @@ export const Get_single__Order_HIstory_Fun = createAsyncThunk(
       };
 
       const response = await axios.get(`${API_BASEURL}v1/order/${id}`, config);
-      console.log({
-        zzz: response.data,
-      });
+      // console.log({
+      //   zzz: response.data,
+      // });
       return response.data;
     } catch (error) {
       const errorMessage = handleApiError(error);
