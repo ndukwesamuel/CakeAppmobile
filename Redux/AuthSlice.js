@@ -4,6 +4,8 @@ import { handleApiError } from "./shareApi";
 import axios from "axios";
 
 import Toast from "react-native-toast-message";
+import { axiosInstance, getAxiosConfig, getToken } from "../utills/ApiConfig";
+
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 // import { Alert } from "react-native";
@@ -29,6 +31,56 @@ const initialState = {
   current_vendor_profile_isLoading: false,
   current_vendor_profile_message: null,
 };
+
+const fetchResponsData = async (url, thunkAPI) => {
+  try {
+    const token = getToken(thunkAPI);
+
+    const response = await axiosInstance.get(url, getAxiosConfig(token));
+
+    return response.data;
+  } catch (error) {
+    // Check if the error is an Axios error and has a response from the server
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      throw new Error(
+        `Failed to fetch data: ${error.response.status} - ${
+          error.response.data?.message || error.response.statusText
+        }`
+      );
+    } else if (error.request) {
+      // Request was made, but no response received
+      throw new Error(
+        "No response received from the server. Please check your network connection."
+      );
+    } else {
+      // Something else happened in setting up the request
+      throw new Error(`Unexpected error: ${error.message}`);
+    }
+  }
+};
+
+// export const UserProfile_Fun = createAsyncThunk(
+//   "auth/UserProfile_Fun",
+
+//   async (query, thunkAPI) => {
+//     let url = "v1/auth";
+
+//     try {
+//       // Call fetchResponsData within a try/catch block
+//       const response = await fetchResponsData(url, thunkAPI);
+
+//       return response; // Return the successful response
+//     } catch (error) {
+//       // Log the error and reject the async thunk
+
+//       // You can return a rejection with a custom message
+//       return thunkAPI.rejectWithValue(
+//         error.message || "An error occurred while fetching vendor profile"
+//       );
+//     }
+//   }
+// );
 
 const Login_Fun_Service = async (data) => {
   let url = `${API_BASEURL}v1/auth/signin`;
@@ -67,7 +119,7 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/auth`, config);
-      console.log({profile:response.data})
+      console.log({ profile: response.data });
 
       return response.data;
 

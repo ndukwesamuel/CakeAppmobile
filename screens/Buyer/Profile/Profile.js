@@ -9,17 +9,28 @@ import {
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useDispatch, useSelector } from "react-redux";
-import { UserProfile_Fun } from "../../../Redux/AuthSlice";
+import {
+  UserProfile_Fun,
+  UserProfile_Fun_getVendorProfile,
+} from "../../../Redux/AuthSlice";
 import Orderhistory from "./Orderhistory";
 import Personalinfo from "./Personalinfo";
 import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
+import { useUserProfile } from "../../../utills/CustomHook";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user_profile_data } = useSelector((state) => state.Auth);
   const userData = user_profile_data?.data?.user;
 
+  const { user_data, user_profile_data } = useSelector((state) => state?.Auth);
+
+  // Use the custom hook to get the user profile data
+  // const { userProfileData } = useUserProfile();
+
+  console.log({
+    ffgfg: user_profile_data?.data?.user,
+  });
   useEffect(() => {
     dispatch(UserProfile_Fun());
   }, []);
@@ -94,35 +105,50 @@ const Profile = () => {
     <AppScreenThree arrrow={"true"} title={"Profile"}>
       <ScrollView style={styles.container}>
         <View style={styles.displayContainer}>
-          <Image source={{ uri: userData?.image }} style={styles.image} />
-          <Text style={styles.name}>
-            {userData?.firstName} {userData?.lastName}
+          <Image
+            source={{ uri: user_profile_data?.data?.user?.image }}
+            style={styles.image}
+          />
+          <Text style={{}}>
+            {user_profile_data?.data?.user?.firstName}{" "}
+            {user_profile_data?.data?.user?.lastName}
           </Text>
+
+          <TouchableOpacity>
+            <Text style={styles.name}>Edit Profile </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.container2}>
           <Text style={styles.title}>Personal Information</Text>
           <View style={styles.groupContainer}>
             <Text style={styles.groupKey}>Name</Text>
             <Text style={styles.groupValue}>
-              {userData?.firstName} {userData.lastName}
+              {user_profile_data?.data?.user?.firstName}{" "}
+              {user_profile_data?.data?.user?.lastName}
             </Text>
           </View>
           <View style={styles.groupContainer}>
             <Text style={styles.groupKey}>Email Address</Text>
-            <Text style={styles.groupValue}>{userData?.email}</Text>
+            <Text style={styles.groupValue}>
+              {user_profile_data?.data?.user?.email}
+            </Text>
           </View>
           <View style={styles.groupContainer}>
             <Text style={styles.groupKey}>location</Text>
-            <Text style={styles.groupValue}>{userData?.location}</Text>
+            <Text style={styles.groupValue}>
+              {user_profile_data?.data?.user?.location}
+            </Text>
           </View>
           <View style={styles.groupContainer}>
             <Text style={styles.groupKey}>No of Orders made</Text>
-            <Text style={styles.groupValue}>{userData?.orderCount}</Text>
+            <Text style={styles.groupValue}>
+              {user_profile_data?.data?.user?.orderCount}
+            </Text>
           </View>
         </View>
-        <View style={[styles.container2, {paddingBottom:60}]}>
+        <View style={[styles.container2, { paddingBottom: 60 }]}>
           <Text style={styles.title}>Orders</Text>
-          <Orderhistory/>
+          <Orderhistory />
         </View>
       </ScrollView>
     </AppScreenThree>
@@ -159,9 +185,9 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   title: {
-    color:"#2B025F",
-    fontSize:20,
-    fontWeight:"500"
+    color: "#2B025F",
+    fontSize: 20,
+    fontWeight: "500",
   },
   groupContainer: {
     flexDirection: "row",
