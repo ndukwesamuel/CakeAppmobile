@@ -12,15 +12,6 @@ export const handleApiError = (error) => {
   if (error?.response?.data) {
     // return error?.response?.data?.message;
 
-    let bad_Data =
-      error?.response?.data ||
-      error?.response?.data?.error ||
-      error?.response?.data?.message;
-
-    console.log({
-      bad_Data: bad_Data,
-    });
-
     if (error?.response?.data?.message === "Invalid token") {
       // navigation.navigate("Login");
       Toast.show({

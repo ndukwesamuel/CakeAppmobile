@@ -47,7 +47,7 @@ const SignIn = ({ onSetAuth }) => {
   const handleLogin = () => {
     // Dispatch the login action with username and password
     dispatch(setOtpEmail(email));
-
+    console.log({ email, password });
     dispatch(Login_Fun({ email, password }));
   };
 
