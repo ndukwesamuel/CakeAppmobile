@@ -137,7 +137,7 @@ const BuyerHome = () => {
             />
             <Image
               source={require("../../../assets/icons/search.svg")}
-              style={{ width: 30, height: 30, backgroundColor: "" }}
+              style={{ width: 30, height: 30, }}
             />
           </View>
         </View>

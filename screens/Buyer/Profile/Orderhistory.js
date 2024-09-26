@@ -18,7 +18,7 @@ import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
 const Orderhistory = () => {
   const [status, setstatus] = useState('')
   const { user_profile_data } = useSelector(
-    (state) => state.Auth.user_profile_data
+    (state) => state?.Auth
   );
   const { get_all_order_history_data } = useSelector(
     (state) => state?.OrderSlice
