@@ -21,7 +21,6 @@ import { useUserProfile } from "../../../utills/CustomHook";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const userData = user_profile_data?.data?.user;
 
   const { user_data, user_profile_data } = useSelector((state) => state?.Auth);
 
@@ -35,7 +34,7 @@ const Profile = () => {
     dispatch(UserProfile_Fun());
   }, []);
 
-  console.log({ data: user_profile_data?.data.user });
+  console.log({ data: user_profile_data?.data?.user });
 
   return (
     // <AppScreenTwo>

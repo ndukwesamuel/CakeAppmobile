@@ -134,8 +134,8 @@ const CakeCategories = () => {
           contentContainerStyle={styles.listContainer}
           columnWrapperStyle={{
             justifyContent: "space-between",
-            paddingHorizontal: 10,
-            gap: 10,
+            // paddingHorizontal: 10,
+            gap: 20,
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -143,7 +143,7 @@ const CakeCategories = () => {
           ListEmptyComponent={
             <View style={styles.emptyComponent}>
               <Text style={{ fontWeight: "500", fontSize: 16 }}>
-                No Vendors Available
+                No Categories Available
               </Text>
             </View>
           }
@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   listContainer: {
-    gap: 10,
+    gap: 20,
+    paddingHorizontal:10
   },
   circle: {
     width: 100,
@@ -192,7 +193,7 @@ export const ImageCard = ({ item }) => {
       style={{
         width: "48%",
         // height: 125,
-        paddingVertical:50,
+        paddingVertical:35,
         backgroundColor: "white",
       }}
       onPress={() => navigation.navigate("categoryCakes", { item })}
