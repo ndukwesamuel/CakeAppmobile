@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +16,12 @@ import VendorList from "./VendorList";
 import { Get_All_Vendor_Fun } from "../../../Redux/Buyer/VendorSlice";
 import CakeCategories from "./CakeCategories";
 import AppScreen from "../../../components/shared/AppScreen";
+import {
+  MaterialIcons,
+  AntDesign,
+  FontAwesome,
+  Ionicons,
+} from "@expo/vector-icons";
 
 const BuyerHome = () => {
   const dispatch = useDispatch();
@@ -119,9 +132,16 @@ const BuyerHome = () => {
             backgroundColor: "white",
             padding: 10,
             flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
             <Image
               source={{ uri: userData.image }}
               style={{ width: 30, height: 30, borderRadius: 20 }}
@@ -131,14 +151,8 @@ const BuyerHome = () => {
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <Image
-              source={require("../../../assets/icons/notification.svg")}
-              style={{ width: 30, height: 30 }}
-            />
-            <Image
-              source={require("../../../assets/icons/search.svg")}
-              style={{ width: 30, height: 30, backgroundColor: "" }}
-            />
+            <FontAwesome name="search" size={24} color="#6904EC" />
+            <Ionicons name="notifications" size={24} color="#6904EC" />
           </View>
         </View>
         <View>
@@ -148,9 +162,19 @@ const BuyerHome = () => {
           />
         </View>
         <CakeCategories />
-        <View style={{marginBottom:30}}>
+        <View style={{ marginBottom: 30 }}>
           <Pressable>
-            <Text style={{textAlign:"center", textDecorationLine:"underline", color:"#292D32", fontSize:20, fontWeight:"400"}}>Become a Vendor</Text>
+            <Text
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+                color: "#292D32",
+                fontSize: 20,
+                fontWeight: "400",
+              }}
+            >
+              Become a Vendor
+            </Text>
           </Pressable>
         </View>
       </View>
