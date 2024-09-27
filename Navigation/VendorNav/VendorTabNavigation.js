@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import Profile from "../../screens/Vendor/Profile/Profile";
 import Home from "../../screens/Vendor/Home/Home";
 import Orders from "../../screens/Vendor/Order/Orders";
+import Products from "../../screens/Vendor/Products/Products";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +51,7 @@ const VendorTabNavigation = () => {
 
       <Tab.Screen
         name="Product"
-        component={Orders}
+        component={Products}
         options={{
           title: "Product",
           tabBarActiveTintColor: "#005091",

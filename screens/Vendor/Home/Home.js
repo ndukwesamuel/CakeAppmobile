@@ -38,9 +38,9 @@ const Home = () => {
   );
 
   const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
-  console.log({
-    dataaaa: get_all_order_history_data.data.orders,
-  });
+  // console.log({
+  //   dataaaa: get_all_order_history_data?.data?.orders,
+  // });
   useEffect(() => {
     dispatch(Current_vendor_profile_Fun());
     dispatch(Get_Vendor_Profile());
@@ -69,7 +69,7 @@ const Home = () => {
     }
   }, [get_all_order_history_data]);
 
-  console.log({ data: vendor_profile_data });
+  // console.log({ data: vendor_profile_data });
   const navigation = useNavigation();
   return (
     // <AppScreenTwo notification={"true"} style={{ flex: 1 }}>
