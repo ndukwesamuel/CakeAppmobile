@@ -35,7 +35,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_All_Order_HIstory_Fun",
   async (status, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
@@ -45,6 +45,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/vendor/order`, config);
+      console.log({allOrders: response.data})
 
       return response.data;
     } catch (error) {
@@ -58,7 +59,7 @@ export const Get_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_Order_HIstory_Fun",
   async (status, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
@@ -81,7 +82,7 @@ export const Get_single__Order_HIstory_Fun = createAsyncThunk(
   "TripSLice/Get_single_Trip_Fun",
   async (id, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.user?.token;
+      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
       let url = `${API_BASEURL}v1/vendor/order/${id}`;
       console.log({
         url,

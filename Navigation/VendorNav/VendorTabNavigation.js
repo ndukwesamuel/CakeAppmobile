@@ -16,7 +16,7 @@ const VendorTabNavigation = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "white",
-          height: 65,
+          height: 60,
           ...styles.shadow,
         },
         tabBarLabelStyle: {
@@ -34,8 +34,8 @@ const VendorTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/home-2.png")}
-              iconUnfocused={require("../../assets/home.png")}
+              iconFocused={require("../../assets/icons/home-bold.png")}
+              iconUnfocused={require("../../assets/icons/home-2.png")}
               label="Home"
               containerStyle={{
                 alignItems: "center",
@@ -49,18 +49,18 @@ const VendorTabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Order"
+        name="Product"
         component={Orders}
         options={{
-          title: "Order",
+          title: "Product",
           tabBarActiveTintColor: "#005091",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/clock-2.png")}
-              iconUnfocused={require("../../assets/clock.png")}
-              label="Order"
+              iconFocused={require("../../assets/icons/order-bold.png")}
+              iconUnfocused={require("../../assets/icons/order.png")}
+              label="Product"
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -82,8 +82,8 @@ const VendorTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/li_user-2.png")}
-              iconUnfocused={require("../../assets/li_user.png")}
+              iconFocused={require("../../assets/icons/profile-bold.png")}
+              iconUnfocused={require("../../assets/icons/profile.png")}
               label="Profile"
               containerStyle={{
                 alignItems: "center",

@@ -119,7 +119,7 @@ export const UserProfile_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/auth`, config);
-      console.log({ profile: response.data });
+      // console.log({ profile: response.data });
 
       return response.data;
 
@@ -148,7 +148,7 @@ export const Current_vendor_profile_Fun = createAsyncThunk(
         `${API_BASEURL}v1/vendor/profile`,
         config
       );
-
+      // console.log({ response: response.data });
       return response.data;
 
       // return await Login_Fun_Service(data);
