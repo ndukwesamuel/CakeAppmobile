@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 const ImageCard = ({ item }) => {
     const navigation = useNavigation();
     return (
-      <TouchableOpacity style={styles2.container}>
+      <View style={styles2.container}>
         <Image source={{ uri: item.images[0].url }} style={styles2.image} />
         <View style={{ flexDirection: "column", gap: 20, padding: 15 }}>
           <Text style={styles2.cardTitle}>{item?.name}</Text>
@@ -77,7 +77,7 @@ const ImageCard = ({ item }) => {
             </Text>
           </Pressable>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
   

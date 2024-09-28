@@ -8,11 +8,12 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { useSelector } from "react-redux";
+import AppScreenThree from "../../../components/shared/AppScreenThree";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 const CakePreview = () => {
   const route = useRoute();
   const { formData } = route.params;
-  const token = useSelector((state) => state?.Auth?.user_data?.user?.token);
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   // console.log({token:token})a
 
   const UploadCake_Mutation = useMutation(
@@ -51,9 +52,9 @@ const CakePreview = () => {
     UploadCake_Mutation.mutate({ formData, token });
   };
   return (
-    <AppScreenTwo arrrow={"true"}>
+    <AppScreenThree arrrow={"true"} title={"Preview"}>
       <View style={styles.container}>
-        <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text>
+        {/* <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text> */}
         <Image
           source={{ uri: formData?.images[0] }}
           style={{
@@ -137,7 +138,7 @@ const CakePreview = () => {
           </Pressable>
         </View>
       </View>
-    </AppScreenTwo>
+    </AppScreenThree>
   );
 };
 
@@ -146,13 +147,13 @@ export default CakePreview;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    top: 100,
+    top: 60,
     flex: 1,
   },
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: "#DD293E",
+    backgroundColor: "#6904EC",
     borderRadius: 42,
     top: 80,
   },

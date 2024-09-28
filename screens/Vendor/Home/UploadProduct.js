@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,15 +13,29 @@ import {
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import AppScreenThree from "../../../components/shared/AppScreenThree";
+import { useDispatch, useSelector } from "react-redux";
+import { Get_All_Categories_Fun } from "../../../Redux/Buyer/CakeSlice";
 
 const UploadProduct = () => {
   const navigation = useNavigation();
+
+  const { get_all_categories_data } = useSelector((state) => state.CakeSlice);
+
+  const dispatch = useDispatch();
   const [cakeName, setCakeName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [pictures, setPictures] = useState([]);
   const [size, setSize] = useState("");
   const [layers, setLayers] = useState("");
+
+  useEffect(() => {
+    dispatch(Get_All_Categories_Fun());
+    return () => {};
+  }, []);
+
+  console.log({ categories: get_all_categories_data.data.categories.name });
 
   const uploadProductHandler = () => {
     const formData = {
@@ -32,32 +46,37 @@ const UploadProduct = () => {
       category: selectedStatus,
       numberOfLayers: layers,
       images: pictures,
-      timeFrame:2
+      timeFrame: 2,
     };
     console.log({ cakePreview: formData });
     navigation.navigate("previewPage", { formData: formData });
   };
 
   const pickImage = async () => {
-    // Request permission to access the gallery
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    try {
+      // Request permission to access the gallery
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access gallery is required!");
-      return;
-    }
+      if (!permissionResult.granted) {
+        alert("Permission to access gallery is required!");
+        return;
+      }
 
-    // Launch image picker
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+      // Launch image picker
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      setPictures([...pictures, result.assets[0].uri]);
+      if (!result.canceled) {
+        setPictures([...pictures, result.assets[0].uri]);
+      }
+    } catch (error) {
+      console.log("Error picking image:", error);
+      alert("Something went wrong while picking the image.");
     }
   };
 
@@ -66,7 +85,9 @@ const UploadProduct = () => {
     setPictures(updatedPictures);
   };
 
-  const [selectedStatus, setSelectedStatus] = useState("anniversary");
+  const [selectedStatus, setSelectedStatus] = useState(
+    get_all_categories_data?.data?.categories[0]?.name
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const statuses = [
@@ -83,13 +104,13 @@ const UploadProduct = () => {
   };
 
   return (
-    <AppScreenTwo arrrow={"true"}>
+    <AppScreenThree arrrow={"true"} title={"Upload Product"}>
       <ScrollView style={styles.container}>
-        <Text style={{ fontSize: 32, fontWeight: "700" }}>Add Cake</Text>
+        {/* <Text style={{ fontSize: 32, fontWeight: "700" }}>Add Cake</Text> */}
         <View style={{ flexDirection: "column", gap: 50 }}>
-          <View style={{ marginTop: 30, gap: 15 }}>
+          <View style={{ marginTop: 30, gap: 24 }}>
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Name of Cake</Text>
+              <Text style={styles.label}>Cake Name</Text>
               <TextInput
                 style={styles.input}
                 value={cakeName}
@@ -149,10 +170,11 @@ const UploadProduct = () => {
                 style={styles.input}
                 value={size}
                 onChangeText={(text) => setSize(text)}
+                keyboardType="numeric"
               />
             </View>
             <View style={styles.formGroup}>
-              <Text style={styles.label}>layers</Text>
+              <Text style={styles.label}>Number of Layers</Text>
               <TextInput
                 style={styles.input}
                 value={layers}
@@ -216,14 +238,14 @@ const UploadProduct = () => {
                     }}
                   >
                     <FlatList
-                      data={statuses}
-                      keyExtractor={(item) => item}
+                      data={get_all_categories_data?.data?.categories}
+                      keyExtractor={(item) => item._id}
                       renderItem={({ item }) => (
                         <TouchableOpacity
                           style={{
                             paddingVertical: 10,
                           }}
-                          onPress={() => handleStatusSelect(item)}
+                          onPress={() => handleStatusSelect(item?.name)}
                         >
                           <Text
                             style={{
@@ -231,7 +253,7 @@ const UploadProduct = () => {
                               textTransform: "lowercase",
                             }}
                           >
-                            {item}
+                            {item?.name}
                           </Text>
                         </TouchableOpacity>
                       )}
@@ -244,10 +266,10 @@ const UploadProduct = () => {
 
           <TouchableOpacity
             style={{
-              backgroundColor: "#DD293E",
+              backgroundColor: "#6904EC",
               padding: 10,
               borderRadius: 20,
-              marginBottom:20
+              marginBottom: 20,
             }}
             onPress={uploadProductHandler}
           >
@@ -264,7 +286,7 @@ const UploadProduct = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </AppScreenTwo>
+    </AppScreenThree>
   );
 };
 
@@ -274,7 +296,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 100,
+    marginTop: 60,
+    backgroundColor: "white",
   },
   formGroup: {
     flexDirection: "column",
@@ -283,19 +306,21 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0.5,
     borderColor: "#4C060E",
+    height: 48,
     borderRadius: 10,
     paddingHorizontal: 10,
-    height:40
+    paddingVertical: 15,
   },
   label: {
     fontSize: 16,
     fontWeight: "400",
+    color: "#000000",
   },
   uploadContainer: {
     height: 100,
     width: "100%",
     borderWidth: 1,
-    borderColor: "#FF0000", // Red dashed border
+    borderColor: "#4C060E", // Red dashed border
     borderStyle: "dashed",
     justifyContent: "center",
     alignItems: "center",
@@ -313,7 +338,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     marginTop: 5,
-    color: "#FF0000", // Red color for text
+    color: "#6904EC", // Red color for text
     fontSize: 16,
   },
   uploadedImage: {
@@ -329,7 +354,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 5,
     right: 5,
-    backgroundColor: "rgba(255, 0, 0, 0.7)",
+    backgroundColor: "#6904EC",
     borderRadius: 50,
     padding: 5,
   },
