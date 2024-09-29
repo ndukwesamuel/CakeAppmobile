@@ -21,10 +21,10 @@ import AppScreen from "../../../components/shared/AppScreen";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [completedOrdersCount, setCompletedOrdersCount] = useState(0);
-  const [ongoingOrdersCount, setOngoingOrdersCount] = useState(0);
-  const [requestOrdersCount, setRequestOrdersCount] = useState(0);
-  const [cancelledOrdersCount, setCancelledOrdersCount] = useState(0)
+  const [completedOrdersCount, setCompletedOrdersCount] = useState([]);
+  const [ongoingOrdersCount, setOngoingOrdersCount] = useState([]);
+  const [requestOrdersCount, setRequestOrdersCount] = useState([]);
+  const [cancelledOrdersCount, setCancelledOrdersCount] = useState([]);
   const vendor_profile_data1 = useSelector(
     (state) => state?.VendorsSlice?.ProfileSlice?.vendor_profile_data
   );
@@ -53,19 +53,19 @@ const Home = () => {
       const completedOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "completed"
       );
-      setCompletedOrdersCount(completedOrders.length);
+      setCompletedOrdersCount(completedOrders);
       const ongoingOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "ongoing"
       );
-      setOngoingOrdersCount(ongoingOrders.length);
+      setOngoingOrdersCount(ongoingOrders);
       const requestedOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "request"
       );
-      setRequestOrdersCount(requestedOrders.length);
-      const cancelledOrders =  get_all_order_history_data?.data?.orders?.filter(
+      setRequestOrdersCount(requestedOrders);
+      const cancelledOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "rejected"
       );
-      setCancelledOrdersCount(cancelledOrders.length)
+      setCancelledOrdersCount(cancelledOrders);
     }
   }, [get_all_order_history_data]);
 
@@ -180,10 +180,12 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {ongoingOrdersCount}
+                  {ongoingOrdersCount.length}
                 </Text>
               </View>
-              <TouchableOpacity style={{}}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("orderDetails")}
+              >
                 <View style={styles.button}>
                   <Text>View</Text>
                   <Image source={require("../../../assets/icons/Group.png")} />
@@ -227,10 +229,13 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {requestOrdersCount}
+                  {requestOrdersCount.length}
                 </Text>
               </View>
-              <TouchableOpacity style={{}}>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => navigation.navigate("orderDetails")}
+              >
                 <View style={styles.button}>
                   <Text>View</Text>
                   <Image source={require("../../../assets/icons/Group.png")} />
@@ -274,10 +279,13 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {completedOrdersCount}
+                  {completedOrdersCount.length}
                 </Text>
               </View>
-              <TouchableOpacity style={{}}>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => navigation.navigate("orderDetails")}
+              >
                 <View style={styles.button}>
                   <Text>View</Text>
                   <Image source={require("../../../assets/icons/Group.png")} />
@@ -321,10 +329,13 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {cancelledOrdersCount}
+                  {cancelledOrdersCount.length}
                 </Text>
               </View>
-              <TouchableOpacity style={{}}>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => navigation.navigate("orderDetails")}
+              >
                 <View style={styles.button}>
                   <Text>View</Text>
                   <Image source={require("../../../assets/icons/Group.png")} />
