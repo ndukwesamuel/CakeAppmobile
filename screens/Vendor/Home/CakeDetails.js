@@ -1,4 +1,12 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useRoute } from "@react-navigation/native";
@@ -13,74 +21,112 @@ const CakeDetails = () => {
 
   return (
     <AppScreenThree arrrow={"true"}>
-    <ScrollView
-     style={style.container} keyboardShouldPersistTaps="handled">
-      {/* image container */}
-      <View style={style.imageContainer}>
-        <Image
-          source={{ uri: cakeData?.item?.images[0]?.url }}
-          style={{
-            width: "100%",
-            height: 150,
-            resizeMode: "stretch",
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
-          }}
-        />
-        <View style={{ flexDirection: "row", gap: 10 }}>
+      <ScrollView style={style.container} keyboardShouldPersistTaps="handled">
+        {/* image container */}
+        <View style={style.imageContainer}>
           <Image
-            source={{ uri: cakeData?.item?.images[1]?.url }}
+            source={{ uri: cakeData?.item?.images[0]?.url }}
             style={{
-              width: "50%",
-              height: 90,
+              width: "100%",
+              height: 150,
               resizeMode: "stretch",
-              borderBottomLeftRadius: 12,
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
             }}
           />
-          <Image
-            source={{ uri: cakeData?.item?.images[2]?.url }}
-            style={{
-              width: "50%",
-              height: 90,
-              resizeMode: "stretch",
-              borderBottomRightRadius: 12,
-            }}
-          />
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Image
+              source={{ uri: cakeData?.item?.images[1]?.url }}
+              style={{
+                width: "50%",
+                height: 90,
+                resizeMode: "stretch",
+                borderBottomLeftRadius: 12,
+              }}
+            />
+            <Image
+              source={{ uri: cakeData?.item?.images[2]?.url }}
+              style={{
+                width: "50%",
+                height: 90,
+                resizeMode: "stretch",
+                borderBottomRightRadius: 12,
+              }}
+            />
+          </View>
         </View>
-      </View>
 
-      {/* cake details */}
-      <View style={style.detailsContainer}>
-        <View>
-          <Text style={style.title}>{cakeData?.item?.name} cake</Text>
-          <Text style={style.description}>{cakeData?.item?.description}</Text>
+        {/* cake details */}
+        <View style={style.detailsContainer}>
+          <View>
+            <Text style={style.title}>{cakeData?.item?.name} cake</Text>
+            <Text style={style.description}>{cakeData?.item?.description}</Text>
+          </View>
+          <View style={style.pricingContainer}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text
+                style={{ color: "#090765", fontSize: 16, fontWeight: "600" }}
+              >
+                {cakeData?.item?.name}
+              </Text>
+              <Text
+                style={{ color: "#2B025F", fontSize: 16, fontWeight: "700" }}
+              >
+                {cakeData?.item?.price}
+              </Text>
+            </View>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text style={style.text}>Size</Text>
+              <Text style={style.text}>{cakeData?.item?.cakeSize}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                borderTopWidth: 0.5,
+                borderBottomWidth: 0.5,
+                borderColor: "#00000033",
+                paddingVertical: 15,
+              }}
+            >
+              <Text style={style.text}>Layers</Text>
+              <Text style={style.text}>{cakeData?.item?.numberOfLayers}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // borderTopWidth: 0.5,
+                borderBottomWidth: 0.5,
+                borderColor: "#00000033",
+                paddingVertical: 10,
+              }}
+            >
+              <Text style={style.text}>Categories</Text>
+              <Text style={[style.text, {textTransform:"capitalize"}]}>{cakeData?.item?.category}</Text>
+            </View>
+            {/* Active Buttons */}
+            <View style={{gap:10}}>
+            <TouchableOpacity
+              style={style.button}
+              // onPress={() =>
+              //   navigation.navigate("additionalInformation", { cakeData })
+              // }
+            >
+              <Text style={{ textAlign: "center", color: "white" }}>Edit</Text>
+            </TouchableOpacity>
+            <Pressable>
+              <Text style={{textAlign:"center", fontSize:16, fontWeight:"400", color:"#E70400", textDecorationLine:"underline"}}>Delete</Text>
+            </Pressable>
+            </View>
+          </View>
         </View>
-        <View style={style.pricingContainer}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={{color:"#090765", fontSize:16, fontWeight:"600"}}>{cakeData?.item?.name}</Text>
-            <Text style={{color:"#2B025F", fontSize:16, fontWeight:"700"}}>{cakeData?.item?.price}</Text>
-          </View>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={style.text}>Size</Text>
-            <Text style={style.text}>{cakeData?.item?.cakeSize}</Text>
-          </View>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between", borderTopWidth:0.5, borderBottomWidth:0.5, borderColor:"#00000033", paddingVertical:15 }}
-          >
-            <Text style={style.text}>Layers</Text>
-            <Text style={style.text}>{cakeData?.item?.numberOfLayers}</Text>
-          </View>
-          <TouchableOpacity style={style.button} onPress={()=> navigation.navigate('additionalInformation', {cakeData})}>
-            <Text style={{textAlign:"center", color:"white"}}>Order</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
-  </AppScreenThree>
+      </ScrollView>
+    </AppScreenThree>
   );
 };
 
@@ -101,7 +147,8 @@ const style = StyleSheet.create({
     backgroundColor: "white",
     padding: 25,
     marginTop: 20,
-    gap:24,
+    gap: 24,
+    marginBottom:40
   },
   title: {
     color: "#2B025F",
@@ -118,18 +165,18 @@ const style = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     padding: 10,
-    gap:16
+    gap: 16,
   },
   button: {
     backgroundColor: "#6904EC",
     borderRadius: 30,
     paddingHorizontal: 37,
     paddingVertical: 15,
-    marginTop:30
+    // marginTop: 30,
   },
-  text:{
-    fontSize:16,
-    fontWeight:"400",
-    color:"#2B025F"
-  }
+  text: {
+    fontSize: 16,
+    fontWeight: "400",
+    color: "#2B025F",
+  },
 });
