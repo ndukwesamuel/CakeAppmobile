@@ -72,7 +72,13 @@ const UploadProduct = () => {
       });
 
       if (!result.canceled) {
-        setPictures([...pictures, result.assets[0].uri]);
+        const newImage = {
+          url: result.assets[0].uri, // Default to 'image/jpeg' if type is not provided
+        };
+  
+        // Add the new file-like object to the pictures array
+        setPictures([...pictures, newImage]);
+  ;
       }
     } catch (error) {
       console.log("Error picking image:", error);
@@ -153,7 +159,7 @@ const UploadProduct = () => {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <View style={styles.imageContainer}>
-                  <Image source={{ uri: item }} style={styles.uploadedImage} />
+                  <Image source={{ uri: item?.url }} style={styles.uploadedImage} />
                   <TouchableOpacity
                     style={styles.removeButton}
                     onPress={() => removeImage(index)}

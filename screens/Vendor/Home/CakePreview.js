@@ -15,6 +15,7 @@ const CakePreview = () => {
   const { formData } = route.params;
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   // console.log({token:token})a
+  console.log({formData:formData.images})
 
   const UploadCake_Mutation = useMutation(
     async ({ formData, token }) => {
@@ -56,7 +57,7 @@ const CakePreview = () => {
       <View style={styles.container}>
         {/* <Text style={{ fontSize: 32, fontWeight: "700" }}>Cake Details</Text> */}
         <Image
-          source={{ uri: formData?.images[0] }}
+          source={{ uri: formData?.images[0].url }}
           style={{
             width: "95%",
             height: "35%",
