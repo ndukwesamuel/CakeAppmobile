@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,12 +16,18 @@ import VendorList from "./VendorList";
 import { Get_All_Vendor_Fun } from "../../../Redux/Buyer/VendorSlice";
 import CakeCategories from "./CakeCategories";
 import AppScreen from "../../../components/shared/AppScreen";
+import {
+  MaterialIcons,
+  AntDesign,
+  FontAwesome,
+  Ionicons,
+} from "@expo/vector-icons";
 
 const BuyerHome = () => {
   const dispatch = useDispatch();
   const { user_data } = useSelector((state) => state?.Auth);
 
-  const userData = user_data?.data?.user
+  const userData = user_data?.data?.user;
 
   const { get_all_vendor_data } = useSelector((state) => state.VendorSlice);
 
@@ -25,7 +38,7 @@ const BuyerHome = () => {
     dispatch(Get_All_Vendor_Fun());
   }, []);
 
-  // console.log({user:userData})
+  console.log({ user: userData });
 
   return (
     // <AppScreenTwo>
@@ -114,25 +127,67 @@ const BuyerHome = () => {
     // </AppScreenTwo>
     <AppScreen>
       <View style={styles.container}>
-        <View style={{backgroundColor:"white", padding:10, flexDirection:"row"}}>
-          <View>
-            <Text style={{color:"#2E1400", fontSize:20, fontWeight:"700"}}>Hello {userData?.firstName}</Text>
+        <View
+          style={{
+            backgroundColor: "white",
+            padding: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <Image
+              source={{ uri: userData.image }}
+              style={{ width: 30, height: 30, borderRadius: 20 }}
+            />
+            <Text style={{ color: "#2E1400", fontSize: 20, fontWeight: "700" }}>
+              Hello {userData?.firstName}
+            </Text>
           </View>
-          <View>
-            
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <FontAwesome name="search" size={24} color="#6904EC" />
+            <Ionicons name="notifications" size={24} color="#6904EC" />
           </View>
-          
         </View>
-        <CakeCategories/>
+        <View>
+          <Image
+            source={require("../../../assets/images/background.png")}
+            style={{ resizeMode: "contain" }}
+          />
+        </View>
+        <CakeCategories />
+        <View style={{ marginBottom: 30 }}>
+          <Pressable>
+            <Text
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+                color: "#292D32",
+                fontSize: 20,
+                fontWeight: "400",
+              }}
+            >
+              Become a Vendor
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </AppScreen>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1
-  }
+  container: {
+    flex: 1,
+    gap: 20,
+    top: 20,
+  },
   // buttonstyleTrue: {
   //   backgroundColor: "#DD293E",
   //   padding: 12,

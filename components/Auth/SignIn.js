@@ -10,6 +10,7 @@ import {
   Image,
   useWindowDimensions,
   Button,
+  ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -288,7 +289,7 @@ const SignIn = ({ onSetAuth }) => {
     // </Mainborder>
     // </AppScreen>
     <>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Image
           source={backgroundImg}
           style={[styles.backgroundImage, { width }]}
@@ -405,6 +406,7 @@ const SignIn = ({ onSetAuth }) => {
               justifyContent: "center",
               gap: 10,
               marginTop: 10,
+              // paddingBottom:100
             }}
           >
             <Text>You Do Not Have An Account?</Text>
@@ -418,7 +420,7 @@ const SignIn = ({ onSetAuth }) => {
             </Pressable>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -428,7 +430,7 @@ export default SignIn;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
+    // height: 100,
     padding: 0,
     backgroundColor: "rgba(240, 249, 255, 1)",
   },
@@ -438,10 +440,11 @@ const styles = StyleSheet.create({
   },
   displayArea: {
     backgroundColor: "white",
-    position: "absolute",
-    marginTop: 360,
+    // position: "absolute",
+    marginTop: -360,
     borderRadius: 20,
     padding: 20,
+    marginBottom:50
   },
   inputGroup: {
     gap: 10,
@@ -465,6 +468,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 40,
     marginTop: 50,
+    // marginBottom:90
   },
 
   // container: {
