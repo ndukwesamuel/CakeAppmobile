@@ -122,18 +122,15 @@ const MainScreen = () => {
   const dispatch = useDispatch();
 
   // console.log({
-  //   condition: ["user"].includes(user_data?.user?.roles),
-  //   zzzz: user_data?.user?.roles,
+  //   condition: user_data?.data?.roles?.includes("user"),
+  //   zzzz: user_data?.data?.user?.roles,
   // });
-
-  console.log({
-    condition: user_data?.data?.roles?.includes("user"),
-    zzzz: user_data?.data?.user?.roles,
-  });
 
   useEffect(() => {
     if (
-      !["user", "vendor"].some((role) => user_data?.data?.user?.roles?.includes(role))
+      !["user", "vendor"].some((role) =>
+        user_data?.data?.user?.roles?.includes(role)
+      )
     ) {
       dispatch(reset_isOnboarding());
       dispatch(reset_login());

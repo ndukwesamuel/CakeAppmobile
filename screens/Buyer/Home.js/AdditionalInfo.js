@@ -1,5 +1,5 @@
 import {
-    ActivityIndicator,
+  ActivityIndicator,
   Button,
   Image,
   ScrollView,
@@ -86,7 +86,8 @@ export default function AdditionalInfo() {
           type: "success",
           text1: `${success?.data?.message} `,
         });
-        navigaton.navigate("categoryCakes");
+        // navigaton.navigate("categoryCakes");
+        navigaton.goBack();
       },
 
       onError: (error) => {
