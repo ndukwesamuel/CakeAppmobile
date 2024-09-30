@@ -162,21 +162,6 @@ const BuyerHome = () => {
           />
         </View>
         <CakeCategories />
-        <View style={{ marginBottom: 30 }}>
-          <Pressable>
-            <Text
-              style={{
-                textAlign: "center",
-                textDecorationLine: "underline",
-                color: "#292D32",
-                fontSize: 20,
-                fontWeight: "400",
-              }}
-            >
-              Become a Vendor
-            </Text>
-          </Pressable>
-        </View>
       </View>
     </AppScreen>
   );

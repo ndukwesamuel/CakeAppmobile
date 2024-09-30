@@ -31,53 +31,6 @@ export default function CategoryCakes() {
     return () => {};
   }, [dataRoute]);
 
-  const Wish_Mutation = useMutation(
-    (data_info) => {
-      let url = `${API_BASEURL}v1/wishlist`;
-
-      let data = {
-        cakeId: cakeData?._id,
-        customized: true,
-        cakeText: cakeText,
-        quantity: quantity,
-        deliveryDate: selectedDate,
-        address: address,
-      };
-      console.log({
-        url,
-      });
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${user_data?.data?.token}`,
-        },
-      };
-
-      return axios.post(url, data, config);
-    },
-    {
-      onSuccess: (success) => {
-        Toast.show({
-          type: "success",
-          text1: `${success?.data?.message} `,
-        });
-        // navigaton.navigate("categoryCakes");
-        navigaton.goBack();
-      },
-
-      onError: (error) => {
-        console.log({
-          error: error,
-        });
-        Toast.show({
-          type: "error",
-          text1: `${error?.response?.data?.message} `,
-        });
-      },
-    }
-  );
   //   console.log({ option: option });
   //   console.log({ data: get_all_cake_data?.data?.cakes });
   return (
@@ -108,6 +61,48 @@ const styles = StyleSheet.create({
 
 const ImageCard = ({ item }) => {
   const navigation = useNavigation();
+  const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
+
+  const Wish_Mutation = useMutation(
+    (data_info) => {
+      let url = `${API_BASEURL}v1/wishlist`;
+
+      let data = {
+        cakeId: item?._id,
+      };
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${user_data?.data?.token}`,
+        },
+      };
+
+      return axios.post(url, data, config);
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message} `,
+        });
+        // navigaton.navigate("categoryCakes");
+        navigation.goBack();
+      },
+
+      onError: (error) => {
+        console.log({
+          error: error,
+        });
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
+
   return (
     <TouchableOpacity style={styles2.container}>
       <Image source={{ uri: item.images[0].url }} style={styles2.image} />
