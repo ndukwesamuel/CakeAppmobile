@@ -234,7 +234,7 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails")}
+                onPress={() => navigation.navigate("orderDetails", {data: requestOrdersCount, title:"pending"})}
               >
                 <View style={styles.button}>
                   <Text>View</Text>
