@@ -74,15 +74,20 @@ const RenderItem = ({ item }) => {
           <View style={styles.modalContent}>
             {/* Modal Content */}
             <View
-              style={{ backgroundColor: "white", padding: 20, width: "100%", gap:10 }}
+              style={{
+                backgroundColor: "white",
+                padding: 20,
+                width: "100%",
+                gap: 10,
+              }}
             >
               <Text style={styles.title}>{item.cake.name}</Text>
-              <View style={{gap:17}}>
-                <View style={{gap:8}}>
+              <View style={{ gap: 17 }}>
+                <View style={{ gap: 8 }}>
                   <Text style={styles.subtitle}>Cake Description</Text>
                   <Text>{item?.cake?.description}</Text>
                 </View>
-                <View style={{gap:8}}>
+                <View style={{ gap: 8 }}>
                   <Text style={styles.subtitle}>Address</Text>
                   <Text>{item.address}</Text>
                 </View>
