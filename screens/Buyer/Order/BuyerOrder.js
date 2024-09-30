@@ -127,7 +127,6 @@ export default function BuyerOrder() {
         {item?.cake?.description}
       </Text>
 
-      {/* Conditionally render Make Payment button if status is "accepted" */}
       {item?.status === "accepted" && (
         <View
           style={{

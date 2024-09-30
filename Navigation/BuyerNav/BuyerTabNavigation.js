@@ -20,6 +20,7 @@ import { StyleSheet } from "react-native";
 import Profile from "../../screens/Buyer/Profile/Profile";
 import BuyerHome from "../../screens/Buyer/Home.js/BuyerHome";
 import BuyerOrder from "../../screens/Buyer/Order/BuyerOrder";
+import Wishlist from "../../screens/Buyer/Home.js/Wishlist";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,8 +50,8 @@ const BuyerTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/icons/home-2.png")}
-              iconUnfocused={require("../../assets/home.png")}
+              iconFocused={require("../../assets/icons/home-bold.png")}
+              iconUnfocused={require("../../assets/icons/home-2.png")}
               label="Home"
               containerStyle={{
                 alignItems: "center",
@@ -73,9 +74,32 @@ const BuyerTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/clock-2.png")}
-              iconUnfocused={require("../../assets/clock.png")}
+              iconFocused={require("../../assets/icons/order-bold.png")}
+              iconUnfocused={require("../../assets/icons/order.png")}
               label="Order"
+              containerStyle={{
+                alignItems: "center",
+                justifyContent: "center",
+                // top: 10,
+              }}
+              texttStyle={{ color: "#000000" }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Wishlist"
+        component={Wishlist}
+        options={{
+          title: "Wishlist",
+          tabBarActiveTintColor: "#005091",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <Tabcomponent
+              focused={focused}
+              iconFocused={require("../../assets/icons/heart-bold.png")}
+              iconUnfocused={require("../../assets/icons/heart.png")}
+              label="Wishlist"
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -97,8 +121,8 @@ const BuyerTabNavigation = () => {
           tabBarIcon: ({ focused }) => (
             <Tabcomponent
               focused={focused}
-              iconFocused={require("../../assets/li_user-2.png")}
-              iconUnfocused={require("../../assets/li_user.png")}
+              iconFocused={require("../../assets/icons/profile-bold.png")}
+              iconUnfocused={require("../../assets/icons/profile.png")}
               label="Profile"
               containerStyle={{
                 alignItems: "center",

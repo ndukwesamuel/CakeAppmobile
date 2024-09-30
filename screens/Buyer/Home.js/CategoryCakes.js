@@ -14,7 +14,10 @@ import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { Get_All_Cake_Fun } from "../../../Redux/Buyer/CakeSlice";
-
+import { useMutation } from "react-query";
+import Toast from "react-native-toast-message";
+import axios from "axios";
+const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 export default function CategoryCakes() {
   const dispatch = useDispatch();
   const { get_all_cake_data } = useSelector((state) => state.CakeSlice);
@@ -27,6 +30,54 @@ export default function CategoryCakes() {
     dispatch(Get_All_Cake_Fun(dataRoute?.item?.name));
     return () => {};
   }, [dataRoute]);
+
+  const Wish_Mutation = useMutation(
+    (data_info) => {
+      let url = `${API_BASEURL}v1/wishlist`;
+
+      let data = {
+        cakeId: cakeData?._id,
+        customized: true,
+        cakeText: cakeText,
+        quantity: quantity,
+        deliveryDate: selectedDate,
+        address: address,
+      };
+      console.log({
+        url,
+      });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${user_data?.data?.token}`,
+        },
+      };
+
+      return axios.post(url, data, config);
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message} `,
+        });
+        // navigaton.navigate("categoryCakes");
+        navigaton.goBack();
+      },
+
+      onError: (error) => {
+        console.log({
+          error: error,
+        });
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
   //   console.log({ option: option });
   //   console.log({ data: get_all_cake_data?.data?.cakes });
   return (
@@ -79,7 +130,7 @@ const ImageCard = ({ item }) => {
             Place Order
           </Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("wishlist")}>
+        <Pressable onPress={() => Wish_Mutation.mutate()}>
           <Text
             style={{
               textAlign: "center",
