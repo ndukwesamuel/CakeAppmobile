@@ -184,7 +184,7 @@ const Home = () => {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("orderDetails")}
+                onPress={() => navigation.navigate("orderDetails", {data:ongoingOrdersCount, title:"Ongoing"})}
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -284,7 +284,7 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails")}
+                onPress={() => navigation.navigate("orderDetails", {data:completedOrdersCount, title:"Completed"})}
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -334,7 +334,7 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails")}
+                onPress={() => navigation.navigate("orderDetails", {data: cancelledOrdersCount, title:"cancelled"})}
               >
                 <View style={styles.button}>
                   <Text>View</Text>
