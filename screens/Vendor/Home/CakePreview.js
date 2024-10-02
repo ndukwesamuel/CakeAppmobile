@@ -12,10 +12,10 @@ import AppScreenThree from "../../../components/shared/AppScreenThree";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 const CakePreview = () => {
   const route = useRoute();
-  const { formData } = route.params;
+  const { formData, edit, id } = route.params;
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   // console.log({token:token})a
-  console.log({formData:formData.images})
+  console.log({ formData: formData.images });
 
   const UploadCake_Mutation = useMutation(
     async ({ formData, token }) => {
@@ -52,6 +52,45 @@ const CakePreview = () => {
   const handleSubmit = () => {
     UploadCake_Mutation.mutate({ formData, token });
   };
+
+  const updateCake_Mutation = useMutation(
+    async ({ formData, token }) => {
+      try {
+        const response = await axios.patch(
+          `https://cake-app-server.onrender.com/api/v1/vendor/cake/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message}`,
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
+
+  const handleUpdate = () => {
+    updateCake_Mutation.mutate({formData, token})
+  };
+
   return (
     <AppScreenThree arrrow={"true"} title={"Preview"}>
       <View style={styles.container}>
@@ -125,18 +164,33 @@ const CakePreview = () => {
           </View>
         </View>
         <View>
-          <Pressable style={styles.button} onPress={handleSubmit}>
-            <Text
-              style={{
-                textAlign: "center",
-                color: "white",
-                fontSize: 16,
-                fontWeight: "400",
-              }}
-            >
-              Submit
-            </Text>
-          </Pressable>
+          {edit ? (
+            <Pressable style={styles.button} onPress={handleUpdate}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "400",
+                }}
+              >
+                Update
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable style={styles.button} onPress={handleSubmit}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "400",
+                }}
+              >
+                Submit
+              </Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </AppScreenThree>

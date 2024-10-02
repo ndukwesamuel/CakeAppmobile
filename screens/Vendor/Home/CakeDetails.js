@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -168,9 +168,9 @@ const CakeDetails = () => {
             <View style={{ gap: 10 }}>
               <TouchableOpacity
                 style={style.button}
-                // onPress={() =>
-                //   navigation.navigate("additionalInformation", { cakeData })
-                // }
+                onPress={() =>
+                  navigation.navigate("uploadProduct", { cakeData })
+                }
               >
                 <Text style={{ textAlign: "center", color: "white" }}>
                   Edit

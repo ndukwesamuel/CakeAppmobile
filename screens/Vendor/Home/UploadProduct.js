@@ -12,7 +12,7 @@ import {
   Platform,
 } from "react-native";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,9 @@ const UploadProduct = () => {
 
   const navigation = useNavigation();
 
-  const { get_all_categories_data } = useSelector((state) => state.CakeSlice);
+  const { get_all_categories_data } = useSelector((state) => state?.CakeSlice);
+  const dataRoute = useRoute()?.params?.cakeData;
+  console.log({ edit: dataRoute });
 
   const dispatch = useDispatch();
   const [cakeName, setCakeName] = useState("");
@@ -33,13 +35,25 @@ const UploadProduct = () => {
   const [description, setDescription] = useState("");
   const [pictures, setPictures] = useState([]);
   const [size, setSize] = useState("");
-  const [layers, setLayers] = useState("");
+  const [layers, setLayers] = useState(0);
+  const [editMode, setEditMode] = useState(false)
 
   useEffect(() => {
     dispatch(Get_All_Categories_Fun());
     return () => {};
   }, []);
 
+  useEffect(() => {
+    if (dataRoute?.item) {
+      setCakeName(dataRoute.item.name || "");
+      setPrice(dataRoute.item.price || 0);
+      setDescription(dataRoute.item.description || "");
+      setSize(dataRoute.item.cakeSize || "");
+      setLayers(dataRoute.item.numberOfLayers || 0);
+      setSelectedStatus(dataRoute.item.category || selectedStatus);
+      setEditMode(true)
+    }
+  }, [dataRoute]);
   // console.log({ categories: get_all_categories_data.data.categories.name });
 
   const pickImage = async () => {
@@ -108,7 +122,7 @@ const UploadProduct = () => {
 
     // Here you can now upload formData to the server
     console.log({ cakePreview: formData._parts });
-    navigation.navigate("previewPage", { formData: formData });
+    navigation.navigate("previewPage", { formData: formData , edit:editMode, id:dataRoute?.item?._id});
   };
   const [selectedStatus, setSelectedStatus] = useState(
     get_all_categories_data?.data?.categories[0]?.name
@@ -146,7 +160,7 @@ const UploadProduct = () => {
               <Text style={styles.label}>Price</Text>
               <TextInput
                 style={styles.input}
-                value={price}
+                value={price.toString()}
                 onChangeText={(text) => setPrice(text)}
               />
             </View>
@@ -202,7 +216,7 @@ const UploadProduct = () => {
               <Text style={styles.label}>Number of Layers</Text>
               <TextInput
                 style={styles.input}
-                value={layers}
+                value={layers.toString()}
                 onChangeText={(text) => setLayers(text)}
               />
             </View>
