@@ -2,6 +2,7 @@ import ApplicationForm from "../../screens/Vendor/Applications/ApplicationForm";
 import ApplicationPreview from "../../screens/Vendor/Applications/ApplicationPreview";
 import CakeDetails from "../../screens/Vendor/Home/CakeDetails";
 import CakePreview from "../../screens/Vendor/Home/CakePreview";
+import Home from "../../screens/Vendor/Home/Home";
 import OrderDetails from "../../screens/Vendor/Home/OrderDetails";
 import UploadProduct from "../../screens/Vendor/Home/UploadProduct";
 
@@ -36,4 +37,9 @@ export const screens = [
     component: OrderDetails,
     title: "",
   },
+  {
+    name:"home", 
+    component: Home,
+    title:""
+  }
 ];

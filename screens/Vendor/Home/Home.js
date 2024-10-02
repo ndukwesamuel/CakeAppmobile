@@ -51,7 +51,7 @@ const Home = () => {
   useEffect(() => {
     if (get_all_order_history_data) {
       const completedOrders = get_all_order_history_data?.data?.orders?.filter(
-        (order) => order.status === "completed"
+        (order) => order.status === "accepted"
       );
       setCompletedOrdersCount(completedOrders);
       const ongoingOrders = get_all_order_history_data?.data?.orders?.filter(
@@ -274,7 +274,7 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 16, fontWeight: "500" }}
                 >
-                  Completed
+                  Accepted
                 </Text>
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
@@ -284,7 +284,7 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails", {data:completedOrdersCount, title:"Completed"})}
+                onPress={() => navigation.navigate("orderDetails", {data:completedOrdersCount, title:"Accepted"})}
               >
                 <View style={styles.button}>
                   <Text>View</Text>

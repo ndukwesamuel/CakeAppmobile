@@ -9,6 +9,7 @@ import {
   Image,
   FlatList,
   Modal,
+  Platform,
 } from "react-native";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation } from "@react-navigation/native";
@@ -18,13 +19,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Get_All_Categories_Fun } from "../../../Redux/Buyer/CakeSlice";
 
 const UploadProduct = () => {
+  useEffect(() => {
+    console.log("Updated pictures:", pictures);
+  }, [pictures]);
+
   const navigation = useNavigation();
 
   const { get_all_categories_data } = useSelector((state) => state.CakeSlice);
 
   const dispatch = useDispatch();
   const [cakeName, setCakeName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [pictures, setPictures] = useState([]);
   const [size, setSize] = useState("");
@@ -35,26 +40,10 @@ const UploadProduct = () => {
     return () => {};
   }, []);
 
-  console.log({ categories: get_all_categories_data.data.categories.name });
-
-  const uploadProductHandler = () => {
-    const formData = {
-      name: cakeName,
-      price: price,
-      description: description,
-      cakeSize: size,
-      category: selectedStatus,
-      numberOfLayers: layers,
-      images: pictures,
-      timeFrame: 2,
-    };
-    console.log({ cakePreview: formData });
-    navigation.navigate("previewPage", { formData: formData });
-  };
+  // console.log({ categories: get_all_categories_data.data.categories.name });
 
   const pickImage = async () => {
     try {
-      // Request permission to access the gallery
       const permissionResult =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -63,7 +52,6 @@ const UploadProduct = () => {
         return;
       }
 
-      // Launch image picker
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -72,13 +60,16 @@ const UploadProduct = () => {
       });
 
       if (!result.canceled) {
-        const newImage = {
-          url: result.assets[0].uri, // Default to 'image/jpeg' if type is not provided
-        };
-  
-        // Add the new file-like object to the pictures array
-        setPictures([...pictures, newImage]);
-  ;
+        if (Platform.OS === "web") {
+          const imageBlob = await uriToBlob(result.assets[0].uri);
+          setPictures([
+            ...pictures,
+            { uri: result.assets[0].uri, blob: imageBlob },
+          ]);
+          console.log({ pictures: pictures });
+        } else {
+          setPictures([...pictures, { uri: result.assets[0].uri }]);
+        }
       }
     } catch (error) {
       console.log("Error picking image:", error);
@@ -86,11 +77,39 @@ const UploadProduct = () => {
     }
   };
 
-  const removeImage = (index) => {
-    const updatedPictures = pictures.filter((_, i) => i !== index);
-    setPictures(updatedPictures);
+  // Convert image URI to Blob for web uploads
+  const uriToBlob = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return blob;
   };
 
+  const uploadProductHandler = () => {
+    const formData = new FormData();
+    formData.append("name", cakeName);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("cakeSize", size);
+    formData.append("category", selectedStatus);
+    formData.append("numberOfLayers", layers);
+    formData.append("timeFrame", 2);
+
+    pictures.forEach((image, index) => {
+      if (Platform.OS === "web") {
+        formData.append("images", image.blob, `image${index}.jpg`); // Use Blob for web
+      } else {
+        formData.append("images", {
+          uri: image.uri,
+          name: `image${index}.jpg`,
+          type: "image/jpg",
+        });
+      }
+    });
+
+    // Here you can now upload formData to the server
+    console.log({ cakePreview: formData._parts });
+    navigation.navigate("previewPage", { formData: formData });
+  };
   const [selectedStatus, setSelectedStatus] = useState(
     get_all_categories_data?.data?.categories[0]?.name
   );
@@ -153,13 +172,13 @@ const UploadProduct = () => {
               </View>
             </TouchableOpacity>
 
-            <FlatList
+            {/* <FlatList
               data={pictures}
               horizontal
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <View style={styles.imageContainer}>
-                  <Image source={{ uri: item?.url }} style={styles.uploadedImage} />
+                  <Image source={{ uri: item }} style={styles.uploadedImage} />
                   <TouchableOpacity
                     style={styles.removeButton}
                     onPress={() => removeImage(index)}
@@ -168,7 +187,7 @@ const UploadProduct = () => {
                   </TouchableOpacity>
                 </View>
               )}
-            />
+            /> */}
 
             <View style={styles.formGroup}>
               <Text style={styles.label}>Size</Text>

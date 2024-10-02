@@ -10,7 +10,7 @@ import Toast from "react-native-toast-message";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const ApplicationPreview = () => {
-  const token = useSelector((state) => state?.Auth?.user_data?.user?.token);
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   console.log(token);
 
   const route = useRoute();
