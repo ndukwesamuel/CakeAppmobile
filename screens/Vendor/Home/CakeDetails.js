@@ -7,17 +7,70 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
+import { useMutation } from "react-query";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
+import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
+const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const CakeDetails = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const cakeData = useRoute()?.params;
-  //   const { get_single_cake_data } = useSelector((state) => state.CakeSlice);
-  console.log({ 1111111: cakeData.item });
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
+  // const [openModal, setopenModal] = useState(false)
+  const { user_data, current_vendor_profile_data } = useSelector(
+    (state) => state?.Auth
+  );
+  useEffect(() => {
+    dispatch(Current_vendor_profile_Fun());
+    dispatch(
+      Get_vendor_Cake_Fun({
+        vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
+      })
+    );
+    return () => {};
+  }, []);
+
+  const Delete_Mutation = useMutation(
+    (data_info) => {
+      let url = `${API_BASEURL}v1/vendor/cake/${data_info}`;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return axios.delete(url, config);
+    },
+    {
+      onSuccess: (success) => {
+        dispatch(
+          Get_vendor_Cake_Fun({
+            vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
+          })
+        );
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message}`,
+        });
+        navigation.navigate("product")
+      },
+      onError: (error) => {
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
 
   return (
     <AppScreenThree arrrow={"true"}>
@@ -107,21 +160,37 @@ const CakeDetails = () => {
               }}
             >
               <Text style={style.text}>Categories</Text>
-              <Text style={[style.text, {textTransform:"capitalize"}]}>{cakeData?.item?.category}</Text>
+              <Text style={[style.text, { textTransform: "capitalize" }]}>
+                {cakeData?.item?.category}
+              </Text>
             </View>
             {/* Active Buttons */}
-            <View style={{gap:10}}>
-            <TouchableOpacity
-              style={style.button}
-              // onPress={() =>
-              //   navigation.navigate("additionalInformation", { cakeData })
-              // }
-            >
-              <Text style={{ textAlign: "center", color: "white" }}>Edit</Text>
-            </TouchableOpacity>
-            <Pressable>
-              <Text style={{textAlign:"center", fontSize:16, fontWeight:"400", color:"#E70400", textDecorationLine:"underline"}}>Delete</Text>
-            </Pressable>
+            <View style={{ gap: 10 }}>
+              <TouchableOpacity
+                style={style.button}
+                // onPress={() =>
+                //   navigation.navigate("additionalInformation", { cakeData })
+                // }
+              >
+                <Text style={{ textAlign: "center", color: "white" }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <Pressable
+                onPress={() => Delete_Mutation.mutate(cakeData?.item?._id)}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    fontWeight: "400",
+                    color: "#E70400",
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Delete
+                </Text>
+              </Pressable>
             </View>
           </View>
         </View>
@@ -148,7 +217,7 @@ const style = StyleSheet.create({
     padding: 25,
     marginTop: 20,
     gap: 24,
-    marginBottom:40
+    marginBottom: 40,
   },
   title: {
     color: "#2B025F",

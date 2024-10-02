@@ -5,6 +5,7 @@ import CakePreview from "../../screens/Vendor/Home/CakePreview";
 import Home from "../../screens/Vendor/Home/Home";
 import OrderDetails from "../../screens/Vendor/Home/OrderDetails";
 import UploadProduct from "../../screens/Vendor/Home/UploadProduct";
+import Products from "../../screens/Vendor/Products/Products";
 
 export const screens = [
   {
@@ -40,6 +41,11 @@ export const screens = [
   {
     name:"home", 
     component: Home,
+    title:""
+  },
+  {
+    name:"product",
+    component: Products,
     title:""
   }
 ];
