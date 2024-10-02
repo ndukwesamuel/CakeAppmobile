@@ -17,6 +17,7 @@ import Toast from "react-native-toast-message";
 import RequestModal from "../Modals/RequestModal";
 import OngoingModal from "../Modals/OngoingModal";
 import CancelledModal from "../Modals/CancelledModal";
+import AcceptedModal from "../Modals/AcceptedModal";
 
 export default function OrderDetails() {
   const dataRoute = useRoute()?.params;
@@ -29,14 +30,15 @@ export default function OrderDetails() {
           data={dataRoute?.data}
           renderItem={({ item }) => {
             if (dataRoute?.title === "pending") {
-                return <RequestModal item={item}/>
-            }else if(dataRoute?.title === "ongoing"){
-                return <OngoingModal item ={item}/>
-            }else if (dataRoute?.title === "cancelled"){
-                return <CancelledModal item = {item}/>
+              return <RequestModal item={item} />;
+            } else if (dataRoute?.title === "ongoing") {
+              return <OngoingModal item={item} />;
+            } else if (dataRoute?.title === "cancelled") {
+              return <CancelledModal item={item} />;
+            } else if (dataRoute?.title === "accepted") {
+              return <AcceptedModal item={item} />;
             }
-          }
-           }
+          }}
           contentContainerStyle={{ gap: 10 }}
           ListEmptyComponent={
             <View>
