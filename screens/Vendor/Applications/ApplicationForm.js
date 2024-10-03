@@ -1,11 +1,19 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useNavigation } from "@react-navigation/native";
+import AppScreenThree from "../../../components/shared/AppScreenThree";
 
 export default function ApplicationForm() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [businessName, setBusinessName] = useState("");
   const [businessOwnerName, setBusinessOwnerName] = useState("");
   const [cacNumber, setcacNumber] = useState("");
@@ -15,7 +23,7 @@ export default function ApplicationForm() {
   const [nationality, setNationality] = useState("");
   const [businessDescription, setBusinessDescription] = useState("");
 
-  const applicationFormHandler = () =>{
+  const applicationFormHandler = () => {
     const formData = {
       businessName: businessName,
       businessOwnerName: businessOwnerName,
@@ -23,16 +31,14 @@ export default function ApplicationForm() {
       businessEmail: businessEmail,
       businessCallLine: businessCallLine,
       nationality: nationality,
-      businessDescription:businessDescription
-    }
-    navigation.navigate("applicationPreviewPage", {formData: formData})
-    
-  }
+      businessDescription: businessDescription,
+    };
+    navigation.navigate("applicationPreviewPage", { formData: formData });
+  };
 
   return (
-    <AppScreenTwo arrrow={"true"}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Application Form</Text>
+    <AppScreenThree arrrow={"true"} title={"Application Form"}>
+      <ScrollView style={styles.container}>
         <View style={{ marginTop: 10, gap: 15 }}>
           <View style={styles.formGroup}>
             <Text style={styles.label}>Business Name</Text>
@@ -107,19 +113,19 @@ export default function ApplicationForm() {
                 fontWeight: "400",
               }}
             >
-              Proceed
+              Complete Registration
             </Text>
           </Pressable>
         </View>
-      </View>
-    </AppScreenTwo>
+      </ScrollView>
+    </AppScreenThree>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 80,
+    marginTop: 60,
     padding: 20,
   },
   title: {
@@ -134,18 +140,21 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0.5,
     borderColor: "#4C060E",
+    height: 48,
     borderRadius: 10,
     paddingHorizontal: 10,
-    height:40,
+    paddingVertical: 15,
   },
   label: {
+    color: "rgba(43, 2, 95, 1)",
     fontSize: 16,
     fontWeight: "400",
   },
   button: {
-    paddingHorizontal: 20,
+    backgroundColor: "rgba(105, 4, 236, 1)",
     paddingVertical: 10,
-    backgroundColor: "#DD293E",
-    borderRadius: 42,
+    borderRadius: 40,
+    marginTop: 50,
+    marginBottom: 50,
   },
 });

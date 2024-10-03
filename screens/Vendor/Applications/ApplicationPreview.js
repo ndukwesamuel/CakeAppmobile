@@ -1,15 +1,17 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useSelector } from "react-redux";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import AppScreenThree from "../../../components/shared/AppScreenThree";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const ApplicationPreview = () => {
+  const navigation = useNavigation()
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   console.log(token);
 
@@ -36,10 +38,12 @@ const ApplicationPreview = () => {
       }
     },{
       onSuccess:(success)=>{
-        Toast.show({
-          type:"success",
-          text1:`${success?.data?.message}`
-        })
+        navigation.navigate("home")
+        // console.log({success:success})
+        // Toast.show({
+        //   type:"success",
+        //   text1:`${success?.message}`
+        // })
       },
         onError: (error) => {
 
@@ -57,19 +61,20 @@ const ApplicationPreview = () => {
     ApplicationForm_Mutation.mutate({formData, token})
   }
   return (
-    <AppScreenTwo arrrow={"true"}>
+    <AppScreenThree arrrow={"true"} title={"Application Preview"}>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.title}>Preview Application</Text>
+          {/* <Text style={styles.title}>Preview Application</Text> */}
           <View
             style={{
               backgroundColor: "white",
               gap: 20,
-              padding: 20,
-              marginTop: 50,
+              paddingHorizontal: 20,
+              paddingVertical: 50
+              // marginTop: 50,
             }}
           >
-            <View style={{ flexDirection: "row", gap: 10 }}>
+            <View style={{ flexDirection: "row", }}>
               <Text style={styles.key}>Business Name:</Text>
               <Text style={styles.value}>{formData?.businessName}</Text>
             </View>
@@ -117,7 +122,7 @@ const ApplicationPreview = () => {
           </View>
         </View>
       </ScrollView>
-    </AppScreenTwo>
+    </AppScreenThree>
   );
 };
 
@@ -126,7 +131,7 @@ export default ApplicationPreview;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100,
+    marginTop: 60,
     padding: 20,
   },
   title: {
@@ -148,10 +153,10 @@ const styles = StyleSheet.create({
     color: "#330111",
   },
   button: {
-    marginTop: 70,
-    paddingHorizontal: 20,
+    backgroundColor: "rgba(105, 4, 236, 1)",
     paddingVertical: 10,
-    backgroundColor: "#DD293E",
-    borderRadius: 42,
+    borderRadius: 40,
+    marginTop: 50,
+    // marginBottom: 50,
   },
 });
