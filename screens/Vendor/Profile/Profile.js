@@ -127,7 +127,7 @@ const Profile = () => {
               {user_data?.data?.user?.firstName}{" "}
               {user_data?.data?.user?.lastName}
             </Text>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate("applicationForm", vendorProfile={current_vendor_profile_data})}>
               <Text
                 style={{
                   color: "#6904EC",
@@ -151,7 +151,7 @@ const Profile = () => {
           <Text style={{color:"#2B025F", fontSize:20, fontWeight:"500"}}>Business Information</Text>
           <View style={{gap:12}}>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: "row",gap:10, justifyContent: "space-between" }}
             >
               <Text style={styles.key}>Business Name</Text>
               <Text style={styles.value}>
@@ -162,7 +162,7 @@ const Profile = () => {
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
               <Text style={styles.key}>Business Description</Text>
-              <Text style={styles.value}>
+              <Text style={[styles.value, {width:"50%", textAlign:"right"}]}>
                 {
                   current_vendor_profile_data.data.vendorProfile
                     .businessDescription

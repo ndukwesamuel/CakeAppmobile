@@ -6,10 +6,10 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 
 export default function ApplicationForm() {
@@ -22,6 +22,22 @@ export default function ApplicationForm() {
   const [yearsOfExperience, setYearsOfExperience] = useState("");
   const [nationality, setNationality] = useState("");
   const [businessDescription, setBusinessDescription] = useState("");
+
+  const dataRoute = useRoute().params
+  console.log({dataRoute:dataRoute?.current_vendor_profile_data?.data?.vendorProfile})
+
+  useEffect(() =>{
+if(dataRoute?.current_vendor_profile_data?.data?.vendorProfile){
+  setBusinessName(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.businessName || "")
+  setBusinessOwnerName(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.businessOwnerName || "")
+  setcacNumber(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.CACNumber || "")
+  setBusinessEmail(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.businessEmail || "")
+  setBusinessCallLine(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.businessCallLine || "")
+  setNationality(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.nationality || "")
+  setBusinessDescription(dataRoute?.current_vendor_profile_data?.data?.vendorProfile?.businessDescription || "")
+}
+  }, [])
+
 
   const applicationFormHandler = () => {
     const formData = {
