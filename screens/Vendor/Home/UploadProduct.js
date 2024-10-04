@@ -373,6 +373,7 @@ export default UploadProduct;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    marginTop: 50,
   },
   sectionTitle: {
     fontSize: 18,
