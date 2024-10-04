@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -21,7 +22,7 @@ export default function RequestModal({ item }) {
   const [openModal, setOpenModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
-  const [reason, setReason] = useState('')
+  const [reason, setReason] = useState("");
 
   const updateOrder_Mutation = useMutation(
     async ({ formData, token }) => {
@@ -47,7 +48,6 @@ export default function RequestModal({ item }) {
           type: "success",
           text1: `${success?.data?.message}`,
         });
-        
       },
       onError: (error) => {
         console.log(error);
@@ -60,7 +60,6 @@ export default function RequestModal({ item }) {
   );
 
   const handleAcceptOffer = () => {
-   
     const formData = {
       status: "accepted",
     };
@@ -70,21 +69,20 @@ export default function RequestModal({ item }) {
 
   const handleRejectOffer = () => {
     if (reason !== "") {
-        const formData = {
-            status:"rejected",
-            reason:reason
-        }
-        updateOrder_Mutation.mutate({formData, token})
-        setOpenModal(!openModal)
-        setRejectModal(!rejectModal)
-    }else{
-        Toast.show({
-            type:"error",
-            text1:"Pls add reason for rejection"
-        })
+      const formData = {
+        status: "rejected",
+        reason: reason,
+      };
+      updateOrder_Mutation.mutate({ formData, token });
+      setOpenModal(!openModal);
+      setRejectModal(!rejectModal);
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Pls add reason for rejection",
+      });
     }
-    
-  }
+  };
   return (
     <View style={styles.container2}>
       <View style={{ gap: 12 }}>
@@ -119,132 +117,147 @@ export default function RequestModal({ item }) {
       </Pressable>
 
       <Modal visible={openModal} transparent={true} animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            {/* Modal Content */}
-            <View
-              style={{
-                backgroundColor: "white",
-                padding: 20,
-                width: "100%",
-                gap: 10,
-              }}
-            >
-              <Text style={styles.title}>{item?.cake?.name}</Text>
-              <View style={{ gap: 17 }}>
-                <View style={{ gap: 8 }}>
-                  <Text style={styles.subtitle}>Cake Description</Text>
-                  <Text>{item?.cake?.description}</Text>
+        <TouchableWithoutFeedback onPress={() => setOpenModal(!openModal)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              {/* Modal Content */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  padding: 20,
+                  width: "100%",
+                  gap: 10,
+                }}
+              >
+                <Text style={styles.title}>{item?.cake?.name}</Text>
+                <View style={{ gap: 17 }}>
+                  <View style={{ gap: 8 }}>
+                    <Text style={styles.subtitle}>Cake Description</Text>
+                    <Text>{item?.cake?.description}</Text>
+                  </View>
+                  <View style={{ gap: 8 }}>
+                    <Text style={styles.subtitle}>Cake Text</Text>
+                    <Text>{item?.cakeText}</Text>
+                  </View>
+                  <View style={{ gap: 8 }}>
+                    <Text style={styles.subtitle}>Quantity</Text>
+                    <Text>{item?.quantity}</Text>
+                  </View>
+                  <View style={{ gap: 8 }}>
+                    <Text style={styles.subtitle}>Address</Text>
+                    <Text>{item?.address}</Text>
+                  </View>
                 </View>
-                <View style={{ gap: 8 }}>
-                  <Text style={styles.subtitle}>Cake Text</Text>
-                  <Text>{item?.cakeText}</Text>
-                </View>
-                <View style={{ gap: 8 }}>
-                  <Text style={styles.subtitle}>Quantity</Text>
-                  <Text>{item?.quantity}</Text>
-                </View>
-                <View style={{ gap: 8 }}>
-                  <Text style={styles.subtitle}>Address</Text>
-                  <Text>{item?.address}</Text>
-                </View>
+                <Pressable
+                  onPress={handleAcceptOffer}
+                  style={[styles.button, { backgroundColor: "#6904EC" }]}
+                >
+                  <Text style={{ textAlign: "center", color: "white" }}>
+                    Accept Offer
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setRejectModal(!rejectModal)}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: "white",
+                      borderWidth: 1,
+                      borderColor: "#6904EC",
+                    },
+                  ]}
+                >
+                  <Text style={{ textAlign: "center", color: "#2B025F" }}>
+                    Reject Offer
+                  </Text>
+                </Pressable>
               </View>
-              <Pressable
-                onPress={handleAcceptOffer}
-                style={[styles.button, { backgroundColor: "#6904EC" }]}
-              >
-                <Text style={{ textAlign: "center", color: "white" }}>
-                  Accept Offer
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={() => setRejectModal(!rejectModal)}
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor: "white",
-                    borderWidth: 1,
-                    borderColor: "#6904EC",
-                  },
-                ]}
-              >
-                <Text style={{ textAlign: "center", color: "#2B025F" }}>
-                  Reject Offer
-                </Text>
-              </Pressable>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* accept offer modal */}
       <Modal visible={acceptModal} transparent={true} animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View
-              style={{
-                backgroundColor: "white",
-                padding: 20,
-                width: "100%",
-                gap: 20,
-                paddingVertical: 50,
-              }}
-            >
-              <Text
+        <TouchableWithoutFeedback onPress={() => setAcceptModal(!acceptModal)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <View
                 style={{
-                  textAlign: "center",
-                  color: "#2B025F",
-                  fontSize: 24,
-                  fontWeight: "600",
+                  backgroundColor: "white",
+                  padding: 20,
+                  width: "100%",
+                  gap: 20,
+                  paddingVertical: 50,
                 }}
               >
-                Offer Accepted
-              </Text>
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "#2B025F",
-                  fontSize: 14,
-                  fontWeight: "400",
-                }}
-              >
-                You have accepted this offered, Kindly proceed to baking the
-                cake
-              </Text>
-              <Pressable
-                style={[styles.button, { backgroundColor: "#6904EC" }]}
-                onPress={() => navigation.navigate("home")}
-              >
-                <Text style={{ textAlign: "center", color: "white" }}>
-                  Okay
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "#2B025F",
+                    fontSize: 24,
+                    fontWeight: "600",
+                  }}
+                >
+                  Offer Accepted
                 </Text>
-              </Pressable>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "#2B025F",
+                    fontSize: 14,
+                    fontWeight: "400",
+                  }}
+                >
+                  You have accepted this offered, Kindly proceed to baking the
+                  cake
+                </Text>
+                <Pressable
+                  style={[styles.button, { backgroundColor: "#6904EC" }]}
+                  onPress={() => navigation.navigate("home")}
+                >
+                  <Text style={{ textAlign: "center", color: "white" }}>
+                    Okay
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
 
       {/* Reject modal */}
       <Modal visible={rejectModal} transparent={true} animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View
-              style={{
-                backgroundColor: "white",
-                padding: 20,
-                width: "100%",
-                gap: 20,
-                paddingVertical: 50,
-              }}
-            >
-              <Text style={styles.title}>Reason for Rejection</Text>
-              <TextInput style={styles.input}  value={reason} onChangeText={(text) => setReason(text)}/>
-              <Pressable style={[styles.button, {backgroundColor:"#6904EC", }]} onPress={handleRejectOffer}>
-                <Text style={{textAlign:"center", color:"white"}}>Submit</Text>
-              </Pressable>
+        <TouchableWithoutFeedback onPress={() => setRejectModal(!rejectModal)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  padding: 20,
+                  width: "100%",
+                  gap: 20,
+                  paddingVertical: 50,
+                }}
+              >
+                <Text style={styles.title}>Reason for Rejection</Text>
+                <TextInput
+                  style={styles.input}
+                  value={reason}
+                  onChangeText={(text) => setReason(text)}
+                />
+                <Pressable
+                  style={[styles.button, { backgroundColor: "#6904EC" }]}
+                  onPress={handleRejectOffer}
+                >
+                  <Text style={{ textAlign: "center", color: "white" }}>
+                    Submit
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
