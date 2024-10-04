@@ -1,4 +1,13 @@
-import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect } from "react";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,14 +31,13 @@ export default function Products() {
     return () => {};
   }, []);
 
-  console.log({ cakes: get_vendor_Cake_data.data.cakes });
+  console.log({ cakes: get_vendor_Cake_data?.data?.cakes });
   return (
     <AppScreenThree arrrow={"true"} title={"My Product"}>
       <View style={styles.container}>
         <FlatList
-        
-        data={get_vendor_Cake_data?.data?.cakes}
-        renderItem={({item}) => <ImageCard item={item}/>}
+          data={get_vendor_Cake_data?.data?.cakes}
+          renderItem={({ item }) => <ImageCard item={item} />}
           ListEmptyComponent={
             <View>
               <Text style={{ textAlign: "center" }}>
@@ -53,63 +61,63 @@ const styles = StyleSheet.create({
 });
 
 const ImageCard = ({ item }) => {
-    const navigation = useNavigation();
-    return (
-      <View style={styles2.container}>
-        <Image source={{ uri: item.images[0].url }} style={styles2.image} />
-        <View style={{ flexDirection: "column", gap: 20, padding: 15 }}>
-          <Text style={styles2.cardTitle}>{item?.name}</Text>
-          <Text style={styles2.description}>{item.description}</Text>
-          <Text style={styles2.cardTitle}>{item.price}</Text>
-          <Pressable
-            style={styles2.button}
-            onPress={() => navigation.navigate("cakeDetails", { item })}
+  const navigation = useNavigation();
+  return (
+    <View style={styles2.container}>
+      <Image source={{ uri: item.images[0].url }} style={styles2.image} />
+      <View style={{ flexDirection: "column", gap: 20, padding: 15 }}>
+        <Text style={styles2.cardTitle}>{item?.name}</Text>
+        <Text style={styles2.description}>{item.description}</Text>
+        <Text style={styles2.cardTitle}>{item.price}</Text>
+        <Pressable
+          style={styles2.button}
+          onPress={() => navigation.navigate("cakeDetails", { item })}
+        >
+          <Text
+            style={{
+              color: "#6904EC",
+              fontSize: 14,
+              fontWeight: "500",
+              textAlign: "center",
+            }}
           >
-            <Text
-              style={{
-                color: "#6904EC",
-                fontSize: 14,
-                fontWeight: "500",
-                textAlign: "center",
-              }}
-            >
-              View
-            </Text>
-          </Pressable>
-        </View>
+            View
+          </Text>
+        </Pressable>
       </View>
-    );
-  };
-  
-  const styles2 = StyleSheet.create({
-    container: {
-      borderWidth: 0.5,
-      borderColor: "#00000033",
-      marginBottom: 10,
-      borderRadius: 12,
-    },
-    image: {
-      width: "100%",
-      height: 180,
-      borderTopLeftRadius: 12,
-      borderTopRightRadius: 12,
-    },
-    cardTitle: {
-      color: "#2B025F",
-      fontSize: 16,
-      fontWeight: "700",
-      lineHeight:24
-    },
-    description: {
-      color: "#2B025F",
-      fontSize: 12,
-      fontWeight: "400",
-      lineHeight:18
-    },
-    button: {
-      backgroundColor: "#6904EC0D",
-      borderRadius: 30,
-      paddingHorizontal: 37,
-      paddingVertical: 15,
-    },
-  });
+    </View>
+  );
+};
+
+const styles2 = StyleSheet.create({
+  container: {
+    borderWidth: 0.5,
+    borderColor: "#00000033",
+    marginBottom: 10,
+    borderRadius: 12,
+  },
+  image: {
+    width: "100%",
+    height: 180,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  cardTitle: {
+    color: "#2B025F",
+    fontSize: 16,
+    fontWeight: "700",
+    lineHeight: 24,
+  },
+  description: {
+    color: "#2B025F",
+    fontSize: 12,
+    fontWeight: "400",
+    lineHeight: 18,
+  },
+  button: {
+    backgroundColor: "#6904EC0D",
+    borderRadius: 30,
+    paddingHorizontal: 37,
+    paddingVertical: 15,
+  },
+});

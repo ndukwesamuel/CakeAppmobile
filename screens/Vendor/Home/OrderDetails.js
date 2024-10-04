@@ -12,7 +12,7 @@ import { useRoute } from "@react-navigation/native";
 import { formatDate } from "../../../utills/DateTime";
 
 export default function OrderDetails() {
-  const dataRoute = useRoute().params;
+  const dataRoute = useRoute()?.params;
   console.log({ dataaaaa: dataRoute?.data });
 
   return (
@@ -35,7 +35,13 @@ export default function OrderDetails() {
 
 const RenderItem = ({ item }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [acceptModal, setAcceptModal] = useState(false);
+  const [rejectModal, setRejectModal] = useState(false);
 
+  const handleAcceptOffer = () => {
+    setAcceptModal(true);
+    setOpenModal(false);
+  };
   return (
     <View style={styles.container2}>
       <View style={{ gap: 12 }}>
@@ -81,7 +87,7 @@ const RenderItem = ({ item }) => {
                 gap: 10,
               }}
             >
-              <Text style={styles.title}>{item.cake.name}</Text>
+              <Text style={styles.title}>{item?.cake?.name}</Text>
               <View style={{ gap: 17 }}>
                 <View style={{ gap: 8 }}>
                   <Text style={styles.subtitle}>Cake Description</Text>
@@ -89,11 +95,11 @@ const RenderItem = ({ item }) => {
                 </View>
                 <View style={{ gap: 8 }}>
                   <Text style={styles.subtitle}>Address</Text>
-                  <Text>{item.address}</Text>
+                  <Text>{item?.address}</Text>
                 </View>
               </View>
               <Pressable
-                onPress={() => setOpenModal(false)}
+                onPress={handleAcceptOffer}
                 style={[styles.button, { backgroundColor: "#6904EC" }]}
               >
                 <Text style={{ textAlign: "center", color: "white" }}>
@@ -118,6 +124,12 @@ const RenderItem = ({ item }) => {
             </View>
           </View>
         </View>
+      </Modal>
+
+      {/* accept offer modal */}
+      <Modal visible={acceptModal} transparent={true} animationType="slide">
+        {/* <View style={styles.modalOverlay}> */}
+        {/* <View style={styles.modalContent}> */}
       </Modal>
     </View>
   );
