@@ -7,17 +7,18 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
+import VendorNavigation from "../../../Navigation/VendorNav/VendorNavigation";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const ApplicationPreview = () => {
   const navigation = useNavigation()
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
-  console.log(token);
+  // console.log(token);
 
   const route = useRoute();
   const { formData } = route.params;
-  console.log({appppllllli:formData});
+  // console.log({appppllllli:formData});
 
  const  ApplicationForm_Mutation = useMutation(
     async ({ formData, token }) => {
@@ -33,21 +34,21 @@ const ApplicationPreview = () => {
         )
 
       }catch(error){
-        console.log({applicationform: error})
+        // console.log({applicationform: error})
         throw error;
       }
     },{
       onSuccess:(success)=>{
-        navigation.navigate("home")
+        // navigation.navigate("home")
         // console.log({success:success})
-        // Toast.show({
-        //   type:"success",
-        //   text1:`${success?.message}`
-        // })
+        Toast.show({
+          type:"success",
+          text1:`Profile successfully updated`
+        })
       },
         onError: (error) => {
 
-          console.log(error)
+          // console.log(error)
           Toast.show({
             type: "error",
             text1: `${error?.response?.data?.message} `,

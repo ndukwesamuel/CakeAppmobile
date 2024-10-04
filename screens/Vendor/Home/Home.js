@@ -163,7 +163,7 @@ const Home = () => {
                 onPress={() =>
                   navigation.navigate("orderDetails", {
                     data: ongoingOrdersCount,
-                    title: "Ongoing",
+                    title: "ongoing",
                   })
                 }
               >
