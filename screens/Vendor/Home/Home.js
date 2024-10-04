@@ -20,6 +20,7 @@ import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
 import AppScreen from "../../../components/shared/AppScreen";
 
 const Home = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [completedOrdersCount, setCompletedOrdersCount] = useState([]);
   const [ongoingOrdersCount, setOngoingOrdersCount] = useState([]);
@@ -38,6 +39,10 @@ const Home = () => {
   );
 
   const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
+  console.log({
+    current_vendor_profile_data:
+      current_vendor_profile_data?.data?.vendorProfile?.isSubmitted,
+  });
   // console.log({
   //   dataaaa: get_all_order_history_data?.data?.orders,
   // });
@@ -51,7 +56,7 @@ const Home = () => {
   useEffect(() => {
     if (get_all_order_history_data) {
       const completedOrders = get_all_order_history_data?.data?.orders?.filter(
-        (order) => order.status === "completed"
+        (order) => order.status === "accepted"
       );
       setCompletedOrdersCount(completedOrders);
       const ongoingOrders = get_all_order_history_data?.data?.orders?.filter(
@@ -69,41 +74,16 @@ const Home = () => {
     }
   }, [get_all_order_history_data]);
 
-  // console.log({ data: vendor_profile_data });
-  const navigation = useNavigation();
+  const handleUploadProduct = () => {
+    if (
+      current_vendor_profile_data?.data?.vendorProfile?.isSubmitted === true
+    ) {
+      navigation.navigate("uploadProduct");
+    } else {
+      navigation.navigate("applicationForm");
+    }
+  };
   return (
-    // <AppScreenTwo notification={"true"} style={{ flex: 1 }}>
-    //   <View style={styles.container}>
-    //     <TouchableOpacity onPress={() => navigation.navigate("uploadProduct")}>
-    //       <Text style={[styles.upload]}>Upload Product</Text>
-    //     </TouchableOpacity>
-
-    //     <View style={styles.profileContainer}>
-    //       <Image
-    //         source={{ uri: vendor_profile_data1?.image }}
-    //         style={styles.profileImage}
-    //       />
-    //       <Text style={styles.profileName}>
-    //         {vendor_profile_data?.businessName}
-    //       </Text>
-    //     </View>
-    //     <View style={[styles.subContainer]}>
-    //       <View style={styles.infoRow}>
-    //         <Text style={styles.subtitle}>Number of Orders</Text>
-    //         <Text style={styles.value}>
-    //           {get_all_order_history_data?.length}
-    //         </Text>
-    //       </View>
-    //       <View style={styles.infoRow}>
-    //         <Text style={styles.subtitle}>Completed Orders</Text>
-    //         <Text style={styles.value}>{completedOrdersCount}</Text>
-    //       </View>
-    //     </View>
-    //     <View style={styles.categoriesContainer}>
-    //       <CakeCategories />
-    //     </View>
-    //   </View>
-    // </AppScreenTwo>
     <AppScreen>
       <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
         <View
@@ -180,11 +160,16 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {ongoingOrdersCount.length}
+                  {ongoingOrdersCount?.length}
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("orderDetails", {data:ongoingOrdersCount, title:"Ongoing"})}
+                onPress={() =>
+                  navigation.navigate("orderDetails", {
+                    data: ongoingOrdersCount,
+                    title: "Ongoing",
+                  })
+                }
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -234,7 +219,12 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails", {data: requestOrdersCount, title:"pending"})}
+                onPress={() =>
+                  navigation.navigate("orderDetails", {
+                    data: requestOrdersCount,
+                    title: "pending",
+                  })
+                }
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -274,7 +264,7 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 16, fontWeight: "500" }}
                 >
-                  Completed
+                  Accepted
                 </Text>
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
@@ -284,7 +274,12 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails", {data:completedOrdersCount, title:"Completed"})}
+                onPress={() =>
+                  navigation.navigate("orderDetails", {
+                    data: completedOrdersCount,
+                    title: "accepted",
+                  })
+                }
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -334,7 +329,12 @@ const Home = () => {
               </View>
               <TouchableOpacity
                 style={{}}
-                onPress={() => navigation.navigate("orderDetails", {data: cancelledOrdersCount, title:"cancelled"})}
+                onPress={() =>
+                  navigation.navigate("orderDetails", {
+                    data: cancelledOrdersCount,
+                    title: "cancelled",
+                  })
+                }
               >
                 <View style={styles.button}>
                   <Text>View</Text>
@@ -348,9 +348,7 @@ const Home = () => {
         {/* </View> */}
 
         <View style={{ marginBottom: 50 }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("uploadProduct")}
-          >
+          <TouchableOpacity onPress={handleUploadProduct}>
             <Text
               style={{
                 textAlign: "center",
