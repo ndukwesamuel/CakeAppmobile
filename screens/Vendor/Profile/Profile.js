@@ -148,8 +148,10 @@ const Profile = () => {
             gap: 24,
           }}
         >
-          <Text style={{color:"#2B025F", fontSize:20, fontWeight:"500"}}>Business Information</Text>
-          <View style={{gap:12}}>
+          <Text style={{ color: "#2B025F", fontSize: 20, fontWeight: "500" }}>
+            Business Information
+          </Text>
+          <View style={{ gap: 12 }}>
             <View
               style={{ flexDirection: "row",gap:10, justifyContent: "space-between" }}
             >

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   UserProfile_Fun,
   UserProfile_Fun_getVendorProfile,
+  reset_login,
 } from "../../../Redux/AuthSlice";
 import Orderhistory from "./Orderhistory";
 import Personalinfo from "./Personalinfo";
@@ -115,6 +116,14 @@ const Profile = () => {
 
           <TouchableOpacity>
             <Text style={styles.name}>Edit Profile </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(reset_login());
+            }}
+          >
+            <Text style={styles.name}> LogOut </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container2}>

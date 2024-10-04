@@ -39,7 +39,10 @@ const Home = () => {
   );
 
   const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
-  console.log({current_vendor_profile_data: current_vendor_profile_data?.data?.vendorProfile?.isSubmitted})
+  console.log({
+    current_vendor_profile_data:
+      current_vendor_profile_data?.data?.vendorProfile?.isSubmitted,
+  });
   // console.log({
   //   dataaaa: get_all_order_history_data?.data?.orders,
   // });
@@ -72,12 +75,13 @@ const Home = () => {
   }, [get_all_order_history_data]);
 
   const handleUploadProduct = () => {
-    if( current_vendor_profile_data?.data?.vendorProfile?.isSubmitted === true){
-      navigation.navigate("uploadProduct")
-    }else{
-      navigation.navigate("applicationForm")
+    if (
+      current_vendor_profile_data?.data?.vendorProfile?.isSubmitted === true
+    ) {
+      navigation.navigate("uploadProduct");
+    } else {
+      navigation.navigate("applicationForm");
     }
-
   };
   return (
     <AppScreen>
@@ -156,7 +160,7 @@ const Home = () => {
                 <Text
                   style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
                 >
-                  {ongoingOrdersCount.length}
+                  {ongoingOrdersCount?.length}
                 </Text>
               </View>
               <TouchableOpacity
