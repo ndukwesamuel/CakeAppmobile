@@ -6,12 +6,21 @@ export const list = [
     title: "Welcome !",
     description:
       "Get your cake with no stress and connect with your vendors easy.......",
-    image: image1,
+    backgroundImage: "#6904EC",
+    gradient1:"#6904EC1A",
+    // image: image1,
   },
   {
     id: 2,
     title: "Welcome !",
     description: "Get ready for a splendid cake adventure .....",
-    image: image1,
+    gradient1:"#A92CD31A",
+    backgroundImage: "#A92CD3",
   },
+  {
+    id: 3,
+    title:"",
+    gradient1:"#C418BB1A",
+    backgroundImage:"#C418BB"
+  }
 ];
