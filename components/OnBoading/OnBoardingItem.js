@@ -252,41 +252,72 @@ const OnBoardingItem = ({ item, scrollTo }) => {
 
   return (
     <View
-    style={[
-      styles.container,
-      { width, backgroundColor: `${item.backgroundImage}` },
-    ]}
-  >
-    <View style={{ flexDirection: "row", gap: 10, justifyContent: "center" }}>
-      <View style={{ gap: 10, alignItems: "center" }}>
-        <Image source={require("../../assets/images/img5.png")} />
-        <Image source={require("../../assets/images/img1.png")} />
-      </View>
-      <View style={{ gap: 20, alignItems: "center" }}>
-        <Image source={require("../../assets/images/img4.png")} />
-        <Image source={require("../../assets/images/img3.png")} />
-        <Image source={require("../../assets/images/img2.png")} />
-      </View>
-    </View>
-  
-    {/* Gradient at the Bottom */}
-    <LinearGradient
-      colors={[item.gradient1, item.backgroundImage]}
-      style={styles.gradientWrapper}
+      style={[
+        styles.container,
+        { width, backgroundColor: `${item.backgroundImage}` },
+      ]}
     >
-      {/* Content inside the Gradient */}
-      <View style={styles.contentContainer}>
-        <Text style={styles.heading}>Consectetur adi</Text>
-        <Text style={styles.paragraph}>
-          consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Duis aute irure dolor in repr
-        </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 3,
+          justifyContent: "center",
+          width,
+        }}
+      >
+        <View style={{ gap: 10, alignItems: "center" }}>
+          <Image source={require("../../assets/images/img5.png")} />
+          <Image source={require("../../assets/images/img1.png")} />
+        </View>
+        <View style={{ gap: 20, alignItems: "center" }}>
+          <Image source={require("../../assets/images/img4.png")} />
+          <Image source={require("../../assets/images/img3.png")} />
+          <Image source={require("../../assets/images/img2.png")} />
+        </View>
       </View>
-      <Pressable>
-        <Text>Next</Text>
-      </Pressable>
-    </LinearGradient>
-  </View>
+
+      {/* Gradient at the Bottom */}
+      <LinearGradient
+        colors={[item.gradient1, item.backgroundImage]}
+        style={styles.gradientWrapper}
+      >
+        {/* Content inside the Gradient */}
+        <View style={styles.contentContainer}>
+          <Text style={styles.heading}>Consectetur adi</Text>
+          <Text style={styles.paragraph}>
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Duis aute irure dolor in repr
+          </Text>
+          {item?.id === 3 ? (
+            <Pressable style={styles.button} onPress={handleSkip}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 16,
+                  fontWeight: "500",
+                  color: "#572F2F",
+                }}
+              >
+                Next
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable style={styles.button} onPress={() => scrollTo()}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 16,
+                  fontWeight: "500",
+                  color: "#572F2F",
+                }}
+              >
+                Next
+              </Text>
+            </Pressable>
+          )}
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -301,17 +332,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    height: "100%",
-    justifyContent:'flex-end',
-    alignItems: "center", 
+    height: "50%",
+    justifyContent: "flex-end",
+    // alignItems: "center",
   },
   contentContainer: {
     paddingHorizontal: 20,
     marginBottom: 40,
   },
   heading: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontWeight: "700",
     color: "white",
     marginBottom: 10,
     textAlign: "left",
@@ -321,9 +352,17 @@ const styles = StyleSheet.create({
     color: "white",
     lineHeight: 24,
     textAlign: "left",
+    marginBottom: 20,
+  },
+  button: {
+    width: 84,
+    // paddingHorizontal: 25,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
+    marginTop: 20,
   },
 });
-
 
 // <View
 //           style={{

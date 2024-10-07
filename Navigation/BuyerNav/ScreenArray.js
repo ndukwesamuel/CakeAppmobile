@@ -5,6 +5,7 @@ import VendorDetails from "../../screens/Buyer/Home.js/VendorDetails";
 import Wishlist from "../../screens/Buyer/Home.js/Wishlist";
 import BuyerOrderDetails from "../../screens/Buyer/Order/BuyerOrderDetails";
 import PaymentPage from "../../screens/Buyer/Order/PaymentPage";
+import EditProfile from "../../screens/Buyer/Profile/EditProfile";
 
 export const screens = [
   {
@@ -42,6 +43,11 @@ export const screens = [
   {
     name: "wishlist",
     component: Wishlist,
-    title:""
+    title: "",
+  },
+  {
+    name: "editProfile",
+    component: EditProfile,
+    title: "",
   },
 ];
