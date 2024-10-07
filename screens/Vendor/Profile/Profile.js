@@ -15,9 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   Current_vendor_profile_Fun,
   UserProfile_Fun,
+  reset_login,
 } from "../../../Redux/AuthSlice";
 import { useNavigation } from "@react-navigation/native";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
+import { reset_isOnboarding } from "../../../Redux/OnboardingSlice";
 
 const profileImage = require("../../../assets/cakeImages/profile.png");
 
@@ -38,75 +40,6 @@ const Profile = () => {
   }, []);
 
   return (
-    // <AppScreenTwo notification={"true"}>
-    //   <View style={{ flex: 1 }}>
-    //   <TouchableOpacity
-    //         onPress={() => navigation.navigate("applicationForm")}
-    //         style={{paddingTop: 80}}
-    //       >
-    //         <Text style={styles.applicationform}>Update Application Form</Text>
-    //       </TouchableOpacity>
-    //     <View style={{ alignItems: "center",  }}>
-
-    //       <Image
-    //         style={{ width: 100, height: 100, borderRadius: 50, marginTop:20 }}
-    //         source={{ uri: user?.image }}
-    //       />
-    //     </View>
-    //     <View
-    //       style={{
-    //         flexDirection: "row",
-
-    //         alignItems: "center",
-    //         justifyContent: "center",
-    //         gap: 80,
-    //         marginTop: 20,
-    //       }}
-    //     >
-    //       <TouchableOpacity
-    //         style={
-    //           profletab === "personal"
-    //             ? styles.buttonstyleTrue
-    //             : styles.buttonstyleFalse
-    //         }
-    //         onPress={() => setprofletab("personal")}
-    //       >
-    //         <Text
-    //           style={{
-    //             color: profletab === "personal" ? "white" : "#DD293E",
-    //           }}
-    //         >
-    //           Personal information
-    //         </Text>
-    //       </TouchableOpacity>
-
-    //       <TouchableOpacity
-    //         style={
-    //           profletab === "order"
-    //             ? styles.buttonstyleTrue
-    //             : styles.buttonstyleFalse
-    //         }
-    //         onPress={() => setprofletab("order")}
-    //       >
-    //         <Text
-    //           style={{
-    //             color: profletab === "order" ? "white" : "#DD293E",
-    //           }}
-    //         >
-    //           Order History
-    //         </Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //     <View
-    //       style={{
-    //         flex: 1,
-    //       }}
-    //     >
-    //       {profletab === "personal" && <PersonalInformation />}
-    //       {profletab === "order" && <OrderHistory />}
-    //     </View>
-    //   </View>
-    // </AppScreenTwo>
     <AppScreenThree arrrow={"true"} title={"Profile"}>
       <View style={styles.container}>
         <View
@@ -127,7 +60,14 @@ const Profile = () => {
               {user_data?.data?.user?.firstName}{" "}
               {user_data?.data?.user?.lastName}
             </Text>
-            <Pressable onPress={() => navigation.navigate("applicationForm", vendorProfile={current_vendor_profile_data})}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate(
+                  "applicationForm",
+                  (vendorProfile = { current_vendor_profile_data })
+                )
+              }
+            >
               <Text
                 style={{
                   color: "#6904EC",
@@ -138,6 +78,31 @@ const Profile = () => {
                 Edit Profile
               </Text>
             </Pressable>
+
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(reset_isOnboarding());
+                dispatch(reset_login());
+              }}
+              style={{
+                borderWidth: 2,
+                borderColor: "green",
+                padding: 5,
+                marginTop: 5,
+
+                borderRadius: 5,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#6904EC",
+                  fontSize: 14,
+                  textAlign: "center",
+                }}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         {/* business display */}
@@ -153,7 +118,11 @@ const Profile = () => {
           </Text>
           <View style={{ gap: 12 }}>
             <View
-              style={{ flexDirection: "row",gap:10, justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                justifyContent: "space-between",
+              }}
             >
               <Text style={styles.key}>Business Name</Text>
               <Text style={styles.value}>
@@ -164,7 +133,9 @@ const Profile = () => {
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
               <Text style={styles.key}>Business Description</Text>
-              <Text style={[styles.value, {width:"50%", textAlign:"right"}]}>
+              <Text
+                style={[styles.value, { width: "50%", textAlign: "right" }]}
+              >
                 {
                   current_vendor_profile_data.data.vendorProfile
                     .businessDescription

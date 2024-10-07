@@ -76,6 +76,8 @@ export default function BuyerOrder() {
         });
 
         setPaystackInfo(success?.data?.authorizationUrl);
+        navigation.navigate("payment", { item: success?.data });
+
         Toast.show({
           type: "success",
           text1: `success `,
@@ -171,90 +173,80 @@ export default function BuyerOrder() {
   );
 
   return (
-    <AppScreenThree arrrow={"true"} title={"Orders"}>
-      {paystackInfo ? (
-        <WebView
-          style={{
-            flex: 1,
-          }}
-          source={{ uri: paystackInfo }}
-        />
-      ) : (
-        <ScrollView style={styles.container}>
-          {/* Active buttons */}
-          <View>
-            <FlatList
-              key={3} // Force re-render when numColumns changes (use a static key based on numColumns)
-              data={[
-                "request",
-                "accepted",
-                "ongoing",
-                "completed",
-                "delivered",
-                "rejected",
-              ]}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={3} // Set the number of columns to 3
-              renderItem={({ item }) => (
-                <TouchableOpacity
+    <AppScreenThree>
+      <View style={styles.container}>
+        {/* Active buttons */}
+        <View>
+          <FlatList
+            key={3} // Force re-render when numColumns changes (use a static key based on numColumns)
+            data={[
+              "request",
+              "accepted",
+              "ongoing",
+              "completed",
+              "delivered",
+              "rejected",
+            ]}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={3} // Set the number of columns to 3
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 15,
+                  paddingVertical: 10,
+                  borderRadius: 40,
+                  margin: 5,
+                  backgroundColor: activeTab === item ? "#6904EC" : "#6904EC1A",
+                }}
+                onPress={() => setActiveTab(item)}
+              >
+                <Text
                   style={{
-                    flex: 1,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    borderRadius: 40,
-                    margin: 5,
-                    backgroundColor:
-                      activeTab === item ? "#6904EC" : "#6904EC1A",
-                  }}
-                  onPress={() => setActiveTab(item)}
-                >
-                  <Text
-                    style={{
-                      color: activeTab === item ? "white" : "#6904EC",
-                      textAlign: "center",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-          <View style={{ marginTop: 20, marginBottom: 100 }}>
-            <FlatList
-              data={get_all_order_history_data?.data?.orders}
-              renderItem={renderOrder}
-              keyExtractor={(item) => item?._id}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flex: 1,
+                    color: activeTab === item ? "white" : "#6904EC",
+                    textAlign: "center",
+                    textTransform: "capitalize",
                   }}
                 >
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      fontSize: 20,
-                      color: "#2B025F",
-                      marginTop: 60,
-                    }}
-                  >
-                    No Order History
-                  </Text>
-                </View>
-              }
-            />
-          </View>
-        </ScrollView>
-      )}
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        <View style={{ flex: 1, marginTop: 20, marginBottom: 100 }}>
+          <FlatList
+            data={get_all_order_history_data?.data?.orders}
+            renderItem={renderOrder}
+            keyExtractor={(item) => item?._id}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flex: 1,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    fontSize: 20,
+                    color: "#2B025F",
+                    marginTop: 60,
+                  }}
+                >
+                  No Order History
+                </Text>
+              </View>
+            }
+          />
+        </View>
+      </View>
     </AppScreenThree>
   );
 }
