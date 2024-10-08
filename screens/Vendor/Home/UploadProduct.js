@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -181,188 +182,183 @@ const UploadProduct = () => {
   };
   return (
     <AppScreenThree arrrow={"true"} title={"Upload Product"}>
-      <ScrollView style={styles.container}>
-        <View style={{ marginBottom: 30 }}>
-          <Text style={styles.sectionTitle}>Product Details</Text>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Cake Name</Text>
-            <TextInput
-              style={styles.input}
-              value={cakeName}
-              onChangeText={(text) => setCakeName(text)}
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Price</Text>
-            <TextInput
-              style={styles.input}
-              value={price.toString()}
-              onChangeText={(text) => setPrice(text)}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Description</Text>
-            <TextInput
-              style={[styles.input, { height: 80 }]}
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-            />
-          </View>
-
-          <TouchableOpacity style={styles.uploadContainer} onPress={pickImage}>
-            <View style={styles.uploadContent}>
-              <Image
-                source={{ uri: "https://example.com/upload-icon.png" }}
-                style={styles.icon}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingHorizontal: 10 }}
+      >
+        <View style={{ flexDirection: "column", gap: 50 }}>
+          <View style={{ marginTop: 30, gap: 24 }}>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Cake Name</Text>
+              <TextInput
+                style={styles.input}
+                value={cakeName}
+                onChangeText={(text) => setCakeName(text)}
               />
-              <Text style={styles.uploadText}>Upload Images</Text>
             </View>
-          </TouchableOpacity>
 
-          {/* <FlatList
-            data={pictures}
-            horizontal
-            keyExtractor={(item) => item.uri} // Use unique URIs
-            renderItem={({ item }) => (
-              <Image source={{ uri: item.uri }} style={styles.uploadedImage} />
-            )}
-          /> */}
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Price</Text>
+              <TextInput
+                style={styles.input}
+                value={price.toString()}
+                onChangeText={(text) => setPrice(text)}
+                keyboardType="numeric"
+              />
+            </View>
 
-          <FlatList
-            data={pictures}
-            horizontal
-            keyExtractor={(item) => item.uri} // Use unique URIs
-            renderItem={({ item, index }) => (
-              <View style={styles.imageContainer}>
-                <Image
-                  source={{ uri: item.uri }}
-                  style={styles.uploadedImage}
-                />
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => handleRemoveImage(index)}
-                >
-                  <Text style={styles.deleteButtonText}>X</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          />
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Description</Text>
+              <TextInput
+                style={[styles.input, { height: 80 }]}
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+              />
+            </View>
 
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Size</Text>
-            <TextInput
-              style={styles.input}
-              value={size}
-              onChangeText={(text) => setSize(text)}
-            />
-          </View>
-
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Number of Layers</Text>
-            <TextInput
-              style={styles.input}
-              value={layers.toString()}
-              onChangeText={(text) => setLayers(text)}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              paddingHorizontal: 20,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                marginBottom: 10,
-              }}
-            >
-              Select Category:
-            </Text>
             <TouchableOpacity
+              style={styles.uploadContainer}
+              onPress={pickImage}
+            >
+              <View style={styles.uploadContent}>
+                {/* <Image
+                  source={{ uri: "https://example.com/upload-icon.png" }}
+                  style={styles.icon}
+                /> */}
+                <Text style={styles.uploadText}>Upload Images</Text>
+              </View>
+            </TouchableOpacity>
+
+            <FlatList
+              data={pictures}
+              horizontal
+              keyExtractor={(item) => item.uri} // Use unique URIs
+              renderItem={({ item, index }) => (
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{ uri: item.uri }}
+                    style={styles.uploadedImage}
+                  />
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => handleRemoveImage(index)}
+                  >
+                    <Text style={styles.deleteButtonText}>X</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Size</Text>
+              <TextInput
+                style={styles.input}
+                value={size}
+                onChangeText={(text) => setSize(text)}
+              />
+            </View>
+
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Number of Layers</Text>
+              <TextInput
+                style={styles.input}
+                value={layers.toString()}
+                onChangeText={(text) => setLayers(text)}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View
               style={{
-                borderWidth: 1,
-                borderColor: "#ccc",
-                padding: 10,
-                borderRadius: 5,
+                flex: 1,
+                justifyContent: "center",
+                // paddingHorizontal: 20,
               }}
-              onPress={() => setIsModalVisible(true)}
             >
               <Text
                 style={{
-                  fontSize: 16,
-                  textTransform: "lowercase",
+                  fontSize: 18,
+                  marginBottom: 10,
                 }}
               >
-                {selectedStatus}
+                Select Category:
               </Text>
-            </TouchableOpacity>
-
-            <Modal
-              visible={isModalVisible}
-              transparent={true}
-              animationType="slide"
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                }}
+              <TouchableOpacity
+                style={styles.input}
+                onPress={() => setIsModalVisible(true)}
               >
-                <View
+                <Text
                   style={{
-                    backgroundColor: "white",
-                    width: "80%",
-                    borderRadius: 10,
-                    padding: 20,
+                    fontSize: 16,
+                    textTransform: "lowercase",
                   }}
                 >
-                  <FlatList
-                    data={get_all_categories_data?.data?.categories}
-                    keyExtractor={(item) => item._id}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={{
-                          paddingVertical: 10,
-                        }}
-                        onPress={() => handleStatusSelect(item?.name)}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 18,
-                            textTransform: "lowercase",
-                          }}
-                        >
-                          {item?.name}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              </View>
-            </Modal>
-          </View>
-        </View>
+                  {selectedStatus}
+                </Text>
+              </TouchableOpacity>
 
-        {profileImagemutation?.isLoading ? (
-          <ActivityIndicator size="large" color="green" />
-        ) : (
+              <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType="slide"
+              >
+                <TouchableWithoutFeedback
+                  onPress={() => setIsModalVisible(!isModalVisible)}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        width: "80%",
+                        borderRadius: 10,
+                        padding: 20,
+                      }}
+                    >
+                      <FlatList
+                        data={get_all_categories_data?.data?.categories}
+                        keyExtractor={(item) => item._id}
+                        renderItem={({ item }) => (
+                          <TouchableOpacity
+                            style={{
+                              paddingVertical: 10,
+                            }}
+                            onPress={() => handleStatusSelect(item?.name)}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 18,
+                                textTransform: "lowercase",
+                              }}
+                            >
+                              {item?.name}
+                            </Text>
+                          </TouchableOpacity>
+                        )}
+                      />
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              </Modal>
+            </View>
+          </View>
           <TouchableOpacity
             style={styles.submitButton}
             onPress={uploadProductHandler}
           >
-            <Text style={styles.submitButtonText}>Submit Product</Text>
+            {profileImagemutation?.isLoading ? (
+              <ActivityIndicator size="large" color="green" />
+            ) : (
+              <Text style={styles.submitButtonText}>Upload Product</Text>
+            )}
           </TouchableOpacity>
-        )}
+        </View>
       </ScrollView>
     </AppScreenThree>
   );
@@ -372,8 +368,10 @@ export default UploadProduct;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
-    marginTop: 50,
+    marginTop: 60,
+    backgroundColor: "white",
   },
   sectionTitle: {
     fontSize: 18,
@@ -381,28 +379,39 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   formGroup: {
-    marginBottom: 15,
+    flexDirection: "column",
+    gap: 5,
+  },
+  input: {
+    borderWidth: 0.5,
+    borderColor: "#4C060E",
+    height: 48,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
   },
   label: {
     fontSize: 16,
-    marginBottom: 5,
+    fontWeight: "400",
+    color: "#000000",
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    borderRadius: 5,
-  },
+  // uploadContainer: {
+  //   marginTop: 20,
+  //   borderColor: "#ccc",
+  //   borderWidth: 1,
+  //
+  //   borderRadius: 5,
+
+  // },
   uploadContainer: {
-    marginTop: 20,
-    borderColor: "#ccc",
+    width: "100%",
+    padding: 20,
     borderWidth: 1,
-    padding: 10,
-    borderRadius: 5,
-  },
-  uploadContent: {
-    flexDirection: "row",
+    borderColor: "#4C060E", 
+    borderStyle: "dashed",
     alignItems: "center",
+    borderRadius: 5,
+    backgroundColor: "#f9f9f9", // Optional: Background color for the container
   },
   icon: {
     width: 30,
@@ -419,10 +428,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   submitButton: {
-    backgroundColor: "green",
-    padding: 15,
-    borderRadius: 5,
+    backgroundColor: "#6904EC",
+    paddingHorizontal: 20,
+    paddingVertical:10,
+    borderRadius: 50,
     alignItems: "center",
+    marginBottom:50
   },
   submitButtonText: {
     color: "#fff",

@@ -93,7 +93,7 @@ const Home = () => {
             flexDirection: "row",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, justifyContent:'center' }}>
             <Image
               source={{ uri: current_vendor_profile_data?.data?.image }}
               style={{ width: 30, height: 30, borderRadius: 20 }}

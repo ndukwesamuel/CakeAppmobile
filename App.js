@@ -103,9 +103,9 @@ export const NavigationScreen = () => {
 
   const { user_data } = useSelector((state) => state?.Auth);
 
-  console.log({
-    asdd: user_data,
-  });
+  // console.log({
+  //   asdd: user_data,
+  // });
 
   return (
     <NavigationContainer>
