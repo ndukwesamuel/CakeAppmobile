@@ -50,7 +50,7 @@ const Profile = () => {
             {user_profile_data?.data?.user?.lastName}
           </Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate("editProfile")}>
+          <TouchableOpacity onPress={() => navigation.navigate("editProfile",{user_profile_data})}>
             <Text style={{fontSize:14, fontWeight:"400", textDecorationLine:"underline", color:"#6904EC"}}>Edit Profile </Text>
           </TouchableOpacity>
         </View>
