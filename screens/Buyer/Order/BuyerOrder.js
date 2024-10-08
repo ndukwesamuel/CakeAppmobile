@@ -36,13 +36,16 @@ export default function BuyerOrder() {
   const [pay, setPay] = useState(false);
   const [fluterwaveObj, setfluterwaveObj] = useState("");
   const { user_data } = useSelector((state) => state.Auth);
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
 
   const { get_all_order_history_data } = useSelector(
     (state) => state?.OrderSlice
   );
+
+  console.log({ orderhistory: get_all_order_history_data.data.orders });
   const [paystackInfo, setPaystackInfo] = useState(null);
 
-  console.log({ azzz: user_data?.data?.token });
+  // console.log({ azzz: user_data?.data?.token });
 
   useEffect(() => {
     // dispatch(UserProfile_Fun());
@@ -53,10 +56,10 @@ export default function BuyerOrder() {
     (data_info) => {
       let url = `${API_BASEURL}v1/order/pay/${data_info}`;
 
-      console.log({
-        url,
-        datas: data_info, //get_single_order_history_data?.order?._id,
-      });
+      // console.log({
+      //   url,
+      //   datas: data_info, //get_single_order_history_data?.order?._id,
+      // });
 
       const config = {
         headers: {
@@ -71,9 +74,9 @@ export default function BuyerOrder() {
     },
     {
       onSuccess: (success) => {
-        console.log({
-          sa: success?.data,
-        });
+        // console.log({
+        //   sa: success?.data,
+        // });
 
         setPaystackInfo(success?.data?.authorizationUrl);
         Toast.show({
@@ -83,9 +86,9 @@ export default function BuyerOrder() {
       },
 
       onError: (error) => {
-        console.log({
-          error: error,
-        });
+        // console.log({
+        //   error: error,
+        // });
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
@@ -102,6 +105,51 @@ export default function BuyerOrder() {
 
     // Wait for 2 seconds
     setRefreshing(false);
+  };
+
+  const updateOrder_Mutation = useMutation(
+    async ({ formData, token, item }) => {
+      console.log({ iddd: item });
+      try {
+        const response = await axios.patch(
+          `https://cake-app-server.onrender.com/api/v1/order/${item}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        // console.log({ applicationform: error });
+        throw error;
+      }
+    },
+    {
+      onSuccess: (success) => {
+        onRefresh();
+        Toast.show({
+          type: "success",
+          text1: `Status successfully updated`,
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
+
+  const handleReceived = (item) => {
+    console.log({ id: item });
+    const formData = {
+      status: "received",
+    };
+    updateOrder_Mutation.mutate({ formData, token, item });
   };
 
   const renderOrder = ({ item }) => (
@@ -123,9 +171,11 @@ export default function BuyerOrder() {
         <Text>{formatTime(item?.updatedAt)}</Text>
       </View>
 
-      <Text style={{ color: "#2B025F", fontSize: 14, fontWeight: "400" }}>
-        {item?.cake?.description}
-      </Text>
+      {item?.status !== "rejected" && (
+        <Text style={{ color: "#2B025F", fontSize: 14, fontWeight: "400" }}>
+          {item?.cake?.description}
+        </Text>
+      )}
 
       {item?.status === "accepted" && (
         <View
@@ -147,24 +197,64 @@ export default function BuyerOrder() {
           )}
         </View>
       )}
-      {item?.status === "delivered" && (
-        <TouchableOpacity style={[styles.button, { alignSelf: "flex-end" }]}>
-          <Text style={{ color: "white", textAlign: "center" }}>
-            Mark as delivered
-          </Text>
+      {item?.status === "completed" && (
+        <TouchableOpacity
+          style={[styles.button, { alignSelf: "flex-end" }]}
+          onPress={() => handleReceived(item._id)}
+        >
+          {updateOrder_Mutation.isLoading ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Text style={{ color: "white", textAlign: "center" }}>
+              Mark as Received
+            </Text>
+          )}
         </TouchableOpacity>
       )}
       {item?.status === "request" && (
         <View style={{ gap: 10 }}>
-          <View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>
               Ongoing
             </Text>
+            <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>0%</Text>
+          </View>
+          <View
+            style={{ backgroundColor: "#ECDDFF", height: 10, borderRadius: 20 }}
+          ></View>
+        </View>
+      )}
+      
+      {item?.status === "received" && (
+        <View style={{ gap: 10 }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>
+              Ongoing
+            </Text>
+            <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>100%</Text>
           </View>
 
           <View
-            style={{ backgroundColor: "#6904EC", height: 15, borderRadius: 20 }}
-          ></View>
+            style={{ backgroundColor: "#ECDDFF", height: 10, borderRadius: 20 }}
+          >
+            <View
+              style={{
+                backgroundColor: "#6904EC",
+                height: 10,
+                borderRadius: 20,
+                // width: "30%",
+              }}
+            ></View>
+          </View>
+        </View>
+      )}
+      {item?.status === "rejected" && (
+        <View>
+          <Text>{item?.reason}</Text>
         </View>
       )}
     </TouchableOpacity>
@@ -187,10 +277,10 @@ export default function BuyerOrder() {
               key={3} // Force re-render when numColumns changes (use a static key based on numColumns)
               data={[
                 "request",
-                "accepted",
                 "ongoing",
+                "accepted",
                 "completed",
-                "delivered",
+                "received",
                 "rejected",
               ]}
               keyExtractor={(item, index) => index.toString()}
