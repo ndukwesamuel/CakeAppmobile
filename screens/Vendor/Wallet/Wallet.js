@@ -1,4 +1,6 @@
 import {
+  ActivityIndicator,
+  FlatList,
   Modal,
   ScrollView,
   StyleSheet,
@@ -15,24 +17,87 @@ import {
   Get_All_Banks_Fun,
   Get_Wallet_Details_Fun,
 } from "../../../Redux/Vendor/WalletSlice";
+import { useMutation } from "react-query";
+import axios from "axios";
+import Toast from "react-native-toast-message";
 
 export default function Wallet() {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   const { get_banks_data, wallet_details_data } = useSelector(
     (state) => state?.VendorsSlice?.WalletSlice
   );
-  console.log({
-    banks: get_banks_data,
-    wallet: wallet_details_data.data.wallet,
-  });
+  console.log({ wallet: wallet_details_data?.data?.wallet });
 
   const [accountModal, setAccountModal] = useState(false);
+  const [bankModal, setBankModal] = useState(false);
+  const [selectedBank, setSelectedBank] = useState(null); // State to store selected bank
+  const [searchQuery, setSearchQuery] = useState(""); // Search input state
+  const [bankCode, setbankCode] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+
   useEffect(() => {
     dispatch(Get_All_Banks_Fun());
     dispatch(Get_Wallet_Details_Fun());
   }, []);
+
+  // Handle bank selection
+  const handleBankSelect = (bank) => {
+    setSelectedBank(bank); // Set the selected bank in state
+    setBankModal(false); // Close the bank modal after selection
+    setbankCode(bank?.code);
+  };
+
+  // Filter the banks list based on search query
+  const filteredBanks = get_banks_data?.data?.banks.filter((bank) =>
+    bank?.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const Update_Mutation = useMutation(
+    async ({ formData, token }) => {
+      try {
+        const response = await axios.patch(
+          "https://cake-app-server.onrender.com/api/v1/vendor/wallet/update-virtual-account",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+    },
+    {
+      onSuccess: (success) => {
+        // navigation.navigate("home")
+        // console.log({success:success})
+        Toast.show({
+          type: "success",
+          text1: `Bank details successfully updated`,
+        });
+      },
+      onError: (error) => {
+        // console.log(error)
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
+
+  const handleUpdateBankDetails = (item) => {
+    const formData = {
+      bankCode: bankCode,
+      accountNumber: accountNumber,
+    };
+    Update_Mutation.mutate({ formData, token });
+  };
   return (
-    <AppScreenThree arrrow={"true"} title={"Wallet"}>
+    <AppScreenThree arrow={"true"} title={"Wallet"}>
       <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
         <View style={[styles.SubContainer, { alignItems: "center" }]}>
           <Text style={{ color: "#020D44", fontSize: 16, fontWeight: "500" }}>
@@ -45,6 +110,7 @@ export default function Wallet() {
             <Text style={{ color: "white", fontSize: 16 }}>Withdraw</Text>
           </TouchableOpacity>
         </View>
+
         {/* Account Details */}
         <View style={[styles.SubContainer, { gap: 20 }]}>
           <Text style={styles.title}>Account Details</Text>
@@ -58,20 +124,27 @@ export default function Wallet() {
             </TouchableOpacity>
             <View style={styles.viewGroup}>
               <Text style={styles.key}>Name of account</Text>
-              <Text style={styles.value}>-</Text>
+              <Text style={styles.value}>
+                {wallet_details_data?.data?.wallet?.name || ""}
+              </Text>
             </View>
             <View style={styles.viewGroup}>
               <Text style={styles.key}>Account Number</Text>
-              <Text style={styles.value}>-</Text>
+              <Text style={styles.value}>
+                {wallet_details_data?.data?.wallet?.bankAccountNumber || ""}
+              </Text>
             </View>
             <View style={styles.viewGroup}>
               <Text style={styles.key}>Bank Name</Text>
-              <Text style={styles.value}>-</Text>
+              <Text style={styles.value}>
+                {wallet_details_data?.data?.wallet?.bankName || ""}
+              </Text>
             </View>
           </View>
         </View>
 
-        <Modal visible={accountModal} transparent={true} animationType="Slide">
+        {/* Account Modal */}
+        <Modal visible={accountModal} transparent={true} animationType="slide">
           <TouchableWithoutFeedback
             onPress={() => setAccountModal(!accountModal)}
           >
@@ -82,30 +155,91 @@ export default function Wallet() {
                 >
                   Update Bank Details
                 </Text>
-                <View>
+                <View style={{ gap: 5 }}>
                   <View style={styles.viewGroup}>
                     <Text style={styles.key}>Name of account</Text>
-                    <Text style={styles.value}>-</Text>
+                    <Text style={styles.value}>
+                      {wallet_details_data?.data?.wallet?.name || ""}
+                    </Text>
                   </View>
                   <View style={styles.viewGroup}>
                     <Text style={styles.key}>Account Number</Text>
-                    <Text style={styles.value}>-</Text>
+                    <Text style={styles.value}>
+                      {wallet_details_data?.data?.wallet?.bankAccountNumber ||
+                        ""}
+                    </Text>
                   </View>
                   <View style={styles.viewGroup}>
                     <Text style={styles.key}>Bank Name</Text>
-                    <Text style={styles.value}>-</Text>
+                    <Text style={styles.value}>
+                      {wallet_details_data?.data?.wallet?.bankName || ""}
+                    </Text>
                   </View>
                 </View>
 
-                <View>
+                <View style={{ gap: 15 }}>
                   <View style={styles.inputGroup}>
                     <Text style={styles.inputLabel}>Bank Name</Text>
-                    <TextInput style={styles.input}/>
+                    <TouchableOpacity
+                      style={[styles.input, { justifyContent: "center" }]}
+                      onPress={() => setBankModal(!bankModal)}
+                    >
+                      <Text>
+                        {selectedBank ? selectedBank.name : "Select a bank"}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.inputGroup}>
-                    <Text style={styles.inputLabel}>Account Name</Text>
-                    <TextInput style={styles.input}/>
+                    <Text style={styles.inputLabel}>Account Number</Text>
+                    <TextInput
+                      style={styles.input}
+                      keyboardType="phone-pad"
+                      value={accountNumber}
+                      onChangeText={(text) => setAccountNumber(text)}
+                    />
                   </View>
+                  <TouchableOpacity
+                    onPress={handleUpdateBankDetails}
+                    style={[styles.button, { borderRadius: 10 }]}
+                  >
+                    {Update_Mutation.isLoading ? (
+                      <ActivityIndicator size="small" color="white" />
+                    ) : (
+                      <Text style={{ textAlign: "center", color: "white" }}>
+                        Update Bank Details
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
+        {/* Bank Modal */}
+        <Modal visible={bankModal} transparent={true} animationType="slide">
+          <TouchableWithoutFeedback onPress={() => setBankModal(!bankModal)}>
+            <View style={styles.modalOverlay}>
+              <View style={[styles.modalContent, { height: "60%" }]}>
+                <View>
+                  {/* Search Input */}
+                  <TextInput
+                    style={[styles.input, { marginVertical: 10 }]}
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChangeText={setSearchQuery} // Update search query on input
+                  />
+                  {/* List of Banks */}
+                  <FlatList
+                    contentContainerStyle={{ gap: 10 }}
+                    data={filteredBanks} // Use filtered banks for search
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity onPress={() => handleBankSelect(item)}>
+                        <Text>{item?.name}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
                 </View>
               </View>
             </View>
@@ -114,7 +248,7 @@ export default function Wallet() {
 
         {/* Transaction History */}
         <View style={[styles.SubContainer]}>
-          <Text style={styles.title}>Transaction History</Text>
+          <Text style={[styles.title]}>Transaction History</Text>
         </View>
       </ScrollView>
     </AppScreenThree>
@@ -167,7 +301,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F9FF",
     padding: 20,
     borderRadius: 10,
-    // alignItems: "center",
+    gap: 20,
+    paddingBottom: 50,
   },
   inputGroup: {
     gap: 10,

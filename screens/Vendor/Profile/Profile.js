@@ -30,9 +30,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const user_data = useSelector((state) => state?.Auth?.user_profile_data);
-  const { current_vendor_profile_data } = useSelector((state) => state.Auth);
+  const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
   // console.log({ userrrrrrrr: user });
-  console.log({ profile: current_vendor_profile_data.data.vendorProfile });
+  console.log({ profile: current_vendor_profile_data?.data?.vendorProfile });
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
@@ -173,7 +173,7 @@ const Profile = () => {
             >
               <Text style={styles.key}>Business Name</Text>
               <Text style={styles.value}>
-                {current_vendor_profile_data.data.vendorProfile.businessName}
+                {current_vendor_profile_data?.data?.vendorProfile?.businessName}
               </Text>
             </View>
             <View
@@ -188,8 +188,8 @@ const Profile = () => {
                 style={[styles.value, { width: "50%", textAlign: "right" }]}
               >
                 {
-                  current_vendor_profile_data.data.vendorProfile
-                    .businessDescription
+                  current_vendor_profile_data?.data?.vendorProfile
+                    ?.businessDescription
                 }
               </Text>
             </View>
@@ -202,7 +202,7 @@ const Profile = () => {
             >
               <Text style={styles.key}> C.A.C Number</Text>
               <Text style={styles.value}>
-                {current_vendor_profile_data.data.vendorProfile.CACNumber}
+                {current_vendor_profile_data?.data?.vendorProfile?.CACNumber}
               </Text>
             </View>
             <View
@@ -214,7 +214,7 @@ const Profile = () => {
             >
               <Text style={styles.key}>Nationality</Text>
               <Text style={styles.value}>
-                {current_vendor_profile_data.data.vendorProfile.nationality}
+                {current_vendor_profile_data?.data?.vendorProfile?.nationality}
               </Text>
             </View>
             <View
@@ -227,8 +227,8 @@ const Profile = () => {
               <Text style={styles.key}>Contact</Text>
               <Text style={styles.value}>
                 {
-                  current_vendor_profile_data.data.vendorProfile
-                    .businessCallLine
+                  current_vendor_profile_data?.data?.vendorProfile
+                    ?.businessCallLine
                 }
               </Text>
             </View>
