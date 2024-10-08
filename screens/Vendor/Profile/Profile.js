@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -14,6 +16,7 @@ import OrderHistory from "./OrderHistory";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Current_vendor_profile_Fun,
+  reset_login,
   UserProfile_Fun,
 } from "../../../Redux/AuthSlice";
 import { useNavigation } from "@react-navigation/native";
@@ -25,6 +28,7 @@ const Profile = () => {
   const navigation = useNavigation();
   const [profletab, setprofletab] = useState("order");
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
   const user_data = useSelector((state) => state?.Auth?.user_profile_data);
   const { current_vendor_profile_data } = useSelector((state) => state.Auth);
   // console.log({ userrrrrrrr: user });
@@ -127,7 +131,14 @@ const Profile = () => {
               {user_data?.data?.user?.firstName}{" "}
               {user_data?.data?.user?.lastName}
             </Text>
-            <Pressable onPress={() => navigation.navigate("applicationForm", vendorProfile={current_vendor_profile_data})}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate(
+                  "applicationForm",
+                  (vendorProfile = { current_vendor_profile_data })
+                )
+              }
+            >
               <Text
                 style={{
                   color: "#6904EC",
@@ -153,7 +164,12 @@ const Profile = () => {
           </Text>
           <View style={{ gap: 12 }}>
             <View
-              style={{ flexDirection: "row",gap:10, justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}>Business Name</Text>
               <Text style={styles.value}>
@@ -161,10 +177,16 @@ const Profile = () => {
               </Text>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}>Business Description</Text>
-              <Text style={[styles.value, {width:"50%", textAlign:"right"}]}>
+              <Text
+                style={[styles.value, { width: "50%", textAlign: "right" }]}
+              >
                 {
                   current_vendor_profile_data.data.vendorProfile
                     .businessDescription
@@ -172,7 +194,11 @@ const Profile = () => {
               </Text>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}> C.A.C Number</Text>
               <Text style={styles.value}>
@@ -180,7 +206,11 @@ const Profile = () => {
               </Text>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}>Nationality</Text>
               <Text style={styles.value}>
@@ -188,7 +218,11 @@ const Profile = () => {
               </Text>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}>Contact</Text>
               <Text style={styles.value}>
@@ -200,13 +234,58 @@ const Profile = () => {
             </View>
 
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Text style={styles.key}></Text>
               <Text style={styles.value}></Text>
             </View>
           </View>
         </View>
+        <View style={{ backgroundColor: "white", padding: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              setOpenModal(!openModal);
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: "700" }}> Log Out </Text>
+          </TouchableOpacity>
+        </View>
+        <Modal visible={openModal} transparent={true} animationType="slide">
+          <TouchableWithoutFeedback onPress={() => setOpenModal(!openModal)}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <Text>Logging Out</Text>
+                <Text>
+                  Are you sure you want to log out of the application?
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    gap: 30,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#DD293E" }]}
+                    onPress={() => dispatch(reset_login())}
+                  >
+                    <Text style={{ color: "white" }}>Yes</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#6904EC" }]}
+                    onPress={() => setOpenModal(!openModal)}
+                  >
+                    <Text style={{ color: "white" }}>No</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     </AppScreenThree>
   );
@@ -237,24 +316,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
   },
-  // buttonstyleTrue: {
-  //   backgroundColor: "#DD293E",
-  //   padding: 12,
-  //   paddingHorizontal: 20,
-  //   paddingVertical: 10,
-  //   borderRadius: 30,
-  // },
-  // buttonstyleFalse: {
-  //   // backgroundColor: "#F0F0F0", // Define a background color for inactive buttons
-  //   padding: 12,
-  //   paddingHorizontal: 15,
-  //   paddingVertical: 10,
-  //   borderRadius: 30,
-  // },
-  // applicationform:{
-  //   textAlign:"right",
-  //   color:"#DD293E",
-  //   marginRight:20
-
-  // }
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  modalContent: {
+    width: "100%",
+    backgroundColor: "white",
+    padding: 20,
+    width: "100%",
+    gap: 20,
+    paddingVertical: 50,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 50,
+  },
 });

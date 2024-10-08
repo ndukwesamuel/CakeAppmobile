@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -109,7 +109,7 @@ const ApplicationPreview = () => {
             </View>
             {/* button */}
             <Pressable style={styles.button} onPress={handleSubmit}>
-              <Text
+              {ApplicationForm_Mutation.isLoading? (<ActivityIndicator size="small" color="white"/>):(<Text
                 style={{
                   textAlign: "center",
                   color: "white",
@@ -118,7 +118,7 @@ const ApplicationPreview = () => {
                 }}
               >
                 Submit
-              </Text>
+              </Text>)}
             </Pressable>
           </View>
         </View>
