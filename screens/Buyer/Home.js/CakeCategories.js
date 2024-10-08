@@ -124,7 +124,7 @@ const CakeCategories = () => {
           )}
         />
       </View> */}
-      <ScrollView style={{ flex: 1, marginTop: 10 }}>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <FlatList
           data={get_all_categories_data?.data?.categories}
           renderItem={({ item }) => <ImageCard item={item} />}
@@ -148,7 +148,7 @@ const CakeCategories = () => {
             </View>
           }
         />
-      </ScrollView>
+      </View>
     </View>
   );
 };

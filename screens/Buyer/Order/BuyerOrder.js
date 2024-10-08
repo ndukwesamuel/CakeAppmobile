@@ -226,6 +226,31 @@ export default function BuyerOrder() {
           ></View>
         </View>
       )}
+      {item?.status === "ongoing" && (
+        <View style={{ gap: 10 }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>
+              Ongoing
+            </Text>
+            <Text style={{ color: "#2B025F", fontSize: 16, fontWeight: "400" }}>30%</Text>
+          </View>
+
+          <View
+            style={{ backgroundColor: "#ECDDFF", height: 10, borderRadius: 20 }}
+          >
+            <View
+              style={{
+                backgroundColor: "#6904EC",
+                height: 10,
+                borderRadius: 20,
+                width: "30%",
+              }}
+            ></View>
+          </View>
+        </View>
+      )}
       
       {item?.status === "received" && (
         <View style={{ gap: 10 }}>
@@ -270,15 +295,15 @@ export default function BuyerOrder() {
           source={{ uri: paystackInfo }}
         />
       ) : (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
           {/* Active buttons */}
           <View>
             <FlatList
               key={3} // Force re-render when numColumns changes (use a static key based on numColumns)
               data={[
                 "request",
-                "ongoing",
                 "accepted",
+                "ongoing",
                 "completed",
                 "received",
                 "rejected",
@@ -343,7 +368,7 @@ export default function BuyerOrder() {
               }
             />
           </View>
-        </ScrollView>
+        </View>
       )}
     </AppScreenThree>
   );
