@@ -20,6 +20,7 @@ import {
 import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wallet() {
   const dispatch = useDispatch();
@@ -31,10 +32,12 @@ export default function Wallet() {
 
   const [accountModal, setAccountModal] = useState(false);
   const [bankModal, setBankModal] = useState(false);
+  const [withdrawalModal, setWithdrawalModal] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null); // State to store selected bank
   const [searchQuery, setSearchQuery] = useState(""); // Search input state
   const [bankCode, setbankCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [amount, setAmount] = useState(0);
 
   useEffect(() => {
     dispatch(Get_All_Banks_Fun());
@@ -43,8 +46,8 @@ export default function Wallet() {
 
   // Handle bank selection
   const handleBankSelect = (bank) => {
-    setSelectedBank(bank); // Set the selected bank in state
-    setBankModal(false); // Close the bank modal after selection
+    setSelectedBank(bank);
+    setBankModal(false);
     setbankCode(bank?.code);
   };
 
@@ -72,15 +75,12 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        // navigation.navigate("home")
-        // console.log({success:success})
         Toast.show({
           type: "success",
           text1: `Bank details successfully updated`,
         });
       },
       onError: (error) => {
-        // console.log(error)
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
@@ -96,6 +96,44 @@ export default function Wallet() {
     };
     Update_Mutation.mutate({ formData, token });
   };
+
+  const Withdrawal_Mutation = useMutation(
+    (data) => {
+      const url = `${API_BASEURL}v1/vendor/wallet/withdraw`;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return axios.post(url, data, config);
+    },
+    {
+      onSuccess: (success) => {
+        dispatch(Get_Wallet_Details_Fun())
+        setWithdrawalModal(!withdrawalModal)
+        Toast.show({
+          type: "success",
+          text1: `${success?.data?.message} `,
+        });
+      },
+
+      onError: (error) => {
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
+  const handleWithdrawal = () => {
+    const data = {
+      amount: amount
+    }
+    Withdrawal_Mutation.mutate(data)
+  }
+
   return (
     <AppScreenThree arrow={"true"} title={"Wallet"}>
       <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
@@ -106,7 +144,10 @@ export default function Wallet() {
           <Text style={{ fontSize: 32, fontWeight: "900" }}>
             {wallet_details_data?.data?.wallet?.balance}
           </Text>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setWithdrawalModal(!withdrawalModal)}
+          >
             <Text style={{ color: "white", fontSize: 16 }}>Withdraw</Text>
           </TouchableOpacity>
         </View>
@@ -241,6 +282,68 @@ export default function Wallet() {
                     )}
                   />
                 </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
+        {/* Withdrawal Modal */}
+        <Modal
+          visible={withdrawalModal}
+          animationType="slide"
+          transparent={true}
+        >
+          <TouchableWithoutFeedback
+            onPress={() => setWithdrawalModal(!withdrawalModal)}
+          >
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <Text>Withdraw Funds</Text>
+                <View>
+                  <Text>
+                    Balance:{" "}
+                    <Text>{wallet_details_data?.data?.wallet?.balance}</Text>
+                  </Text>
+                  <Text>
+                    Bank Name:{" "}
+                    <Text>{wallet_details_data?.data?.wallet?.name || ""}</Text>
+                  </Text>
+                  <Text>
+                    Account Number:{" "}
+                    <Text>
+                      {wallet_details_data?.data?.wallet?.bankAccountNumber ||
+                        ""}
+                    </Text>
+                  </Text>
+                  <Text>
+                    Account Name:{" "}
+                    <Text>
+                      {" "}
+                      {wallet_details_data?.data?.wallet?.bankName || ""}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.inputLabel}>Amount</Text>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType="phone-pad"
+                    value={amount}
+                    onChangeText={(text) => setAmount(text)}
+                  />
+                </View>
+                <TouchableOpacity
+                onPress={handleWithdrawal}
+                  style={[styles.button, { borderRadius: 10 }]}
+                >
+                  {Withdrawal_Mutation.isLoading ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                  <Text style={{ textAlign: "center", color: "white" }}>
+                    Withdraw
+                  </Text>
+                  )} 
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>
