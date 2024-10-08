@@ -45,7 +45,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
         },
       };
       const response = await axios.get(`${API_BASEURL}v1/vendor/order`, config);
-      console.log({allOrders: response.data})
+      // console.log({allOrders: response.data})
 
       return response.data;
     } catch (error) {
