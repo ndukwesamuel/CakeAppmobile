@@ -298,7 +298,7 @@ export default function BuyerOrder() {
   );
 
   return (
-    <AppScreenThree>
+    <AppScreenThree arrrow={"true"} title="Orders">
       <View style={styles.container}>
         {/* Active buttons */}
         <View>
@@ -309,7 +309,7 @@ export default function BuyerOrder() {
               "accepted",
               "ongoing",
               "completed",
-              "delivered",
+              "received",
               "rejected",
             ]}
             keyExtractor={(item, index) => index.toString()}

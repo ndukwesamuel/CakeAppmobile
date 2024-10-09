@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -82,7 +83,7 @@ const CakeDetails = () => {
             style={{
               width: "100%",
               height: 150,
-              resizeMode: "stretch",
+              // resizeMode: "stretch",
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
             }}
@@ -93,7 +94,7 @@ const CakeDetails = () => {
               style={{
                 width: "50%",
                 height: 90,
-                resizeMode: "stretch",
+                // resizeMode: "stretch",
                 borderBottomLeftRadius: 12,
               }}
             />
@@ -102,7 +103,7 @@ const CakeDetails = () => {
               style={{
                 width: "50%",
                 height: 90,
-                resizeMode: "stretch",
+                // resizeMode: "stretch",
                 borderBottomRightRadius: 12,
               }}
             />
@@ -179,7 +180,7 @@ const CakeDetails = () => {
               <Pressable
                 onPress={() => Delete_Mutation.mutate(cakeData?.item?._id)}
               >
-                <Text
+                {Delete_Mutation.isLoading?(<ActivityIndicator size="small" color="red"/>):(<Text
                   style={{
                     textAlign: "center",
                     fontSize: 16,
@@ -189,7 +190,7 @@ const CakeDetails = () => {
                   }}
                 >
                   Delete
-                </Text>
+                </Text>)}
               </Pressable>
             </View>
           </View>

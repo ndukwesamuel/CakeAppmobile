@@ -30,6 +30,8 @@ export default function Wishlist() {
     return () => {};
   }, []);
 
+  console.log({wishlist: wishlist_data.wishlist.items})
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {

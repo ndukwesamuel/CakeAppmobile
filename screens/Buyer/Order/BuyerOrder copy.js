@@ -305,7 +305,7 @@ export default function BuyerOrder() {
               "accepted",
               "ongoing",
               "completed",
-              "delivered",
+              "received",
               "rejected",
             ]}
             keyExtractor={(item, index) => index.toString()}

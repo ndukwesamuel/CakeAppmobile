@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Get_All_Categories_Fun } from "../../../Redux/Buyer/CakeSlice";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
+import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -34,6 +36,7 @@ const UploadProduct = () => {
   const { get_all_categories_data } = useSelector((state) => state?.CakeSlice);
   const dispatch = useDispatch();
   const { user_isLoading, user_data } = useSelector((state) => state?.Auth);
+  const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -51,10 +54,10 @@ const UploadProduct = () => {
   };
 
   const [cakeName, setCakeName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
-  const [layers, setLayers] = useState(0);
+  const [layers, setLayers] = useState("");
   const [pictures, setPictures] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
 
@@ -78,6 +81,12 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (data) => {
+        dispatch(Current_vendor_profile_Fun());
+        dispatch(
+          Get_vendor_Cake_Fun({
+            vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
+          })
+        );
         // console.log({ firedata: data });
         Alert.alert(
           "Success",
@@ -117,7 +126,7 @@ const UploadProduct = () => {
         });
       },
       onError: (error) => {
-        console.log({ errrrrrrrrr: error});
+        console.log({ errrrrrrrrr: error });
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
