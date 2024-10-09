@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserProfile_Fun } from "../../../Redux/AuthSlice";
 
 export default function EditProfile() {
+  const navigation = useNavigation()
     const dispatch = useDispatch()
   const dataRoute = useRoute().params;
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
@@ -55,6 +56,7 @@ export default function EditProfile() {
     {
       onSuccess: (success) => {
         dispatch(UserProfile_Fun())
+        navigation.goBack()
         Toast.show({
           type: "success",
           text1: "Profile successfully updated",

@@ -39,6 +39,7 @@ const ApplicationPreview = () => {
       }
     },{
       onSuccess:(success)=>{
+        navigation.goBack()
         // navigation.navigate("home")
         // console.log({success:success})
         Toast.show({

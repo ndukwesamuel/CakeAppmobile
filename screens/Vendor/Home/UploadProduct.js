@@ -87,6 +87,7 @@ const UploadProduct = () => {
             vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
           })
         );
+        navigation.goBack()
         // console.log({ firedata: data });
         Alert.alert(
           "Success",
@@ -120,6 +121,7 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (success) => {
+        navigation.goBack()
         Toast.show({
           type: "success",
           text1: `Product successfully updated`,

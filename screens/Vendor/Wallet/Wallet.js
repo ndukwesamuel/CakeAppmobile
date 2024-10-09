@@ -75,6 +75,9 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
+        setAccountModal(!accountModal)
+        setAccountNumber('')
+        setSelectedBank("")
         Toast.show({
           type: "success",
           text1: `Bank details successfully updated`,

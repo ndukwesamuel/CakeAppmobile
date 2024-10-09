@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -126,17 +127,21 @@ const ImageCard = ({ item }) => {
           </Text>
         </Pressable>
         <Pressable onPress={() => Wish_Mutation.mutate()}>
-          <Text
-            style={{
-              textAlign: "center",
-              textDecorationLine: "underline",
-              fontWeight: "500",
-              fontSize: 14,
-              color: "#2B025F",
-            }}
-          >
-            Add to Wishlist
-          </Text>
+          {Wish_Mutation.isLoading ? (
+            <ActivityIndicator size="small" color="blue"/>
+          ) : (
+            <Text
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+                fontWeight: "500",
+                fontSize: 14,
+                color: "#2B025F",
+              }}
+            >
+              Add to Wishlist
+            </Text>
+          )}
         </Pressable>
       </View>
     </TouchableOpacity>
