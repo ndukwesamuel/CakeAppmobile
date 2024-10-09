@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Modal,
   Pressable,
   StyleSheet,
@@ -128,16 +129,20 @@ export default function OngoingModal({ item }) {
                   style={styles.button}
                   onPress={handleMarkAsDelivered}
                 >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "white",
-                      fontSize: 16,
-                      fontWeight: "400",
-                    }}
-                  >
-                    Mark as Delivered
-                  </Text>
+                  {updateOrder_Mutation.isLoading ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 16,
+                        fontWeight: "400",
+                      }}
+                    >
+                      Mark as Delivered
+                    </Text>
+                  )}
                 </Pressable>
               </View>
             </View>
