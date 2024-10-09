@@ -82,7 +82,7 @@ const Profile = () => {
               </Text>
             </Pressable>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 dispatch(reset_isOnboarding());
                 dispatch(reset_login());
@@ -105,7 +105,7 @@ const Profile = () => {
               >
                 Logout
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         {/* business display */}
@@ -208,7 +208,7 @@ const Profile = () => {
               setOpenModal(!openModal);
             }}
           >
-            <Text style={{ fontSize: 14, fontWeight: "700" }}> Log Out </Text>
+            <Text style={{ fontSize: 14, fontWeight: "700", color:"red", textAlign:"center"}}> Log Out </Text>
           </TouchableOpacity>
         </View>
         <Modal visible={openModal} transparent={true} animationType="slide">
