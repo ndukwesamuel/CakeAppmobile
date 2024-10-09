@@ -30,6 +30,7 @@ const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const UploadProduct = () => {
   const navigation = useNavigation();
+  const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   const { get_all_categories_data } = useSelector((state) => state?.CakeSlice);
   const dispatch = useDispatch();
   const { user_isLoading, user_data } = useSelector((state) => state?.Auth);
@@ -59,7 +60,7 @@ const UploadProduct = () => {
 
   const dataRoute = useRoute()?.params?.cakeData;
   const [editMode, setEditMode] = useState(false);
-  console.log({dataRoute: dataRoute?.item?.images})
+  console.log({ dataRoute: dataRoute?.item });
 
   const profileImagemutation = useMutation(
     (image_data) => {
@@ -91,9 +92,39 @@ const UploadProduct = () => {
     }
   );
 
-  // console.log({
-  //   gggd: get_all_categories_data?.data?.categories,
-  // });
+  const EditProduct_Mutation = useMutation(
+    async ({ formData, token }) => {
+      try {
+        const response = await axios.patch(
+          `${API_BASEURL}v1/vendor/cake/${dataRoute?.item?._id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+    },
+    {
+      onSuccess: (success) => {
+        Toast.show({
+          type: "success",
+          text1: `Product successfully updated`,
+        });
+      },
+      onError: (error) => {
+        console.log({ errrrrrrrrr: error});
+        Toast.show({
+          type: "error",
+          text1: `${error?.response?.data?.message} `,
+        });
+      },
+    }
+  );
 
   useEffect(() => {
     dispatch(Get_All_Categories_Fun());
@@ -103,7 +134,7 @@ const UploadProduct = () => {
       setDescription(dataRoute?.item?.description || "");
       setSize(dataRoute?.item?.cakeSize || "");
       setLayers(dataRoute?.item?.numberOfLayers || 0);
-      setPictures(dataRoute?.item?.images)
+      setPictures(dataRoute?.item?.images);
       setSelectedStatus(
         dataRoute.item.category ||
           get_all_categories_data?.data?.categories[0]?.name
@@ -177,6 +208,31 @@ const UploadProduct = () => {
     profileImagemutation.mutate(formData);
   };
 
+  const handleEditProduct = () => {
+    const formData = new FormData();
+    formData.append("name", cakeName);
+    formData.append("price", parseInt(price)); // Ensure correct type
+    formData.append("description", description);
+    formData.append("cakeSize", size);
+    formData.append("category", selectedStatus);
+    formData.append("numberOfLayers", parseInt(layers)); // Ensure correct type
+    formData.append("timeFrame", 2);
+
+    pictures.forEach((image, index) => {
+      if (Platform.OS === "web") {
+        formData.append("images", image.blob, `image${index}.jpg`);
+      } else {
+        formData.append("images", {
+          uri: image.uri,
+          name: `image${index}.jpg`,
+          type: "image/jpg",
+        });
+      }
+    });
+
+    EditProduct_Mutation.mutate({ formData, token });
+  };
+
   const handleRemoveImage = (index) => {
     const updatedPictures = [...pictures];
     updatedPictures.splice(index, 1); // Remove the image at the given index
@@ -241,7 +297,7 @@ const UploadProduct = () => {
               renderItem={({ item, index }) => (
                 <View style={styles.imageContainer}>
                   <Image
-                    source={{ uri: item.uri ||item?.url }}
+                    source={{ uri: item.uri || item?.url }}
                     style={styles.uploadedImage}
                   />
                   <TouchableOpacity
@@ -356,9 +412,9 @@ const UploadProduct = () => {
           {editMode ? (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={uploadProductHandler}
+              onPress={handleEditProduct}
             >
-              {profileImagemutation?.isLoading ? (
+              {EditProduct_Mutation?.isLoading ? (
                 <ActivityIndicator size="small" color="white" />
               ) : (
                 <Text style={styles.submitButtonText}>Upload Product</Text>
