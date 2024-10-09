@@ -111,6 +111,7 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
+        setAmount(0)
         dispatch(Get_Wallet_Details_Fun())
         setWithdrawalModal(!withdrawalModal)
         Toast.show({

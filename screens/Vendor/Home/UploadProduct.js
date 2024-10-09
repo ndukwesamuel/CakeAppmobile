@@ -24,9 +24,9 @@ import axios from "axios";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
-console.log({
-  fgf: API_BASEURL,
-});
+// console.log({
+//   fgf: API_BASEURL,
+// });
 
 const UploadProduct = () => {
   const navigation = useNavigation();
@@ -59,6 +59,7 @@ const UploadProduct = () => {
 
   const dataRoute = useRoute()?.params?.cakeData;
   const [editMode, setEditMode] = useState(false);
+  console.log({dataRoute: dataRoute?.item?.images})
 
   const profileImagemutation = useMutation(
     (image_data) => {
@@ -76,7 +77,7 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (data) => {
-        console.log({ firedata: data });
+        // console.log({ firedata: data });
         Alert.alert(
           "Success",
           "Product submitted successfully!",
@@ -85,23 +86,24 @@ const UploadProduct = () => {
         );
       },
       onError: (error) => {
-        console.log({ error: error?.response?.data });
+        // console.log({ error: error?.response?.data });
       },
     }
   );
 
-  console.log({
-    gggd: get_all_categories_data?.data?.categories,
-  });
+  // console.log({
+  //   gggd: get_all_categories_data?.data?.categories,
+  // });
 
   useEffect(() => {
     dispatch(Get_All_Categories_Fun());
     if (dataRoute?.item) {
-      setCakeName(dataRoute.item.name || "");
-      setPrice(dataRoute.item.price || 0);
-      setDescription(dataRoute.item.description || "");
-      setSize(dataRoute.item.cakeSize || "");
-      setLayers(dataRoute.item.numberOfLayers || 0);
+      setCakeName(dataRoute?.item?.name || "");
+      setPrice(dataRoute?.item?.price || 0);
+      setDescription(dataRoute?.item?.description || "");
+      setSize(dataRoute?.item?.cakeSize || "");
+      setLayers(dataRoute?.item?.numberOfLayers || 0);
+      setPictures(dataRoute?.item?.images)
       setSelectedStatus(
         dataRoute.item.category ||
           get_all_categories_data?.data?.categories[0]?.name
@@ -181,7 +183,10 @@ const UploadProduct = () => {
     setPictures(updatedPictures);
   };
   return (
-    <AppScreenThree arrrow={"true"} title={"Upload Product"}>
+    <AppScreenThree
+      arrrow={"true"}
+      title={editMode ? "Edit Product" : "Upload Product"}
+    >
       <ScrollView
         style={styles.container}
         contentContainerStyle={{ paddingHorizontal: 10 }}
@@ -236,7 +241,7 @@ const UploadProduct = () => {
               renderItem={({ item, index }) => (
                 <View style={styles.imageContainer}>
                   <Image
-                    source={{ uri: item.uri }}
+                    source={{ uri: item.uri ||item?.url }}
                     style={styles.uploadedImage}
                   />
                   <TouchableOpacity
@@ -348,16 +353,29 @@ const UploadProduct = () => {
               </Modal>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={uploadProductHandler}
-          >
-            {profileImagemutation?.isLoading ? (
-              <ActivityIndicator size="large" color="green" />
-            ) : (
-              <Text style={styles.submitButtonText}>Upload Product</Text>
-            )}
-          </TouchableOpacity>
+          {editMode ? (
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={uploadProductHandler}
+            >
+              {profileImagemutation?.isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text style={styles.submitButtonText}>Upload Product</Text>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={uploadProductHandler}
+            >
+              {profileImagemutation?.isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text style={styles.submitButtonText}>Upload Product</Text>
+              )}
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </AppScreenThree>
@@ -407,7 +425,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 20,
     borderWidth: 1,
-    borderColor: "#4C060E", 
+    borderColor: "#4C060E",
     borderStyle: "dashed",
     alignItems: "center",
     borderRadius: 5,
@@ -430,10 +448,10 @@ const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: "#6904EC",
     paddingHorizontal: 20,
-    paddingVertical:10,
+    paddingVertical: 10,
     borderRadius: 50,
     alignItems: "center",
-    marginBottom:50
+    marginBottom: 50,
   },
   submitButtonText: {
     color: "#fff",

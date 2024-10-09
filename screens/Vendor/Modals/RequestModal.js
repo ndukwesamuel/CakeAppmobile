@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Modal,
   Pressable,
   StyleSheet,
@@ -9,14 +10,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "react-query";
 import { formatDate } from "../../../utills/DateTime";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import { Get_All_Order_HIstory_Fun } from "../../../Redux/Vendor/OrderSlice";
 // import Modal from "../../../components/Modal";
 
 export default function RequestModal({ item }) {
+  const dispatch = useDispatch()
   const navigation = useNavigation();
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
   const [openModal, setOpenModal] = useState(false);
@@ -44,6 +47,7 @@ export default function RequestModal({ item }) {
     },
     {
       onSuccess: (success) => {
+        dispatch(Get_All_Order_HIstory_Fun());
         Toast.show({
           type: "success",
           text1: `${success?.data?.message}`,
@@ -64,7 +68,7 @@ export default function RequestModal({ item }) {
       status: "accepted",
     };
     updateOrder_Mutation.mutate({ formData, token });
-    setOpenModal(!openModal);
+    // setOpenModal(!openModal);
   };
 
   const handleRejectOffer = () => {
@@ -74,8 +78,8 @@ export default function RequestModal({ item }) {
         reason: reason,
       };
       updateOrder_Mutation.mutate({ formData, token });
-      setOpenModal(!openModal);
-      setRejectModal(!rejectModal);
+      // setOpenModal(!openModal);
+      // setRejectModal(!rejectModal);
     } else {
       Toast.show({
         type: "error",
@@ -152,9 +156,13 @@ export default function RequestModal({ item }) {
                   onPress={handleAcceptOffer}
                   style={[styles.button, { backgroundColor: "#6904EC" }]}
                 >
-                  <Text style={{ textAlign: "center", color: "white" }}>
-                    Accept Offer
-                  </Text>
+                  {updateOrder_Mutation.isLoading ? (
+                    <ActivityIndicator color="white" size="small" />
+                  ) : (
+                    <Text style={{ textAlign: "center", color: "white" }}>
+                      Accept Offer
+                    </Text>
+                  )}
                 </Pressable>
                 <Pressable
                   onPress={() => setRejectModal(!rejectModal)}
@@ -214,7 +222,7 @@ export default function RequestModal({ item }) {
                 </Text>
                 <Pressable
                   style={[styles.button, { backgroundColor: "#6904EC" }]}
-                  onPress={() => navigation.navigate("home")}
+                  onPress={() => setAcceptModal(!acceptModal)}
                 >
                   <Text style={{ textAlign: "center", color: "white" }}>
                     Okay
@@ -250,9 +258,13 @@ export default function RequestModal({ item }) {
                   style={[styles.button, { backgroundColor: "#6904EC" }]}
                   onPress={handleRejectOffer}
                 >
-                  <Text style={{ textAlign: "center", color: "white" }}>
-                    Submit
-                  </Text>
+                  {updateOrder_Mutation.isLoading ? (
+                    <ActivityIndicator color="white" size="small" />
+                  ) : (
+                    <Text style={{ textAlign: "center", color: "white" }}>
+                      Submit
+                    </Text>
+                  )}
                 </Pressable>
               </View>
             </View>
