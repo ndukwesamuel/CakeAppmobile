@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -46,6 +47,21 @@ const Home = () => {
   // console.log({
   //   dataaaa: get_all_order_history_data?.data?.orders,
   // });
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Simulate a network request or some async operation
+    setTimeout(() => {
+      dispatch(Current_vendor_profile_Fun());
+      dispatch(Get_Vendor_Profile());
+      dispatch(Get_All_Order_HIstory_Fun());
+      setRefreshing(false);
+      // setOption("");
+    }, 2000);
+  };
+
   useEffect(() => {
     dispatch(Current_vendor_profile_Fun());
     dispatch(Get_Vendor_Profile());
@@ -85,7 +101,13 @@ const Home = () => {
   };
   return (
     <AppScreen>
-      <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ gap: 20 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View
           style={{
             backgroundColor: "white",
@@ -93,7 +115,14 @@ const Home = () => {
             flexDirection: "row",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, justifyContent:'center' }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              justifyContent: "center",
+            }}
+          >
             <Image
               source={{ uri: current_vendor_profile_data?.data?.image }}
               style={{ width: 30, height: 30, borderRadius: 20 }}

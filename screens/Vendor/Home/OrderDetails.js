@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Modal,
+  RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
@@ -23,6 +24,16 @@ export default function OrderDetails() {
   const dataRoute = useRoute()?.params;
   console.log({ dataaaaa: dataRoute?.data });
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Simulate a network request or some async operation
+    setTimeout(() => {
+      setRefreshing(false);
+      // setOption("");
+    }, 2000);
+  };
   return (
     <AppScreenThree arrrow={"true"} title={dataRoute?.title}>
       <View style={styles.container}>
@@ -44,6 +55,9 @@ export default function OrderDetails() {
             <View>
               <Text style={{ textAlign: "center" }}>No Orders yet.</Text>
             </View>
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
       </View>
