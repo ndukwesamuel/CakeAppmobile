@@ -30,7 +30,7 @@
       }
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 8,
       "permissions": [
         "com.google.android.gms.permission.AD_ID",
         "android.permission.CAMERA",
@@ -54,6 +54,8 @@
       "eas": {
         "projectId": "ce9c5749-f94a-4001-945b-945edd3a21f4"
       }
-    }
+    },
+    "privacy": "public", // or "unlisted", depending on your preference
+    "policyUrl": "https://your-privacy-policy-url.com" // Add the link to your privacy policy here
   }
 }
