@@ -46,7 +46,7 @@ const OnBoarding = () => {
         />
       </View>
 
-      <Paginator data={list} scrollX={scrollX} />
+      {/* <Paginator data={list} scrollX={scrollX} /> */}
     </View>
   );
 };

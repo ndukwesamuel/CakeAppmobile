@@ -89,7 +89,7 @@ export const Loading = () => {
 };
 
 export const StartScreen = ({}) => {
-  const { isOnboarding } = useSelector((state) => state.OnboardingSlice);
+  const { isOnboarding } = useSelector((state) => state?.OnboardingSlice);
 
   console.log({ isOnboarding });
 

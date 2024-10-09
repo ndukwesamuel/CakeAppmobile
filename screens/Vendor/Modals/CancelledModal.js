@@ -1,4 +1,11 @@
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { formatDate } from "../../../utills/DateTime";
 
@@ -40,28 +47,40 @@ export default function CancelledModal({ item }) {
       </Pressable>
 
       <Modal visible={openModal} transparent={true} animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            {/* Modal Content */}
-            <View
-              style={{
-                backgroundColor: "white",
-                padding: 20,
-                width: "100%",
-                gap: 10,
-              }}
-            >
-              <Text style={styles.title}>{item?.cake?.name}</Text>
-              <Text style={styles.subtitle}>Reason for cancellation</Text>
-              <Text>{item?.reason}</Text>
-              <Pressable style={styles.button} onPress={() => setOpenModal(!openModal)}>
-                <Text style={{ textAlign: "center", color: "white", fontSize:16, fontWeight:"400" }}>
-                  Back
-                </Text>
-              </Pressable>
+        <TouchableWithoutFeedback onPress={() => setOpenModal(!openModal)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              {/* Modal Content */}
+              <View
+                style={{
+                  backgroundColor: "white",
+                  padding: 20,
+                  width: "100%",
+                  gap: 10,
+                }}
+              >
+                <Text style={styles.title}>{item?.cake?.name}</Text>
+                <Text style={styles.subtitle}>Reason for cancellation</Text>
+                <Text>{item?.reason}</Text>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => setOpenModal(!openModal)}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: 16,
+                      fontWeight: "400",
+                    }}
+                  >
+                    Back
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
