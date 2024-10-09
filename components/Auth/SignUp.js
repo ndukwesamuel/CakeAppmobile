@@ -458,6 +458,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(76, 6, 14, 1)",
     height: 48,
     borderRadius: 10,
+    paddingHorizontal:10
   },
   inputLabel: {
     color: "rgba(43, 2, 95, 1)",

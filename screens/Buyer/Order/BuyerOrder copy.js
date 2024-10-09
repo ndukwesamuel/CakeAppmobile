@@ -79,10 +79,6 @@ export default function BuyerOrder() {
         // });
 
         setPaystackInfo(success?.data?.authorizationUrl);
-
-        console.log({
-          fff: success,
-        });
         navigation.navigate("payment", { item: success?.data });
 
         Toast.show({

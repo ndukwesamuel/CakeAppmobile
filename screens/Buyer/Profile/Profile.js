@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -19,18 +21,18 @@ import Personalinfo from "./Personalinfo";
 import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useUserProfile } from "../../../utills/CustomHook";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [openModal, setOpenModal] = useState(false);
 
   const { user_data, user_profile_data } = useSelector((state) => state?.Auth);
 
-  // Use the custom hook to get the user profile data
-  // const { userProfileData } = useUserProfile();
-
-  console.log({
-    ffgfg: user_profile_data?.data?.user,
-  });
+  // console.log({
+  //   ffgfg: user_profile_data?.data?.user,
+  // });
   useEffect(() => {
     dispatch(UserProfile_Fun());
   }, []);
@@ -38,70 +40,6 @@ const Profile = () => {
   console.log({ data: user_profile_data?.data?.user });
 
   return (
-    // <AppScreenTwo>
-    //   <View style={{ flex: 1 }}>
-    //     <View style={{ alignItems: "center", paddingTop: 60 }}>
-    //       <Image
-    //         style={{ width: 40, height: 40, borderRadius: 50 }}
-    //         source={{ uri: user?.image }}
-    //       />
-    //     </View>
-
-    //     <View
-    //       style={{
-    //         flexDirection: "row",
-
-    //         alignItems: "center",
-    //         justifyContent: "center",
-    //         gap: 100,
-    //         marginTop: 20,
-    //       }}
-    //     >
-    //       <TouchableOpacity
-    //         style={
-    //           profletab === "personal"
-    //             ? styles.buttonstyleTrue
-    //             : styles.buttonstyleFalse
-    //         }
-    //         onPress={() => setprofletab("personal")}
-    //       >
-    //         <Text
-    //           style={{
-    //             color: profletab === "personal" ? "white" : "black",
-    //           }}
-    //         >
-    //           Personal information
-    //         </Text>
-    //       </TouchableOpacity>
-
-    //       <TouchableOpacity
-    //         style={
-    //           profletab === "order"
-    //             ? styles.buttonstyleTrue
-    //             : styles.buttonstyleFalse
-    //         }
-    //         onPress={() => setprofletab("order")}
-    //       >
-    //         <Text
-    //           style={{
-    //             color: profletab === "order" ? "white" : "black",
-    //           }}
-    //         >
-    //           Order History
-    //         </Text>
-    //       </TouchableOpacity>
-    //     </View>
-
-    //     <View
-    //       style={{
-    //         flex: 1,
-    //       }}
-    //     >
-    //       {profletab === "personal" && <Personalinfo />}
-    //       {profletab === "order" && <Orderhistory />}
-    //     </View>
-    //   </View>
-    // </AppScreenTwo>
     <AppScreenThree arrrow={"true"} title={"Profile"}>
       <ScrollView style={styles.container}>
         <View style={styles.displayContainer}>
@@ -109,21 +47,26 @@ const Profile = () => {
             source={{ uri: user_profile_data?.data?.user?.image }}
             style={styles.image}
           />
-          <Text style={{}}>
+          <Text style={styles.name}>
             {user_profile_data?.data?.user?.firstName}{" "}
             {user_profile_data?.data?.user?.lastName}
           </Text>
 
-          <TouchableOpacity>
-            <Text style={styles.name}>Edit Profile </Text>
-          </TouchableOpacity>
-
           <TouchableOpacity
-            onPress={() => {
-              dispatch(reset_login());
-            }}
+            onPress={() =>
+              navigation.navigate("editProfile", { user_profile_data })
+            }
           >
-            <Text style={styles.name}> LogOut </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "400",
+                textDecorationLine: "underline",
+                color: "#6904EC",
+              }}
+            >
+              Edit Profile{" "}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container2}>
@@ -154,10 +97,41 @@ const Profile = () => {
             </Text>
           </View>
         </View>
-        <View style={[styles.container2, { paddingBottom: 60 }]}>
+        {/* <View style={[styles.container2, { paddingBottom: 60 }]}>
           <Text style={styles.title}>Orders</Text>
           <Orderhistory />
+        </View> */}
+        <View style={[styles.container2]}>
+          <TouchableOpacity
+            onPress={() => {
+              setOpenModal(!openModal);
+              
+            }}
+          >
+            <Text style={styles.name}> Log Out </Text>
+          </TouchableOpacity>
         </View>
+
+        <Modal visible={openModal} transparent={true} animationType="slide">
+          <TouchableWithoutFeedback onPress={() => setOpenModal(!openModal)}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <Text>Logging Out</Text>
+                <Text>
+                  Are you sure you want to log out of the application?
+                </Text>
+                <View style={{flexDirection:"row", justifyContent:"space-between", gap:30}}>
+                  <TouchableOpacity style={[styles.button, {backgroundColor:'#DD293E'}]} onPress={() => dispatch(reset_login())}>
+                    <Text style={{color:"white"}}>Yes</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.button, {backgroundColor:'#6904EC'}]} onPress={() => setOpenModal(!openModal)}>
+                    <Text style={{color:'white'}}>No</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </ScrollView>
     </AppScreenThree>
   );
@@ -211,6 +185,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  modalContent: {
+    width: "100%",
+    backgroundColor: "white",
+    padding: 20,
+    width: "100%",
+    gap: 20,
+    paddingVertical: 50,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  button:{
+    paddingHorizontal:20,
+    paddingVertical:16,
+    borderRadius:50
+  }
 });
 
 export default Profile;

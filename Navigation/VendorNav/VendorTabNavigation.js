@@ -6,6 +6,7 @@ import Profile from "../../screens/Vendor/Profile/Profile";
 import Home from "../../screens/Vendor/Home/Home";
 import Orders from "../../screens/Vendor/Order/Orders";
 import Products from "../../screens/Vendor/Products/Products";
+import Wallet from "../../screens/Vendor/Wallet/Wallet";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,6 +63,29 @@ const VendorTabNavigation = () => {
               iconFocused={require("../../assets/icons/order-bold.png")}
               iconUnfocused={require("../../assets/icons/order.png")}
               label="Product"
+              containerStyle={{
+                alignItems: "center",
+                justifyContent: "center",
+                top: 10,
+              }}
+              texttStyle={{ color: "#000000" }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Wallet"
+        component={Wallet}
+        options={{
+          title: "Wallet",
+          tabBarActiveTintColor: "#005091",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <Tabcomponent
+              focused={focused}
+              iconFocused={require("../../assets/icons/profile-bold.png")}
+              iconUnfocused={require("../../assets/icons/profile.png")}
+              label="Wallet"
               containerStyle={{
                 alignItems: "center",
                 justifyContent: "center",

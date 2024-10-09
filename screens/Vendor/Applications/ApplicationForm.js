@@ -24,7 +24,7 @@ export default function ApplicationForm() {
   const [businessDescription, setBusinessDescription] = useState("");
 
   const dataRoute = useRoute().params
-  console.log({dataRoute:dataRoute?.current_vendor_profile_data?.data?.vendorProfile})
+  // console.log({dataRoute:dataRoute?.current_vendor_profile_data?.data?.vendorProfile})
 
   useEffect(() =>{
 if(dataRoute?.current_vendor_profile_data?.data?.vendorProfile){
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 60,
     padding: 20,
+    backgroundColor:"white"
   },
   title: {
     fontSize: 32,

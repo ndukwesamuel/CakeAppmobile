@@ -79,7 +79,7 @@ export default function Wishlist() {
 
   return (
     <AppScreenThree arrrow={"true"} title={"Wishlist"}>
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <FlatList
           data={wishlist_data?.wishlist?.items}
           refreshControl={
@@ -157,7 +157,7 @@ export default function Wishlist() {
             gap: 10,
           }}
         />
-      </ScrollView>
+      </View>
     </AppScreenThree>
   );
 }
