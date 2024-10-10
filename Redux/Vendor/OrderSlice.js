@@ -35,7 +35,7 @@ export const Get_All_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_All_Order_HIstory_Fun",
   async (status, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
+      let token = thunkAPI?.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {
@@ -59,7 +59,7 @@ export const Get_Order_HIstory_Fun = createAsyncThunk(
   "OrderSlice/Get_Order_HIstory_Fun",
   async (status, thunkAPI) => {
     try {
-      let token = thunkAPI.getState()?.Auth?.user_data?.data?.token;
+      let token = thunkAPI?.getState()?.Auth?.user_data?.data?.token;
 
       const config = {
         headers: {

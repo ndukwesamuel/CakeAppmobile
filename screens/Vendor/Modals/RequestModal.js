@@ -50,7 +50,7 @@ export default function RequestModal({ item }) {
         dispatch(Get_All_Order_HIstory_Fun());
         Toast.show({
           type: "success",
-          text1: `${success?.data?.message}`,
+          text1: `Status successfully updated`,
         });
       },
       onError: (error) => {

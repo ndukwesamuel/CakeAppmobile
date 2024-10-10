@@ -35,14 +35,14 @@ export default function BuyerOrder() {
   const navigation = useNavigation();
   const [pay, setPay] = useState(false);
   const [fluterwaveObj, setfluterwaveObj] = useState("");
-  const { user_data } = useSelector((state) => state.Auth);
+  const { user_data } = useSelector((state) => state?.Auth);
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
 
   const { get_all_order_history_data } = useSelector(
     (state) => state?.OrderSlice
   );
 
-  console.log({ orderhistory: get_all_order_history_data.data.orders });
+  console.log({ orderhistory: get_all_order_history_data?.data?.orders });
   const [paystackInfo, setPaystackInfo] = useState(null);
 
   // console.log({ azzz: user_data?.data?.token });
@@ -312,7 +312,7 @@ export default function BuyerOrder() {
               "received",
               "rejected",
             ]}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index?.toString()}
             numColumns={3} // Set the number of columns to 3
             renderItem={({ item }) => (
               <TouchableOpacity

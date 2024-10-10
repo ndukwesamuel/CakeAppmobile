@@ -21,6 +21,7 @@ import {
   checkOtp,
   reser_otp,
   reset_otpemail,
+  setOtp,
   setOtpEmail,
 } from "../Redux/OnboardingSlice";
 import { reset_login } from "../Redux/AuthSlice";
@@ -28,13 +29,16 @@ import Mainborder from "../components/shared/Mainborder";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const OtpScreen = ({ navigation, onSetAuth }) => {
-  const { otpemail, otp: otpdata } = useSelector(
-    (state) => state?.OnboardingSlice
-  );
+  const {
+    otpemail,
+    otp: otpdata,
+    verifyEmail,
+  } = useSelector((state) => state?.OnboardingSlice);
   const dispatch = useDispatch();
   console.log({
     otpdata,
     otpemail,
+    verifyEmail,
   });
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -127,10 +131,17 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
           text1: `${success?.data?.message} `,
         });
 
-        dispatch(checkOtp(false));
-        dispatch(reset_otpemail());
-        dispatch(reset_login());
-        onSetAuth("sign-in");
+        if (verifyEmail === true) {
+          dispatch(setOtp(code))
+          dispatch(checkOtp(false));
+          
+          onSetAuth("forgot-password")
+        } else {
+          dispatch(checkOtp(false));
+          dispatch(reset_otpemail());
+          dispatch(reset_login());
+          onSetAuth("sign-in");
+        }
       },
 
       onError: (error) => {
@@ -245,10 +256,12 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                       width: "70%",
                       borderRadius: 30,
                     }}
-                    onPress={() => Verify_Mutation.mutate({
-                      email: otpemail,
-                      otp: code
-                    })}
+                    onPress={() =>
+                      Verify_Mutation.mutate({
+                        email: otpemail,
+                        otp: code,
+                      })
+                    }
                   >
                     {Verify_Mutation?.isLoading ? (
                       <ActivityIndicator size="large" color="blue" />

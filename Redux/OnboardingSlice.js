@@ -6,6 +6,8 @@ const initialState = {
   userlogin: "LOGIN",
   otp: false,
   otpemail: "",
+  otpValue:"",
+  verifyEmail: false,
 };
 
 export const OnboardingSlice = createSlice({
@@ -15,6 +17,9 @@ export const OnboardingSlice = createSlice({
     reset_isOnboarding: (state) => initialState,
     reset_otpemail: (state) => {
       state.otpemail = "";
+    },
+    reset_otpValue: (state) =>{
+      state.otpValue ="";
     },
 
     reser_otp: (state) => {
@@ -47,9 +52,15 @@ export const OnboardingSlice = createSlice({
       console.log("this is otp", state.otp);
       // Toggle the value (true becomes false, false becomes true)
     },
+    checkResetPassword: (state) => {
+      state.verifyEmail = !state.verifyEmail;
+    },
 
     setOtpEmail: (state, action) => {
       state.otpemail = action.payload;
+    },
+    setOtp: (state, action) =>{
+      state.otpValue = action.payload;
     },
 
     authScreenChange: (state, action) => {
@@ -68,10 +79,13 @@ export const {
   reset_isOnboarding,
   checkOnboarding,
   authScreenChange,
+  setOtp,
   checkOtp,
   setOtpEmail,
+  checkResetPassword,
   reset_otpemail,
   reser_otp,
+  reset_otpValue,
 } = OnboardingSlice.actions;
 export const onBoaringAction = OnboardingSlice.actions;
 export default OnboardingSlice.reducer;
