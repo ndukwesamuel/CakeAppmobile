@@ -120,7 +120,7 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (success) => {
-        navigation.goBack();
+        navigation.goBack()
         Toast.show({
           type: "success",
           text1: `Product successfully updated`,

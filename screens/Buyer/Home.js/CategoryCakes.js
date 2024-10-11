@@ -128,7 +128,7 @@ const ImageCard = ({ item }) => {
         </Pressable>
         <Pressable onPress={() => Wish_Mutation.mutate()}>
           {Wish_Mutation.isLoading ? (
-            <ActivityIndicator size="small" color="blue"/>
+            <ActivityIndicator size="small" color="blue" />
           ) : (
             <Text
               style={{

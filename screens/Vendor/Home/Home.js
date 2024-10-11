@@ -19,7 +19,7 @@ import CakeCategories from "./CakeCategories";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
 import AppScreen from "../../../components/shared/AppScreen";
-
+import Ionicons from "@expo/vector-icons/Ionicons";
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -27,6 +27,8 @@ const Home = () => {
   const [ongoingOrdersCount, setOngoingOrdersCount] = useState([]);
   const [requestOrdersCount, setRequestOrdersCount] = useState([]);
   const [cancelledOrdersCount, setCancelledOrdersCount] = useState([]);
+  const [deliverdOrdersCount, setDeliverdOrdersCount] = useState([]);
+
   const vendor_profile_data1 = useSelector(
     (state) => state?.VendorsSlice?.ProfileSlice?.vendor_profile_data
   );
@@ -74,7 +76,15 @@ const Home = () => {
       const completedOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "accepted"
       );
+
       setCompletedOrdersCount(completedOrders);
+
+      const DeliverdOrders = get_all_order_history_data?.data?.orders?.filter(
+        (order) => order.status === "completed"
+      );
+
+      setDeliverdOrdersCount(DeliverdOrders);
+
       const ongoingOrders = get_all_order_history_data?.data?.orders?.filter(
         (order) => order.status === "ongoing"
       );
@@ -262,7 +272,7 @@ const Home = () => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* Completed */}
+          {/* Accpeted */}
           <View
             style={{
               flexDirection: "row",
@@ -307,6 +317,63 @@ const Home = () => {
                   navigation.navigate("orderDetails", {
                     data: completedOrdersCount,
                     title: "accepted",
+                  })
+                }
+              >
+                <View style={styles.button}>
+                  <Text>View</Text>
+                  <Image source={require("../../../assets/icons/Group.png")} />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* Completed */}
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              borderBottomColor: "#6904EC33",
+              borderBottomWidth: 0.5,
+            }}
+          >
+            <View
+              style={{
+                paddingHorizontal: 14,
+                paddingVertical: 30,
+                backgroundColor: "#04EC171A",
+              }}
+            >
+              <Ionicons name="checkmark-done-circle" size={24} color="green" />
+              {/* <Image source={require("../../../assets/icons/Winne.png")} /> */}
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingHorizontal: 20,
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <View>
+                <Text
+                  style={{ color: "#2B025F", fontSize: 16, fontWeight: "500" }}
+                >
+                  Completed
+                </Text>
+                <Text
+                  style={{ color: "#2B025F", fontSize: 42, fontWeight: "500" }}
+                >
+                  {deliverdOrdersCount.length}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={{}}
+                onPress={() =>
+                  navigation.navigate("orderDetails", {
+                    data: deliverdOrdersCount,
+                    title: "completed",
                   })
                 }
               >

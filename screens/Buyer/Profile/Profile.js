@@ -70,7 +70,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.container2}>
-          <Text style={styles.title}>Personal Information</Text>
+          <Text style={styles.title}> Personal Information</Text>
           <View style={styles.groupContainer}>
             <Text style={styles.groupKey}>Name</Text>
             <Text style={styles.groupValue}>
@@ -105,10 +105,9 @@ const Profile = () => {
           <TouchableOpacity
             onPress={() => {
               setOpenModal(!openModal);
-              
             }}
           >
-            <Text style={styles.name}> Log Out </Text>
+            <Text style={styles.name}> Logout</Text>
           </TouchableOpacity>
         </View>
 
@@ -120,12 +119,24 @@ const Profile = () => {
                 <Text>
                   Are you sure you want to log out of the application?
                 </Text>
-                <View style={{flexDirection:"row", justifyContent:"space-between", gap:30}}>
-                  <TouchableOpacity style={[styles.button, {backgroundColor:'#DD293E'}]} onPress={() => dispatch(reset_login())}>
-                    <Text style={{color:"white"}}>Yes</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    gap: 30,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#DD293E" }]}
+                    onPress={() => dispatch(reset_login())}
+                  >
+                    <Text style={{ color: "white" }}>Yes</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.button, {backgroundColor:'#6904EC'}]} onPress={() => setOpenModal(!openModal)}>
-                    <Text style={{color:'white'}}>No</Text>
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#6904EC" }]}
+                    onPress={() => setOpenModal(!openModal)}
+                  >
+                    <Text style={{ color: "white" }}>No</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -159,6 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "500",
     color: "#2B025F",
+    textAlign: "center",
   },
   container2: {
     backgroundColor: "white",
@@ -202,11 +214,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
-  button:{
-    paddingHorizontal:20,
-    paddingVertical:16,
-    borderRadius:50
-  }
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 50,
+  },
 });
 
 export default Profile;

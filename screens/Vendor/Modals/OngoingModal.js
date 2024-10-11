@@ -125,25 +125,31 @@ export default function OngoingModal({ item }) {
                     <Text>{item?.address}</Text>
                   </View>
                 </View>
-                <Pressable
-                  style={styles.button}
-                  onPress={handleMarkAsDelivered}
-                >
-                  {updateOrder_Mutation.isLoading ? (
-                    <ActivityIndicator size="small" color="white" />
-                  ) : (
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        fontSize: 16,
-                        fontWeight: "400",
-                      }}
-                    >
-                      Mark as Delivered
-                    </Text>
-                  )}
-                </Pressable>
+                {console.log({
+                  jfjfj: item?.status,
+                })}
+
+                {item?.status != "completed" && (
+                  <Pressable
+                    style={styles.button}
+                    onPress={handleMarkAsDelivered}
+                  >
+                    {updateOrder_Mutation.isLoading ? (
+                      <ActivityIndicator size="small" color="white" />
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          color: "white",
+                          fontSize: 16,
+                          fontWeight: "400",
+                        }}
+                      >
+                        Mark as Delivered
+                      </Text>
+                    )}
+                  </Pressable>
+                )}
               </View>
             </View>
           </View>

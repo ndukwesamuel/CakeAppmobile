@@ -63,7 +63,7 @@ const CakeDetails = () => {
           type: "success",
           text1: `${success?.data?.message}`,
         });
-        navigation.navigate("product")
+        navigation.navigate("product");
       },
       onError: (error) => {
         Toast.show({
@@ -181,17 +181,21 @@ const CakeDetails = () => {
               <Pressable
                 onPress={() => Delete_Mutation.mutate(cakeData?.item?._id)}
               >
-                {Delete_Mutation.isLoading?(<ActivityIndicator size="small" color="red"/>):(<Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 16,
-                    fontWeight: "400",
-                    color: "#E70400",
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Delete
-                </Text>)}
+                {Delete_Mutation.isLoading ? (
+                  <ActivityIndicator size="small" color="red" />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      fontWeight: "400",
+                      color: "#E70400",
+                      textDecorationLine: "underline",
+                    }}
+                  >
+                    Delete
+                  </Text>
+                )}
               </Pressable>
             </View>
           </View>
