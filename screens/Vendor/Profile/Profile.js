@@ -81,31 +81,6 @@ const Profile = () => {
                 Edit Profile
               </Text>
             </Pressable>
-
-            {/* <TouchableOpacity
-              onPress={() => {
-                dispatch(reset_isOnboarding());
-                dispatch(reset_login());
-              }}
-              style={{
-                borderWidth: 2,
-                borderColor: "green",
-                padding: 5,
-                marginTop: 5,
-
-                borderRadius: 5,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#6904EC",
-                  fontSize: 14,
-                  textAlign: "center",
-                }}
-              >
-                Logout
-              </Text>
-            </TouchableOpacity> */}
           </View>
         </View>
         {/* business display */}
@@ -230,13 +205,13 @@ const Profile = () => {
                     style={[styles.button, { backgroundColor: "#DD293E" }]}
                     onPress={() => dispatch(reset_login())}
                   >
-                    <Text style={{ color: "white" }}>Yes</Text>
+                    <Text style={{ color: "white" }}>Yes, Logout</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[styles.button, { backgroundColor: "#6904EC" }]}
                     onPress={() => setOpenModal(!openModal)}
                   >
-                    <Text style={{ color: "white" }}>No</Text>
+                    <Text style={{ color: "white" }}>No, Back</Text>
                   </TouchableOpacity>
                 </View>
               </View>

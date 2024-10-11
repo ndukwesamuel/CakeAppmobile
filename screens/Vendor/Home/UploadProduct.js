@@ -23,6 +23,7 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
 import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
+import { CenterReuseModals } from "../../../components/shared/ReuseModals";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -60,10 +61,15 @@ const UploadProduct = () => {
   const [layers, setLayers] = useState("");
   const [pictures, setPictures] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const dataRoute = useRoute()?.params?.cakeData;
   const [editMode, setEditMode] = useState(false);
   console.log({ dataRoute: dataRoute?.item });
+
+  const toggleModal = () => {
+    setOpenModal(!openModal);
+  };
 
   const profileImagemutation = useMutation(
     (image_data) => {
@@ -87,14 +93,7 @@ const UploadProduct = () => {
             vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
           })
         );
-        navigation.goBack()
-        // console.log({ firedata: data });
-        Alert.alert(
-          "Success",
-          "Product submitted successfully!",
-          [{ text: "OK" }],
-          { cancelable: false }
-        );
+        toggleModal();
       },
       onError: (error) => {
         // console.log({ error: error?.response?.data });
@@ -121,7 +120,7 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (success) => {
-        navigation.goBack()
+        navigation.goBack();
         Toast.show({
           type: "success",
           text1: `Product successfully updated`,
@@ -444,6 +443,13 @@ const UploadProduct = () => {
             </TouchableOpacity>
           )}
         </View>
+
+        <CenterReuseModals
+          onClose={toggleModal}
+          visible={openModal}
+          title={"Product Uploaded"}
+          subText={"You have successfully uploaded a product"}
+        ></CenterReuseModals>
       </ScrollView>
     </AppScreenThree>
   );

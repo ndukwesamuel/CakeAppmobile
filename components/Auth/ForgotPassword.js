@@ -170,7 +170,7 @@ const ForgotPassword = ({ onSetAuth }) => {
           <View style={[styles.displayArea, width]}>
             <View>
               <Text style={[styles.text, { fontSize: 32, fontWeight: "700" }]}>
-                Forget Password
+                Create Password
               </Text>
               <Text style={[styles.text, { fontSize: 12 }]}>
                 Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim{" "}
@@ -183,6 +183,7 @@ const ForgotPassword = ({ onSetAuth }) => {
                   style={styles.input}
                   value={password}
                   onChangeText={(text) => setPassword(text)}
+                  secureTextEntry
                 />
               </View>
               <View style={styles.inputGroup}>
@@ -191,6 +192,7 @@ const ForgotPassword = ({ onSetAuth }) => {
                   style={styles.input}
                   value={confirmPassword}
                   onChangeText={(text) => setConfirmPassword(text)}
+                  secureTextEntry
                 />
               </View>
             </View>

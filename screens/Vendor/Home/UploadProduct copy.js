@@ -166,6 +166,7 @@ const UploadProduct = () => {
                 style={styles.input}
                 value={price.toString()}
                 onChangeText={(text) => setPrice(text)}
+                keyboardType="numeric"
               />
             </View>
             <View style={styles.formGroup}>
@@ -222,6 +223,7 @@ const UploadProduct = () => {
                 style={styles.input}
                 value={layers.toString()}
                 onChangeText={(text) => setLayers(text)}
+                keyboardType="numeric"
               />
             </View>
 

@@ -18,6 +18,7 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
 import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
+import { formatToCurrency } from "../../../utills/Currency";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 const CakeDetails = () => {
@@ -83,7 +84,7 @@ const CakeDetails = () => {
             style={{
               width: "100%",
               height: 150,
-              // resizeMode: "stretch",
+              resizeMode: "stretch",
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
             }}
@@ -94,7 +95,7 @@ const CakeDetails = () => {
               style={{
                 width: "50%",
                 height: 90,
-                // resizeMode: "stretch",
+                resizeMode: "stretch",
                 borderBottomLeftRadius: 12,
               }}
             />
@@ -103,7 +104,7 @@ const CakeDetails = () => {
               style={{
                 width: "50%",
                 height: 90,
-                // resizeMode: "stretch",
+                resizeMode: "stretch",
                 borderBottomRightRadius: 12,
               }}
             />
@@ -128,7 +129,7 @@ const CakeDetails = () => {
               <Text
                 style={{ color: "#2B025F", fontSize: 16, fontWeight: "700" }}
               >
-                {cakeData?.item?.price}
+                {formatToCurrency(cakeData?.item?.price)}
               </Text>
             </View>
             <View

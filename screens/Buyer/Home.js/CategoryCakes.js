@@ -160,6 +160,7 @@ const styles2 = StyleSheet.create({
     height: 180,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
+    resizeMode:"stretch"
   },
   cardTitle: {
     color: "#2B025F",

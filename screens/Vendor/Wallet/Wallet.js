@@ -20,6 +20,8 @@ import {
 import { useMutation } from "react-query";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { formatToCurrency } from "../../../utills/Currency";
+import { CenterReuseModals } from "../../../components/shared/ReuseModals";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wallet() {
@@ -33,11 +35,14 @@ export default function Wallet() {
   const [accountModal, setAccountModal] = useState(false);
   const [bankModal, setBankModal] = useState(false);
   const [withdrawalModal, setWithdrawalModal] = useState(false);
+  const [withdrawalSuccessModal, setWithdrawalSuccessModal] = useState(false);
+  const [updateSuccessModal, setupdateSuccessModal] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null); // State to store selected bank
   const [searchQuery, setSearchQuery] = useState(""); // Search input state
   const [bankCode, setbankCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState(0);
+  const [withdrawnAmount, setWithdrawnAmount] = useState(0)
 
   useEffect(() => {
     dispatch(Get_All_Banks_Fun());
@@ -49,6 +54,14 @@ export default function Wallet() {
     setSelectedBank(bank);
     setBankModal(false);
     setbankCode(bank?.code);
+  };
+
+  const toggleWithdrawalSuccessModal = () => {
+    setWithdrawalSuccessModal(!withdrawalSuccessModal);
+  };
+
+  const toggleUpdateSucessModal = () => {
+    setupdateSuccessModal(!updateSuccessModal);
   };
 
   // Filter the banks list based on search query
@@ -75,13 +88,10 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        setAccountModal(!accountModal)
-        setAccountNumber('')
-        setSelectedBank("")
-        Toast.show({
-          type: "success",
-          text1: `Bank details successfully updated`,
-        });
+        setAccountModal(!accountModal);
+        setAccountNumber("");
+        setSelectedBank("");
+        toggleUpdateSucessModal();
       },
       onError: (error) => {
         Toast.show({
@@ -114,13 +124,13 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        setAmount(0)
-        dispatch(Get_Wallet_Details_Fun())
-        setWithdrawalModal(!withdrawalModal)
-        Toast.show({
-          type: "success",
-          text1: `${success?.data?.message} `,
-        });
+        
+        dispatch(Get_Wallet_Details_Fun());
+        setWithdrawnAmount(amount)
+        setAmount(0);
+        setWithdrawalModal(!withdrawalModal);
+        toggleWithdrawalSuccessModal();
+        
       },
 
       onError: (error) => {
@@ -133,20 +143,20 @@ export default function Wallet() {
   );
   const handleWithdrawal = () => {
     const data = {
-      amount: amount
-    }
-    Withdrawal_Mutation.mutate(data)
-  }
+      amount: amount,
+    };
+    Withdrawal_Mutation.mutate(data);
+  };
 
   return (
     <AppScreenThree arrow={"true"} title={"Wallet"}>
       <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
-        <View style={[styles.SubContainer, { alignItems: "center" }]}>
+        <View style={[styles.SubContainer, { alignItems: "center", gap: 10 }]}>
           <Text style={{ color: "#020D44", fontSize: 16, fontWeight: "500" }}>
             Balance
           </Text>
           <Text style={{ fontSize: 32, fontWeight: "900" }}>
-            {wallet_details_data?.data?.wallet?.balance}
+            {formatToCurrency(wallet_details_data?.data?.wallet?.balance)}
           </Text>
           <TouchableOpacity
             style={styles.button}
@@ -162,7 +172,12 @@ export default function Wallet() {
           <View style={{ gap: 8 }}>
             <TouchableOpacity onPress={() => setAccountModal(!accountModal)}>
               <Text
-                style={{ textAlign: "right", textDecorationLine: "underline" }}
+                style={{
+                  textAlign: "right",
+                  textDecorationLine: "underline",
+                  fontSize: 16,
+                  color: "#2B025F",
+                }}
               >
                 Update account details
               </Text>
@@ -261,6 +276,13 @@ export default function Wallet() {
           </TouchableWithoutFeedback>
         </Modal>
 
+        <CenterReuseModals
+          visible={updateSuccessModal}
+          onClose={toggleUpdateSucessModal}
+          title={"Account Updated"}
+          subText={"Your account has been updated successfully"}
+        />
+
         {/* Bank Modal */}
         <Modal visible={bankModal} transparent={true} animationType="slide">
           <TouchableWithoutFeedback onPress={() => setBankModal(!bankModal)}>
@@ -302,26 +324,36 @@ export default function Wallet() {
           >
             <View style={styles.modalOverlay}>
               <View style={styles.modalContent}>
-                <Text>Withdraw Funds</Text>
-                <View>
-                  <Text>
+                <Text
+                  style={{ color: "#2B025F", fontSize: 24, fontWeight: "600" }}
+                >
+                  Withdraw Funds
+                </Text>
+                <View style={{ gap: 10 }}>
+                  <Text style={styles.key}>
                     Balance:{" "}
-                    <Text>{wallet_details_data?.data?.wallet?.balance}</Text>
+                    <Text style={styles.value}>
+                      {formatToCurrency(
+                        wallet_details_data?.data?.wallet?.balance
+                      )}
+                    </Text>
                   </Text>
-                  <Text>
+                  <Text style={styles.key}>
                     Bank Name:{" "}
-                    <Text>{wallet_details_data?.data?.wallet?.name || ""}</Text>
+                    <Text style={styles.value}>
+                      {wallet_details_data?.data?.wallet?.name || ""}
+                    </Text>
                   </Text>
-                  <Text>
+                  <Text style={styles.key}>
                     Account Number:{" "}
-                    <Text>
+                    <Text style={styles.value}>
                       {wallet_details_data?.data?.wallet?.bankAccountNumber ||
                         ""}
                     </Text>
                   </Text>
-                  <Text>
+                  <Text style={styles.key}>
                     Account Name:{" "}
-                    <Text>
+                    <Text style={styles.value}>
                       {" "}
                       {wallet_details_data?.data?.wallet?.bankName || ""}
                     </Text>
@@ -337,21 +369,28 @@ export default function Wallet() {
                   />
                 </View>
                 <TouchableOpacity
-                onPress={handleWithdrawal}
+                  onPress={handleWithdrawal}
                   style={[styles.button, { borderRadius: 10 }]}
                 >
                   {Withdrawal_Mutation.isLoading ? (
                     <ActivityIndicator size="small" color="white" />
                   ) : (
-                  <Text style={{ textAlign: "center", color: "white" }}>
-                    Withdraw
-                  </Text>
-                  )} 
+                    <Text style={{ textAlign: "center", color: "white" }}>
+                      Withdraw
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>
         </Modal>
+
+        <CenterReuseModals
+          visible={withdrawalSuccessModal}
+          onClose={toggleWithdrawalSuccessModal}
+          title={"Withdrawal Successfully"}
+          subText={`You have successfully withdrawn ${withdrawnAmount} into your bank account`}
+        />
 
         {/* Transaction History */}
         <View style={[styles.SubContainer]}>

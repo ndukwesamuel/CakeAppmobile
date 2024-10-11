@@ -8,9 +8,13 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { formatDate } from "../../../utills/DateTime";
+import { BottomModal } from "../../../components/shared/ReuseModals";
 
 export default function CancelledModal({ item }) {
   const [openModal, setOpenModal] = useState(false);
+  const toggleModal = () =>{
+    setOpenModal(!openModal)
+  }
 
   console.log({ item: item });
   return (
@@ -33,7 +37,7 @@ export default function CancelledModal({ item }) {
           <Text style={styles.value}>{item?.totalPrice}</Text>
         </View>
       </View>
-      <Pressable onPress={() => setOpenModal(!openModal)}>
+      <Pressable onPress={toggleModal}>
         <Text
           style={{
             textDecorationLine: "underline",
@@ -46,42 +50,27 @@ export default function CancelledModal({ item }) {
         </Text>
       </Pressable>
 
-      <Modal visible={openModal} transparent={true} animationType="slide">
-        <TouchableWithoutFeedback onPress={() => setOpenModal(!openModal)}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              {/* Modal Content */}
-              <View
-                style={{
-                  backgroundColor: "white",
-                  padding: 20,
-                  width: "100%",
-                  gap: 10,
-                }}
-              >
-                <Text style={styles.title}>{item?.cake?.name}</Text>
-                <Text style={styles.subtitle}>Reason for cancellation</Text>
-                <Text>{item?.reason}</Text>
-                <Pressable
-                  style={styles.button}
-                  onPress={() => setOpenModal(!openModal)}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "white",
-                      fontSize: 16,
-                      fontWeight: "400",
-                    }}
-                  >
-                    Back
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+     
+      <BottomModal visible={openModal} onClose={toggleModal}>
+        <Text style={styles.title}>{item?.cake?.name}</Text>
+        <Text style={styles.subtitle}>Reason for cancellation</Text>
+        <Text>{item?.reason}</Text>
+        <Pressable
+          style={styles.button}
+          onPress={toggleModal}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 16,
+              fontWeight: "400",
+            }}
+          >
+            Back
+          </Text>
+        </Pressable>
+      </BottomModal>
     </View>
   );
 }

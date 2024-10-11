@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
 import { Current_vendor_profile_Fun } from "../../../Redux/AuthSlice";
 import { useNavigation } from "@react-navigation/native";
+import { formatToCurrency } from "../../../utills/Currency";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -64,11 +65,11 @@ const ImageCard = ({ item }) => {
   const navigation = useNavigation();
   return (
     <View style={styles2.container}>
-      <Image source={{ uri: item.images[0].url }} style={styles2.image} />
+      <Image source={{ uri: item?.images[0]?.url }} style={styles2.image} />
       <View style={{ flexDirection: "column", gap: 20, padding: 15 }}>
         <Text style={styles2.cardTitle}>{item?.name}</Text>
-        <Text style={styles2.description}>{item.description}</Text>
-        <Text style={styles2.cardTitle}>{item.price}</Text>
+        <Text style={styles2.description}>{item?.description}</Text>
+        <Text style={styles2.cardTitle}>{formatToCurrency(item?.price)}</Text>
         <Pressable
           style={styles2.button}
           onPress={() => navigation.navigate("cakeDetails", { item })}
@@ -101,6 +102,7 @@ const styles2 = StyleSheet.create({
     height: 180,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
+    resizeMode:"stretch"
   },
   cardTitle: {
     color: "#2B025F",

@@ -167,7 +167,7 @@ const SignIn = ({ onSetAuth }) => {
               <Text style={[styles.text, { fontSize: 12 }]}>Remember me</Text>
             </TouchableOpacity>
             <Pressable onPress={() => onSetAuth("forgot-password")}>
-              <Text style={[styles.text, { fontSize: 12 }]}>
+              <Text style={[styles.text, { fontSize: 12, textDecorationLine:"underline" }]}>
                 Forgot password?
               </Text>
             </Pressable>
