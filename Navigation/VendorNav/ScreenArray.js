@@ -6,6 +6,7 @@ import Home from "../../screens/Vendor/Home/Home";
 import OrderDetails from "../../screens/Vendor/Home/OrderDetails";
 import UploadProduct from "../../screens/Vendor/Home/UploadProduct";
 import Products from "../../screens/Vendor/Products/Products";
+import TransactionHistory from "../../screens/Vendor/Wallet/TransactionHistory";
 
 export const screens = [
   {
@@ -39,13 +40,18 @@ export const screens = [
     title: "",
   },
   {
-    name:"home", 
+    name: "home",
     component: Home,
-    title:""
+    title: "",
   },
   {
-    name:"product",
+    name: "product",
     component: Products,
-    title:""
-  }
+    title: "",
+  },
+  {
+    name: "transactionHistory",
+    component: TransactionHistory,
+    title: "",
+  },
 ];

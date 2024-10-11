@@ -2,6 +2,8 @@ import {
   ActivityIndicator,
   FlatList,
   Modal,
+  Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,6 +17,7 @@ import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Get_All_Banks_Fun,
+  Get_Transaction_History_Fun,
   Get_Wallet_Details_Fun,
 } from "../../../Redux/Vendor/WalletSlice";
 import { useMutation } from "react-query";
@@ -22,14 +25,15 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import { formatToCurrency } from "../../../utills/Currency";
 import { CenterReuseModals } from "../../../components/shared/ReuseModals";
+import { useNavigation } from "@react-navigation/native";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wallet() {
+  const navigation = useNavigation()
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
-  const { get_banks_data, wallet_details_data } = useSelector(
-    (state) => state?.VendorsSlice?.WalletSlice
-  );
+  const { get_banks_data, wallet_details_data, transaction_history_data } =
+    useSelector((state) => state?.VendorsSlice?.WalletSlice);
   console.log({ wallet: wallet_details_data?.data?.wallet });
 
   const [accountModal, setAccountModal] = useState(false);
@@ -42,12 +46,26 @@ export default function Wallet() {
   const [bankCode, setbankCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState(0);
-  const [withdrawnAmount, setWithdrawnAmount] = useState(0)
+  const [withdrawnAmount, setWithdrawnAmount] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     dispatch(Get_All_Banks_Fun());
     dispatch(Get_Wallet_Details_Fun());
+    dispatch(Get_Transaction_History_Fun());
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      dispatch(Get_All_Banks_Fun());
+      dispatch(Get_Wallet_Details_Fun());
+      // dispatch(Get_Transaction_History_Fun());
+      setRefreshing(false);
+    }, 2000);
+  };
+
+  // console.log({ transaction: transaction_history_data?.data?.transactions });
 
   // Handle bank selection
   const handleBankSelect = (bank) => {
@@ -124,13 +142,11 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        
         dispatch(Get_Wallet_Details_Fun());
-        setWithdrawnAmount(amount)
+        setWithdrawnAmount(amount);
         setAmount(0);
         setWithdrawalModal(!withdrawalModal);
         toggleWithdrawalSuccessModal();
-        
       },
 
       onError: (error) => {
@@ -150,7 +166,10 @@ export default function Wallet() {
 
   return (
     <AppScreenThree arrow={"true"} title={"Wallet"}>
-      <ScrollView style={styles.container} contentContainerStyle={{ gap: 20 }}>
+      <View
+        style={styles.container}
+        // contentContainerStyle={{ gap: 20 }}
+      >
         <View style={[styles.SubContainer, { alignItems: "center", gap: 10 }]}>
           <Text style={{ color: "#020D44", fontSize: 16, fontWeight: "500" }}>
             Balance
@@ -394,9 +413,13 @@ export default function Wallet() {
 
         {/* Transaction History */}
         <View style={[styles.SubContainer]}>
-          <Text style={[styles.title]}>Transaction History</Text>
+          <Pressable onPress={() => navigation.navigate("transactionHistory")} >
+            <Text style={[styles.title, { marginBottom: 30, textDecorationLine:"underline" }]}>
+              Transaction History
+            </Text>
+          </Pressable>
         </View>
-      </ScrollView>
+      </View>
     </AppScreenThree>
   );
 }
@@ -405,6 +428,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 60,
     flex: 1,
+    gap: 20,
   },
   SubContainer: {
     backgroundColor: "white",

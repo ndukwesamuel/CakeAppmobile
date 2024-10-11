@@ -288,7 +288,7 @@ const Home = () => {
                 backgroundColor: "#04EC171A",
               }}
             >
-              <Image source={require("../../../assets/icons/Winne.png")} />
+              <Ionicons name="checkmark-done-circle" size={24} color="green" />
             </View>
             <View
               style={{
@@ -344,8 +344,7 @@ const Home = () => {
                 backgroundColor: "#04EC171A",
               }}
             >
-              <Ionicons name="checkmark-done-circle" size={24} color="green" />
-              {/* <Image source={require("../../../assets/icons/Winne.png")} /> */}
+              <Image source={require("../../../assets/icons/Winne.png")} />
             </View>
             <View
               style={{

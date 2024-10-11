@@ -93,7 +93,7 @@ export const StartScreen = ({}) => {
 
   console.log({ isOnboarding });
 
-  return <>{isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
 };
 
 export const NavigationScreen = () => {
