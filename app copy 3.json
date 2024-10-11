@@ -31,10 +31,9 @@
     },
     "android": {
       "versionCode": 8,
-      "permissions": [
+      "permission": [
         "com.google.android.gms.permission.AD_ID",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.CAMERA"
       ],
       "config": {
         "googleMaps": {
@@ -45,7 +44,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.CakeExpress.CakeExpress"
+      "package": "com.CakeExpress.CakeExpress",
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -54,8 +54,6 @@
       "eas": {
         "projectId": "ce9c5749-f94a-4001-945b-945edd3a21f4"
       }
-    },
-    "privacy": "public", // or "unlisted", depending on your preference
-    "policyUrl": "https://your-privacy-policy-url.com" // Add the link to your privacy policy here
+    }
   }
 }

@@ -47,7 +47,7 @@ const ForgotPassword = ({ onSetAuth }) => {
 
   console.log({
     d: otpemail,
-    verifyEmail:verifyEmail
+    verifyEmail: verifyEmail,
   });
   const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
   // console.log({

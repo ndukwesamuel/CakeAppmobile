@@ -75,9 +75,9 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        setAccountModal(!accountModal)
-        setAccountNumber('')
-        setSelectedBank("")
+        setAccountModal(!accountModal);
+        setAccountNumber("");
+        setSelectedBank("");
         Toast.show({
           type: "success",
           text1: `Bank details successfully updated`,
@@ -114,9 +114,9 @@ export default function Wallet() {
     },
     {
       onSuccess: (success) => {
-        setAmount(0)
-        dispatch(Get_Wallet_Details_Fun())
-        setWithdrawalModal(!withdrawalModal)
+        setAmount(0);
+        dispatch(Get_Wallet_Details_Fun());
+        setWithdrawalModal(!withdrawalModal);
         Toast.show({
           type: "success",
           text1: `${success?.data?.message} `,
@@ -133,10 +133,10 @@ export default function Wallet() {
   );
   const handleWithdrawal = () => {
     const data = {
-      amount: amount
-    }
-    Withdrawal_Mutation.mutate(data)
-  }
+      amount: amount,
+    };
+    Withdrawal_Mutation.mutate(data);
+  };
 
   return (
     <AppScreenThree arrow={"true"} title={"Wallet"}>
@@ -337,16 +337,16 @@ export default function Wallet() {
                   />
                 </View>
                 <TouchableOpacity
-                onPress={handleWithdrawal}
+                  onPress={handleWithdrawal}
                   style={[styles.button, { borderRadius: 10 }]}
                 >
                   {Withdrawal_Mutation.isLoading ? (
                     <ActivityIndicator size="small" color="white" />
                   ) : (
-                  <Text style={{ textAlign: "center", color: "white" }}>
-                    Withdraw
-                  </Text>
-                  )} 
+                    <Text style={{ textAlign: "center", color: "white" }}>
+                      Withdraw
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>

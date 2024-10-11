@@ -87,7 +87,7 @@ const UploadProduct = () => {
             vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
           })
         );
-        navigation.goBack()
+        navigation.goBack();
         // console.log({ firedata: data });
         Alert.alert(
           "Success",
@@ -121,14 +121,14 @@ const UploadProduct = () => {
     },
     {
       onSuccess: (success) => {
-        navigation.goBack()
+        navigation.goBack();
         Toast.show({
           type: "success",
           text1: `Product successfully updated`,
         });
       },
       onError: (error) => {
-        console.log({ errrrrrrrrr: error });
+        console.log({ errrrrrrrrr: error?.response?.data });
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,

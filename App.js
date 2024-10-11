@@ -93,9 +93,7 @@ export const StartScreen = ({}) => {
 
   console.log({ isOnboarding });
 
-  const dispatch = useDispatch();
-
-  return <>{!isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
+  return <>{isOnboarding ? <OnBoardingPage /> : <Auth />}</>;
 };
 
 export const NavigationScreen = () => {
@@ -107,6 +105,8 @@ export const NavigationScreen = () => {
   //   asdd: user_data,
   // });
 
+  // dispatch(reset_isOnboarding());
+  // dispatch(reset_login());
   return (
     <NavigationContainer>
       {user_data?.data?.token && <MainScreen />}
@@ -121,11 +121,6 @@ const MainScreen = () => {
 
   const dispatch = useDispatch();
 
-  // console.log({
-  //   condition: user_data?.data?.roles?.includes("user"),
-  //   zzzz: user_data?.data?.user?.roles,
-  // });
-
   useEffect(() => {
     if (
       !["user", "vendor"].some((role) =>
@@ -136,9 +131,6 @@ const MainScreen = () => {
       dispatch(reset_login());
       console.log("Logging out. User data:", user_data);
     }
-
-    // dispatch(reset_isOnboarding());
-    // dispatch(reset_login());
 
     return () => {};
   }, [user_data]);

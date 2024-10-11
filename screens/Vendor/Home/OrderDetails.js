@@ -44,6 +44,8 @@ export default function OrderDetails() {
               return <RequestModal item={item} />;
             } else if (dataRoute?.title === "ongoing") {
               return <OngoingModal item={item} />;
+            } else if (dataRoute?.title === "completed") {
+              return <OngoingModal item={item} />;
             } else if (dataRoute?.title === "cancelled") {
               return <CancelledModal item={item} />;
             } else if (dataRoute?.title === "accepted") {
