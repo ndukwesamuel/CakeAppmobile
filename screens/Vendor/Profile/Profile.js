@@ -8,6 +8,7 @@ import {
   Pressable,
   Modal,
   TouchableWithoutFeedback,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -30,10 +31,11 @@ const Profile = () => {
   const [profletab, setprofletab] = useState("order");
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const user_data = useSelector((state) => state?.Auth?.user_profile_data);
   const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
   // console.log({ userrrrrrrr: user });
-  console.log({ profile: current_vendor_profile_data?.data?.vendorProfile });
+  // console.log({ profile: current_vendor_profile_data?.data?.vendorProfile });
 
   useEffect(() => {
     dispatch(UserProfile_Fun());
@@ -42,9 +44,23 @@ const Profile = () => {
     return () => {};
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      dispatch(UserProfile_Fun());
+      dispatch(Current_vendor_profile_Fun());
+      setRefreshing(false);
+    }, 2000);
+  };
+
   return (
     <AppScreenThree arrrow={"true"} title={"Profile"}>
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View
           style={{
             backgroundColor: "white",
@@ -227,7 +243,7 @@ const Profile = () => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-      </View>
+      </ScrollView>
     </AppScreenThree>
   );
 };

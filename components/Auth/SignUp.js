@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -38,13 +38,17 @@ const SignUp = ({ onSetAuth }) => {
   const [startSignUp, setStartSignUp] = useState(true);
   const otpemail = useSelector((state) => state?.OnboardingSlice);
 
-  console.log({
-    ooooo: roles,
-  });
+  // console.log({
+  //   ooooo: roles,
+  // });
   const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
-  console.log({
-    login_data: user_data,
-  });
+  // console.log({
+  //   login_data: user_data,
+  // });
+
+  useEffect(() => {
+    dispatch(checkResetPassword(false));
+  }, [dispatch]);
 
   const Registration_Mutation = useMutation(
     (data_info) => {
@@ -281,7 +285,8 @@ const SignUp = ({ onSetAuth }) => {
             style={[
               {
                 backgroundColor: roles.includes("user") ? "#6904EC" : "#F9F9F9",
-                borderBottomLeftRadius: 12, borderTopLeftRadius:12
+                borderBottomLeftRadius: 12,
+                borderTopLeftRadius: 12,
               },
               styles.roleButtons,
             ]}
@@ -302,7 +307,8 @@ const SignUp = ({ onSetAuth }) => {
                 backgroundColor: roles.includes("vendor")
                   ? "#6904EC"
                   : "#F9F9F9",
-                  borderBottomRightRadius:12, borderTopRightRadius:12
+                borderBottomRightRadius: 12,
+                borderTopRightRadius: 12,
               },
               styles.roleButtons,
             ]}
@@ -458,7 +464,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(76, 6, 14, 1)",
     height: 48,
     borderRadius: 10,
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
   inputLabel: {
     color: "rgba(43, 2, 95, 1)",

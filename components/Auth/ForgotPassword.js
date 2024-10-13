@@ -9,7 +9,9 @@ import {
   ActivityIndicator,
   Image,
   useWindowDimensions,
+  TouchableOpacity,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useMutation } from "react-query";
@@ -160,13 +162,32 @@ const ForgotPassword = ({ onSetAuth }) => {
   };
 
   return (
-    <AppScreenThree arrrow={"true"}>
+    <AppScreenThree>
       {verifyEmail === true ? (
         <ScrollView style={styles.container}>
           <Image
             source={backgroundImg}
             style={[styles.backgroundImage, { width }]}
           />
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: 20,
+              left: 30,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: 10,
+              width: 35,
+            }}
+            onPress={() => {
+              dispatch(checkResetPassword(false));
+              dispatch(reset_otpemail());
+              dispatch(reset_otpValue());
+              dispatch(onSetAuth("forgot-password"));
+            }}
+          >
+            <Ionicons name="arrow-back-sharp" size={24} color="black" />
+          </TouchableOpacity>
           <View style={[styles.displayArea, width]}>
             <View>
               <Text style={[styles.text, { fontSize: 32, fontWeight: "700" }]}>
@@ -196,7 +217,7 @@ const ForgotPassword = ({ onSetAuth }) => {
                 />
               </View>
             </View>
-            <Pressable style={styles.button} onPress={handleResetPassword}>
+            <Pressable style={[styles.button, {marginTop:100}]} onPress={handleResetPassword}>
               {ResetPassword_Mutation.isLoading ? (
                 <ActivityIndicator size="small" color="white" />
               ) : (
@@ -220,6 +241,25 @@ const ForgotPassword = ({ onSetAuth }) => {
             source={backgroundImg}
             style={[styles.backgroundImage, { width }]}
           />
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: 50,
+              left: 30,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: 10,
+              width: 35,
+            }}
+            onPress={() => {
+              dispatch(checkResetPassword(false));
+              dispatch(reset_otpemail());
+              dispatch(reset_otpValue());
+              dispatch(onSetAuth("forgot-password"));
+            }}
+          >
+            <Ionicons name="arrow-back-sharp" size={24} color="black" />
+          </TouchableOpacity>
           <View style={[styles.displayArea, width]}>
             <View>
               <Text style={[styles.text, { fontSize: 32, fontWeight: "700" }]}>
@@ -241,7 +281,7 @@ const ForgotPassword = ({ onSetAuth }) => {
               </View>
             </View>
             <Pressable
-              style={styles.button} // Call handleLogin function on button press
+              style={[styles.button, { marginTop: 150 }]} // Call handleLogin function on button press
               onPress={() => ForgotPassword_Mutation.mutate({ email: email })}
             >
               {ForgotPassword_Mutation.isLoading ? (
@@ -422,7 +462,7 @@ const styles = StyleSheet.create({
     marginTop: -360,
     borderRadius: 20,
     padding: 20,
-    marginBottom: 50,
+    // marginBottom: 50,
   },
   inputGroup: {
     gap: 10,

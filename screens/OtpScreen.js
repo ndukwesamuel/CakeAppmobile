@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
   checkOtp,
+  checkResetPassword,
   reser_otp,
   reset_otpemail,
   setOtp,
@@ -132,10 +133,10 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         });
 
         if (verifyEmail === true) {
-          dispatch(setOtp(code))
+          dispatch(setOtp(code));
           dispatch(checkOtp(false));
-          
-          onSetAuth("forgot-password")
+
+          onSetAuth("forgot-password");
         } else {
           dispatch(checkOtp(false));
           dispatch(reset_otpemail());
@@ -160,25 +161,48 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
   return (
     <AppScreen>
       <Mainborder>
-        <TouchableOpacity
-          style={{
-            position: "relative",
-            top: 10,
-            left: 30,
-            borderWidth: 1,
-            padding: 5,
-            borderRadius: 10,
-            width: 35,
-          }}
-          onPress={() => {
-            console.log("this is otpemail", otpemail);
-            dispatch(checkOtp(false));
-            onSetAuth("sign-in");
-            dispatch(reset_login());
-          }}
-        >
-          <Ionicons name="arrow-back-sharp" size={24} color="black" />
-        </TouchableOpacity>
+        {verifyEmail === true ? (
+          <TouchableOpacity
+            style={{
+              position: "relative",
+              top: 10,
+              left: 30,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: 10,
+              width: 35,
+            }}
+            onPress={() => {
+              dispatch(checkResetPassword(false));
+              dispatch(reset_otpemail());
+              dispatch(checkOtp(false));
+              onSetAuth("sign-in");
+              dispatch(reset_login());
+            }}
+          >
+            <Ionicons name="arrow-back-sharp" size={24} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{
+              position: "relative",
+              top: 10,
+              left: 30,
+              borderWidth: 1,
+              padding: 5,
+              borderRadius: 10,
+              width: 35,
+            }}
+            onPress={() => {
+              console.log("this is otpemail", otpemail);
+              dispatch(checkOtp(false));
+              onSetAuth("sign-in");
+              dispatch(reset_login());
+            }}
+          >
+            <Ionicons name="arrow-back-sharp" size={24} color="black" />
+          </TouchableOpacity>
+        )}
         <View style={styles.container}>
           <View style={{ gap: 30 }}>
             <Text style={styles.heading}>E-mail Verification</Text>
@@ -252,7 +276,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                 >
                   <TouchableOpacity
                     style={{
-                      backgroundColor: "#DD293E",
+                      backgroundColor: "#6904EC",
                       width: "70%",
                       borderRadius: 30,
                     }}
@@ -264,7 +288,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                     }
                   >
                     {Verify_Mutation?.isLoading ? (
-                      <ActivityIndicator size="large" color="blue" />
+                      <ActivityIndicator size="small" color="white" />
                     ) : (
                       <Text
                         style={{
@@ -291,7 +315,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
             >
               <Text style={styles.resend}>
                 Didn’t receive a code?{" "}
-                <Text style={{ fontWeight: "500" }}>Resend</Text>
+                <Text style={{ fontWeight: "500", textDecorationLine:"underline" }}>Resend</Text>
                 {Resend_Mutation.isLoading && (
                   <ActivityIndicator color="blue" size="small" />
                 )}

@@ -18,7 +18,7 @@ import { Login_Fun, reset_login } from "../../Redux/AuthSlice";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useMutation } from "react-query";
-import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
+import { checkOtp, checkResetPassword, setOtpEmail } from "../../Redux/OnboardingSlice";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import AppScreen from "../shared/AppScreen";
 import Mainborder from "../shared/Mainborder";
@@ -57,6 +57,7 @@ const SignIn = ({ onSetAuth }) => {
       // navigation.navigate("OtpScreen");
       dispatch(checkOtp(true));
     }
+    dispatch(checkResetPassword(false));
 
     // dispatch(reset_login());
 

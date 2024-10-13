@@ -166,9 +166,10 @@ export default function Wallet() {
 
   return (
     <AppScreenThree arrow={"true"} title={"Wallet"}>
-      <View
+      <ScrollView
         style={styles.container}
-        // contentContainerStyle={{ gap: 20 }}
+        contentContainerStyle={{ gap: 20 }}
+        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing}/>}
       >
         <View style={[styles.SubContainer, { alignItems: "center", gap: 10 }]}>
           <Text style={{ color: "#020D44", fontSize: 16, fontWeight: "500" }}>
@@ -419,7 +420,7 @@ export default function Wallet() {
             </Text>
           </Pressable>
         </View>
-      </View>
+      </ScrollView>
     </AppScreenThree>
   );
 }

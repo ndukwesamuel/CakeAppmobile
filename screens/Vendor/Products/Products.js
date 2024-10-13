@@ -2,13 +2,14 @@ import {
   FlatList,
   Image,
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { useDispatch, useSelector } from "react-redux";
 import { Get_vendor_Cake_Fun } from "../../../Redux/Buyer/VendorSlice";
@@ -18,6 +19,7 @@ import { formatToCurrency } from "../../../utills/Currency";
 
 export default function Products() {
   const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
   const { user_data, current_vendor_profile_data } = useSelector(
     (state) => state?.Auth
   );
@@ -32,11 +34,27 @@ export default function Products() {
     return () => {};
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      dispatch(Current_vendor_profile_Fun());
+      dispatch(
+        Get_vendor_Cake_Fun({
+          vendorId: current_vendor_profile_data?.data?.vendorProfile?._id, //user_data?.user?.id, //user_profile_data?.user?.id,
+        })
+      );
+      setRefreshing(false);
+    }, 2000);
+  };
+
   console.log({ cakes: get_vendor_Cake_data?.data?.cakes });
   return (
     <AppScreenThree arrrow={"true"} title={"My Product"}>
       <View style={styles.container}>
         <FlatList
+          refreshControl={
+            <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+          }
           data={get_vendor_Cake_data?.data?.cakes}
           renderItem={({ item }) => <ImageCard item={item} />}
           ListEmptyComponent={
@@ -102,7 +120,7 @@ const styles2 = StyleSheet.create({
     height: 180,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    resizeMode:"stretch"
+    resizeMode: "stretch",
   },
   cardTitle: {
     color: "#2B025F",
