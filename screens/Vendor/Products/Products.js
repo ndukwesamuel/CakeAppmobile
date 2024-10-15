@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -23,7 +24,9 @@ export default function Products() {
   const { user_data, current_vendor_profile_data } = useSelector(
     (state) => state?.Auth
   );
-  const { get_vendor_Cake_data } = useSelector((state) => state?.VendorSlice);
+  const { get_vendor_Cake_data, get_vendor_Cake_isLoading } = useSelector(
+    (state) => state?.VendorSlice
+  );
   useEffect(() => {
     dispatch(Current_vendor_profile_Fun());
     dispatch(
@@ -47,25 +50,36 @@ export default function Products() {
     }, 2000);
   };
 
-  console.log({ cakes: get_vendor_Cake_data?.data?.cakes });
+  console.log({
+    cakes: get_vendor_Cake_data,
+    loading: get_vendor_Cake_isLoading,
+  });
   return (
     <AppScreenThree arrrow={"true"} title={"My Product"}>
-      <View style={styles.container}>
-        <FlatList
-          refreshControl={
-            <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-          data={get_vendor_Cake_data?.data?.cakes}
-          renderItem={({ item }) => <ImageCard item={item} />}
-          ListEmptyComponent={
-            <View>
-              <Text style={{ textAlign: "center" }}>
-                No Products Uploaded Yet
-              </Text>
-            </View>
-          }
+      {get_vendor_Cake_isLoading ? (
+        <ActivityIndicator
+          size={"small"}
+          color="purple"
+          style={{ marginTop: 70 }}
         />
-      </View>
+      ) : (
+        <View style={styles.container}>
+          <FlatList
+            refreshControl={
+              <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+            }
+            data={get_vendor_Cake_data?.data?.cakes}
+            renderItem={({ item }) => <ImageCard item={item} />}
+            ListEmptyComponent={
+              <View>
+                <Text style={{ textAlign: "center" }}>
+                  No Products Uploaded Yet
+                </Text>
+              </View>
+            }
+          />
+        </View>
+      )}
     </AppScreenThree>
   );
 }

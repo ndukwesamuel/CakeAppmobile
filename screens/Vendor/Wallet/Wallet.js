@@ -29,11 +29,16 @@ import { useNavigation } from "@react-navigation/native";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wallet() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
-  const { get_banks_data, wallet_details_data, transaction_history_data } =
-    useSelector((state) => state?.VendorsSlice?.WalletSlice);
+  const {
+    get_banks_data,
+    wallet_details_data,
+    transaction_history_data,
+    wallet_details_isLoading,
+    get_banks_isLoading,
+  } = useSelector((state) => state?.VendorsSlice?.WalletSlice);
   console.log({ wallet: wallet_details_data?.data?.wallet });
 
   const [accountModal, setAccountModal] = useState(false);
@@ -169,7 +174,9 @@ export default function Wallet() {
       <ScrollView
         style={styles.container}
         contentContainerStyle={{ gap: 20 }}
-        refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing}/>}
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+        }
       >
         <View style={[styles.SubContainer, { alignItems: "center", gap: 10 }]}>
           <Text style={{ color: "#020D44", fontSize: 16, fontWeight: "500" }}>
@@ -189,38 +196,42 @@ export default function Wallet() {
         {/* Account Details */}
         <View style={[styles.SubContainer, { gap: 20 }]}>
           <Text style={styles.title}>Account Details</Text>
-          <View style={{ gap: 8 }}>
-            <TouchableOpacity onPress={() => setAccountModal(!accountModal)}>
-              <Text
-                style={{
-                  textAlign: "right",
-                  textDecorationLine: "underline",
-                  fontSize: 16,
-                  color: "#2B025F",
-                }}
-              >
-                Update account details
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.viewGroup}>
-              <Text style={styles.key}>Name of account</Text>
-              <Text style={styles.value}>
-                {wallet_details_data?.data?.wallet?.name || ""}
-              </Text>
+          {wallet_details_isLoading ? (
+            <ActivityIndicator size={"small"} color={"purple"} />
+          ) : (
+            <View style={{ gap: 8 }}>
+              <TouchableOpacity onPress={() => setAccountModal(!accountModal)}>
+                <Text
+                  style={{
+                    textAlign: "right",
+                    textDecorationLine: "underline",
+                    fontSize: 16,
+                    color: "#2B025F",
+                  }}
+                >
+                  Update account details
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.viewGroup}>
+                <Text style={styles.key}>Name of account</Text>
+                <Text style={styles.value}>
+                  {wallet_details_data?.data?.wallet?.name || ""}
+                </Text>
+              </View>
+              <View style={styles.viewGroup}>
+                <Text style={styles.key}>Account Number</Text>
+                <Text style={styles.value}>
+                  {wallet_details_data?.data?.wallet?.bankAccountNumber || ""}
+                </Text>
+              </View>
+              <View style={styles.viewGroup}>
+                <Text style={styles.key}>Bank Name</Text>
+                <Text style={styles.value}>
+                  {wallet_details_data?.data?.wallet?.bankName || ""}
+                </Text>
+              </View>
             </View>
-            <View style={styles.viewGroup}>
-              <Text style={styles.key}>Account Number</Text>
-              <Text style={styles.value}>
-                {wallet_details_data?.data?.wallet?.bankAccountNumber || ""}
-              </Text>
-            </View>
-            <View style={styles.viewGroup}>
-              <Text style={styles.key}>Bank Name</Text>
-              <Text style={styles.value}>
-                {wallet_details_data?.data?.wallet?.bankName || ""}
-              </Text>
-            </View>
-          </View>
+          )}
         </View>
 
         {/* Account Modal */}
@@ -317,16 +328,22 @@ export default function Wallet() {
                     onChangeText={setSearchQuery} // Update search query on input
                   />
                   {/* List of Banks */}
-                  <FlatList
-                    contentContainerStyle={{ gap: 10 }}
-                    data={filteredBanks} // Use filtered banks for search
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity onPress={() => handleBankSelect(item)}>
-                        <Text>{item?.name}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
+                  {get_banks_isLoading ? (
+                    <ActivityIndicator size={"small"} color={"purple"} />
+                  ) : (
+                    <FlatList
+                      contentContainerStyle={{ gap: 10 }}
+                      data={filteredBanks} // Use filtered banks for search
+                      keyExtractor={(item) => item.id}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          onPress={() => handleBankSelect(item)}
+                        >
+                          <Text>{item?.name}</Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  )}
                 </View>
               </View>
             </View>
@@ -414,8 +431,13 @@ export default function Wallet() {
 
         {/* Transaction History */}
         <View style={[styles.SubContainer]}>
-          <Pressable onPress={() => navigation.navigate("transactionHistory")} >
-            <Text style={[styles.title, { marginBottom: 30, textDecorationLine:"underline" }]}>
+          <Pressable onPress={() => navigation.navigate("transactionHistory")}>
+            <Text
+              style={[
+                styles.title,
+                { marginBottom: 30, textDecorationLine: "underline" },
+              ]}
+            >
               Transaction History
             </Text>
           </Pressable>

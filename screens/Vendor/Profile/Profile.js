@@ -9,6 +9,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppScreenTwo from "../../../components/shared/AppScreenTwo";
@@ -23,6 +24,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
 import { reset_isOnboarding } from "../../../Redux/OnboardingSlice";
+import { colors } from "../../../utills/Themes";
 
 const profileImage = require("../../../assets/cakeImages/profile.png");
 
@@ -33,7 +35,8 @@ const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const user_data = useSelector((state) => state?.Auth?.user_profile_data);
-  const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
+  const { current_vendor_profile_data, current_vendor_profile_isLoading } =
+    useSelector((state) => state?.Auth);
   // console.log({ userrrrrrrr: user });
   // console.log({ profile: current_vendor_profile_data?.data?.vendorProfile });
 
@@ -110,88 +113,98 @@ const Profile = () => {
           <Text style={{ color: "#2B025F", fontSize: 20, fontWeight: "500" }}>
             Business Information
           </Text>
-          <View style={{ gap: 12 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 10,
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}>Business Name</Text>
-              <Text style={styles.value}>
-                {current_vendor_profile_data?.data?.vendorProfile?.businessName}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}>Business Description</Text>
-              <Text
-                style={[styles.value, { width: "50%", textAlign: "right" }]}
+          {current_vendor_profile_isLoading ? (
+            <ActivityIndicator size={"small"} colors={"purple"} />
+          ) : (
+            <View style={{ gap: 12 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
               >
-                {
-                  current_vendor_profile_data?.data?.vendorProfile
-                    ?.businessDescription
-                }
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}> C.A.C Number</Text>
-              <Text style={styles.value}>
-                {current_vendor_profile_data?.data?.vendorProfile?.CACNumber}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}>Nationality</Text>
-              <Text style={styles.value}>
-                {current_vendor_profile_data?.data?.vendorProfile?.nationality}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}>Contact</Text>
-              <Text style={styles.value}>
-                {
-                  current_vendor_profile_data?.data?.vendorProfile
-                    ?.businessCallLine
-                }
-              </Text>
-            </View>
+                <Text style={styles.key}>Business Name</Text>
+                <Text style={styles.value}>
+                  {
+                    current_vendor_profile_data?.data?.vendorProfile
+                      ?.businessName
+                  }
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.key}>Business Description</Text>
+                <Text
+                  style={[styles.value, { width: "50%", textAlign: "right" }]}
+                >
+                  {
+                    current_vendor_profile_data?.data?.vendorProfile
+                      ?.businessDescription
+                  }
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.key}> C.A.C Number</Text>
+                <Text style={styles.value}>
+                  {current_vendor_profile_data?.data?.vendorProfile?.CACNumber}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.key}>Nationality</Text>
+                <Text style={styles.value}>
+                  {
+                    current_vendor_profile_data?.data?.vendorProfile
+                      ?.nationality
+                  }
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.key}>Contact</Text>
+                <Text style={styles.value}>
+                  {
+                    current_vendor_profile_data?.data?.vendorProfile
+                      ?.businessCallLine
+                  }
+                </Text>
+              </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.key}></Text>
-              <Text style={styles.value}></Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.key}></Text>
+                <Text style={styles.value}></Text>
+              </View>
             </View>
-          </View>
+          )}
         </View>
         <View style={{ backgroundColor: "white", padding: 20 }}>
           <TouchableOpacity

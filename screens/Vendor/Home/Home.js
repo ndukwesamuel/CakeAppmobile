@@ -42,10 +42,11 @@ const Home = () => {
   );
 
   const { current_vendor_profile_data } = useSelector((state) => state?.Auth);
-  console.log({
-    current_vendor_profile_data:
-      current_vendor_profile_data?.data?.vendorProfile?.isSubmitted,
-  });
+  // console.log({
+  //   current_vendor_profile_data:
+  //     current_vendor_profile_data?.data?.vendorProfile?.isSubmitted,
+  //     userData: user_data?.data?.user
+  // });
   // console.log({
   //   dataaaa: get_all_order_history_data?.data?.orders,
   // });
@@ -134,14 +135,13 @@ const Home = () => {
             }}
           >
             <Image
-              source={{ uri: current_vendor_profile_data?.data?.image }}
+              source={{ uri: user_data?.data?.user?.image }}
               style={{ width: 30, height: 30, borderRadius: 20 }}
             />
             <Text style={{ color: "#2E1400", fontSize: 20, fontWeight: "700" }}>
               Hello{" "}
               {
-                current_vendor_profile_data?.data?.vendorProfile?.userProfile
-                  ?.firstName
+                user_data?.data?.user?.firstName
               }
             </Text>
           </View>

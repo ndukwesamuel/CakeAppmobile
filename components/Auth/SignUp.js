@@ -15,7 +15,7 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { checkOtp, setOtpEmail } from "../../Redux/OnboardingSlice";
+import { checkOtp, checkResetPassword, setOtpEmail } from "../../Redux/OnboardingSlice";
 import AppScreen from "../shared/AppScreen";
 import Mainborder from "../shared/Mainborder";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
