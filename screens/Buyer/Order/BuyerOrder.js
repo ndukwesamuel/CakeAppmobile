@@ -38,9 +38,8 @@ export default function BuyerOrder() {
   const { user_data } = useSelector((state) => state?.Auth);
   const token = useSelector((state) => state?.Auth?.user_data?.data?.token);
 
-  const { get_all_order_history_data } = useSelector(
-    (state) => state?.OrderSlice
-  );
+  const { get_all_order_history_data, get_all_order_history_isLoading } =
+    useSelector((state) => state?.OrderSlice);
 
   console.log({ orderhistory: get_all_order_history_data?.data?.orders });
   const [paystackInfo, setPaystackInfo] = useState(null);
@@ -339,38 +338,42 @@ export default function BuyerOrder() {
             )}
           />
         </View>
-        <View style={{ flex: 1, marginTop: 20, marginBottom: 100 }}>
-          <FlatList
-            data={get_all_order_history_data?.data?.orders}
-            renderItem={renderOrder}
-            keyExtractor={(item) => item?._id}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            ListEmptyComponent={
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flex: 1,
-                }}
-              >
-                <Text
+        {get_all_order_history_isLoading ? (
+          <ActivityIndicator size={"small"} color={"purple"} style={{marginTop:50}}/>
+        ) : (
+          <View style={{ flex: 1, marginTop: 20, marginBottom: 100 }}>
+            <FlatList
+              data={get_all_order_history_data?.data?.orders}
+              renderItem={renderOrder}
+              keyExtractor={(item) => item?._id}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={
+                <View
                   style={{
-                    fontWeight: "600",
-                    fontSize: 20,
-                    color: "#2B025F",
-                    marginTop: 60,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flex: 1,
                   }}
                 >
-                  No Order History
-                </Text>
-              </View>
-            }
-          />
-        </View>
+                  <Text
+                    style={{
+                      fontWeight: "600",
+                      fontSize: 20,
+                      color: "#2B025F",
+                      marginTop: 60,
+                    }}
+                  >
+                    No Order History
+                  </Text>
+                </View>
+              }
+            />
+          </View>
+        )}
       </View>
     </AppScreenThree>
   );

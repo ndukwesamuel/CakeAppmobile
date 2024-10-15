@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   RefreshControl,
@@ -21,7 +22,7 @@ const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wishlist() {
   const dispatch = useDispatch();
-  const { wishlist_data } = useSelector((state) => state?.OrderSlice);
+  const { wishlist_data, wishlist_isLoading } = useSelector((state) => state?.OrderSlice);
   const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
   const navigation = useNavigation();
 
@@ -30,7 +31,7 @@ export default function Wishlist() {
     return () => {};
   }, []);
 
-  console.log({wishlist: wishlist_data?.wishlist?.items})
+  // console.log({wishlist: wishlist_data?.wishlist?.items})
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -81,7 +82,7 @@ export default function Wishlist() {
 
   return (
     <AppScreenThree arrrow={"true"} title={"Wishlist"}>
-      <View style={styles.container}>
+      {wishlist_isLoading? <ActivityIndicator color={"purple"} size={"small"} style={{marginTop:100}}/> :<View style={styles.container}>
         <FlatList
           data={wishlist_data?.wishlist?.items}
           refreshControl={
@@ -159,7 +160,7 @@ export default function Wishlist() {
             gap: 10,
           }}
         />
-      </View>
+      </View>}
     </AppScreenThree>
   );
 }
