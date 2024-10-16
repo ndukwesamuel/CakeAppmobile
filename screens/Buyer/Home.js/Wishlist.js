@@ -18,11 +18,14 @@ import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { formatToCurrency } from "../../../utills/Currency";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function Wishlist() {
   const dispatch = useDispatch();
-  const { wishlist_data, wishlist_isLoading } = useSelector((state) => state?.OrderSlice);
+  const { wishlist_data, wishlist_isLoading } = useSelector(
+    (state) => state?.OrderSlice
+  );
   const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
   const navigation = useNavigation();
 
@@ -82,85 +85,93 @@ export default function Wishlist() {
 
   return (
     <AppScreenThree arrrow={"true"} title={"Wishlist"}>
-      {wishlist_isLoading? <ActivityIndicator color={"purple"} size={"small"} style={{marginTop:100}}/> :<View style={styles.container}>
-        <FlatList
-          data={wishlist_data?.wishlist?.items}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.container2}>
-              <View
-                style={{
-                  flexDirection: "row",
-                }}
-              >
-                {console.log({
-                  item: item?._id,
-                })}
+      {wishlist_isLoading ? (
+        <ActivityIndicator
+          color={"purple"}
+          size={"small"}
+          style={{ marginTop: 100 }}
+        />
+      ) : (
+        <View style={styles.container}>
+          <FlatList
+            data={wishlist_data?.wishlist?.items}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.container2}>
                 <View
                   style={{
-                    width: "90%",
-                    gap: 10,
+                    flexDirection: "row",
                   }}
-                >
-                  <Image
-                    source={{
-                      uri:
-                        item?.productId?.images?.length > 0
-                          ? item?.productId?.images[0]?.url
-                          : "https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw",
-                    }}
-                    style={{
-                      width: 50, // Updated width
-                      height: 50, // Added height
-                      borderRadius: 50,
-                      resizeMode: "contain", // Ensures image fits the bounds
-                    }}
-                  />
-                  <Text>{item?.productId?.name}</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    ₦{item?.productId?.price}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    justifyContent: "flex-end", // Push the delete icon to the bottom
-                    alignItems: "flex-end", // Align the icon to the right
-                  }}
-                  onPress={() => Wish_Mutation.mutate(item?.productId?._id)}
                 >
                   {console.log({
-                    gdgd: item?.productId?._id,
+                    item: item?._id,
                   })}
-                  <AntDesign name="delete" size={20} color="red" />
-                </TouchableOpacity>
+                  <View
+                    style={{
+                      width: "90%",
+                      gap: 10,
+                    }}
+                  >
+                    <Image
+                      source={{
+                        uri:
+                          item?.productId?.images?.length > 0
+                            ? item?.productId?.images[0]?.url
+                            : "https://lh5.googleusercontent.com/proxy/t08n2HuxPfw8OpbutGWjekHAgxfPFv-pZZ5_-uTfhEGK8B5Lp-VN4VjrdxKtr8acgJA93S14m9NdELzjafFfy13b68pQ7zzDiAmn4Xg8LvsTw1jogn_7wStYeOx7ojx5h63Gliw",
+                      }}
+                      style={{
+                        width: 50, // Updated width
+                        height: 50, // Added height
+                        borderRadius: 50,
+                        resizeMode: "contain", // Ensures image fits the bounds
+                      }}
+                    />
+                    <Text>{item?.productId?.name}</Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {formatToCurrency(item?.productId?.price)}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "flex-end", // Push the delete icon to the bottom
+                      alignItems: "flex-end", // Align the icon to the right
+                    }}
+                    onPress={() => Wish_Mutation.mutate(item?.productId?._id)}
+                  >
+                    {console.log({
+                      gdgd: item?.productId?._id,
+                    })}
+                    <AntDesign name="delete" size={20} color="red" />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            )}
+            ListEmptyComponent={
+              <View
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center", // Center horizontally
+                }}
+              >
+                <Text>No Item in Wish List </Text>
               </View>
-            </TouchableOpacity>
-          )}
-          ListEmptyComponent={
-            <View
-              style={{
-                flex: 1,
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center", // Center horizontally
-              }}
-            >
-              <Text>No Item in Wish List </Text>
-            </View>
-          }
-          contentContainerStyle={{
-            gap: 10,
-          }}
-        />
-      </View>}
+            }
+            contentContainerStyle={{
+              gap: 10,
+            }}
+          />
+        </View>
+      )}
     </AppScreenThree>
   );
 }

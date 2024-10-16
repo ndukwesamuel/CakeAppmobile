@@ -9,18 +9,9 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AppScreenTwo from "../../../components/shared/AppScreenTwo";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  UserProfile_Fun,
-  UserProfile_Fun_getVendorProfile,
-  reset_login,
-} from "../../../Redux/AuthSlice";
-import Orderhistory from "./Orderhistory";
-import Personalinfo from "./Personalinfo";
-import { Get_All_Order_HIstory_Fun } from "../../../Redux/Buyer/OrderSlice";
+import { UserProfile_Fun, reset_login } from "../../../Redux/AuthSlice";
 import AppScreenThree from "../../../components/shared/AppScreenThree";
-import { useUserProfile } from "../../../utills/CustomHook";
 import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
@@ -29,10 +20,6 @@ const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const { user_data, user_profile_data } = useSelector((state) => state?.Auth);
-
-  // console.log({
-  //   ffgfg: user_profile_data?.data?.user,
-  // });
   useEffect(() => {
     dispatch(UserProfile_Fun());
   }, []);
@@ -97,17 +84,25 @@ const Profile = () => {
             </Text>
           </View>
         </View>
-        {/* <View style={[styles.container2, { paddingBottom: 60 }]}>
-          <Text style={styles.title}>Orders</Text>
-          <Orderhistory />
-        </View> */}
-        <View style={[styles.container2]}>
+
+        {/* Log out */}
+        <View
+          style={[
+            styles.container2,
+            {
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 14, fontWeight: "700" }}>Log out</Text>
           <TouchableOpacity
             onPress={() => {
               setOpenModal(!openModal);
             }}
           >
-            <Text style={styles.name}> Logout</Text>
+            <Image source={require("../../../assets/icons/logout.png")} />
           </TouchableOpacity>
         </View>
 
@@ -130,13 +125,13 @@ const Profile = () => {
                     style={[styles.button, { backgroundColor: "#DD293E" }]}
                     onPress={() => dispatch(reset_login())}
                   >
-                    <Text style={{ color: "white" }}>Yes</Text>
+                    <Text style={{ color: "white" }}>Yes, log out</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[styles.button, { backgroundColor: "#6904EC" }]}
                     onPress={() => setOpenModal(!openModal)}
                   >
-                    <Text style={{ color: "white" }}>No</Text>
+                    <Text style={{ color: "white" }}>No, back</Text>
                   </TouchableOpacity>
                 </View>
               </View>

@@ -18,6 +18,7 @@ import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import { formatToCurrency } from "../../../utills/Currency";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 
 export default function AdditionalInfo() {
@@ -195,7 +196,7 @@ export default function AdditionalInfo() {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text>Total</Text>
-            <Text>{price}</Text>
+            <Text>{formatToCurrency(price)}</Text>
           </View>
           <TouchableOpacity style={styles.button} onPress={handleCheckout}>
             {Order_Mutation?.isLoading ? (

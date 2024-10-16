@@ -18,6 +18,7 @@ import { Get_All_Cake_Fun } from "../../../Redux/Buyer/CakeSlice";
 import { useMutation } from "react-query";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import { formatToCurrency } from "../../../utills/Currency";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 export default function CategoryCakes() {
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const ImageCard = ({ item }) => {
       <View style={{ flexDirection: "column", gap: 20, padding: 15 }}>
         <Text style={styles2.cardTitle}>{item?.name}</Text>
         <Text style={styles2.description}>{item.description}</Text>
-        <Text style={styles2.cardTitle}>{item.price}</Text>
+        <Text style={styles2.cardTitle}>{formatToCurrency(item.price)}</Text>
         <Pressable
           style={styles2.button}
           onPress={() => navigation.navigate("cakeDetails", { item })}
