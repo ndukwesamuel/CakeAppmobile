@@ -15,6 +15,9 @@ export const OnboardingSlice = createSlice({
   initialState,
   reducers: {
     reset_isOnboarding: (state) => initialState,
+    reset_verifyEmail: (state) => {
+      state.verifyEmail = false;
+    },
     reset_otpemail: (state) => {
       state.otpemail = "";
     },
@@ -90,6 +93,7 @@ export const {
   reser_otp,
   reset_otpValue,
   reset_isOnboarding_data,
+  reset_verifyEmail,
 } = OnboardingSlice.actions;
 export const onBoaringAction = OnboardingSlice.actions;
 export default OnboardingSlice.reducer;

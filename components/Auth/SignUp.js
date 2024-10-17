@@ -15,7 +15,11 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { checkOtp, checkResetPassword, setOtpEmail } from "../../Redux/OnboardingSlice";
+import {
+  checkOtp,
+  checkResetPassword,
+  setOtpEmail,
+} from "../../Redux/OnboardingSlice";
 import AppScreen from "../shared/AppScreen";
 import Mainborder from "../shared/Mainborder";
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
@@ -37,15 +41,7 @@ const SignUp = ({ onSetAuth }) => {
 
   const [startSignUp, setStartSignUp] = useState(true);
   const otpemail = useSelector((state) => state?.OnboardingSlice);
-
-  // console.log({
-  //   ooooo: roles,
-  // });
   const { user_data, user_isLoading } = useSelector((state) => state?.Auth);
-  // console.log({
-  //   login_data: user_data,
-  // });
-
   useEffect(() => {
     dispatch(checkResetPassword(false));
   }, [dispatch]);
@@ -61,8 +57,6 @@ const SignUp = ({ onSetAuth }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          //   "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${user_data?.token}`,
         },
       };
 
@@ -75,8 +69,6 @@ const SignUp = ({ onSetAuth }) => {
           text1: `${success?.data?.message} `,
         });
         dispatch(checkOtp(true));
-
-        // onPress={() => onSetAuth("sign-in")}
       },
 
       onError: (error) => {
@@ -85,182 +77,12 @@ const SignUp = ({ onSetAuth }) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
-          //   text2: ` ${error?.response?.data?.errorMsg} `,
         });
       },
     }
   );
 
   return (
-    // <>
-    //   {startSignUp ? (
-    //     <WelcomeScreen
-    //       data1={startSignUp}
-    //       setdata={setStartSignUp}
-    //       setdata3={onSetAuth}
-    //       setdata4={setRoles}
-    //       data4={roles}
-    //     />
-    //   ) : (
-    //     <AppScreen>
-    //       <Mainborder>
-    //         <ScrollView style={styles.container}>
-    //           <View
-    //             style={{
-    //               paddingBottom: 30,
-    //               flex: 1,
-    //             }}
-    //           >
-    //             {/* heading texts */}
-    //             <View style={{ gap: 10 }}>
-    //               <Text
-    //                 style={{ fontSize: 24, lineHeight: 36, fontWeight: "900" }}
-    //               >
-    //                 Sign Up
-    //               </Text>
-    //             </View>
-
-    //             {/* inputs container*/}
-    //             <View style={styles.inputGroup}>
-    //               {/* username */}
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>First Name</Text>
-
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={firstName}
-    //                   onChangeText={(text) => setFirstName(text)}
-    //                   placeholder="Enter your first name"
-    //                 />
-    //               </View>
-
-    //               {/* last name */}
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>Last Name</Text>
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={lastName}
-    //                   onChangeText={(text) => setLastName(text)}
-    //                   placeholder="Enter your last name"
-    //                 />
-    //               </View>
-
-    //               {/* Phone Number */}
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>Phone Number</Text>
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={phoneNumber}
-    //                   onChangeText={(text) => setPhoneNumber(text)}
-    //                   placeholder="Enter your phone number"
-    //                   keyboardType="phone-pad"
-    //                 />
-    //               </View>
-
-    //               {/* email address */}
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>Email Address</Text>
-
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={email}
-    //                   onChangeText={(text) => setEmail(text)}
-    //                   placeholder="Enter your email"
-    //                 />
-    //               </View>
-
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>Lacation </Text>
-
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={homeAddress}
-    //                   onChangeText={(text) => setHomeAddress(text)}
-    //                   placeholder="Enter your home address"
-    //                 />
-    //               </View>
-
-    //               <View style={styles.inputContainer}>
-    //                 <Text style={styles.labels}>Password</Text>
-    //                 <TextInput
-    //                   style={styles.inputs}
-    //                   value={password}
-    //                   onChangeText={(text) => setPassword(text)}
-    //                   secureTextEntry
-    //                 />
-    //               </View>
-    //             </View>
-
-    //             {/* action buttons */}
-    //             <View
-    //               style={{
-    //                 justifyContent: "flex-end",
-    //                 alignContent: "flex-center",
-    //                 flex: 3,
-    //                 paddingVertical: 30,
-    //                 gap: 10,
-    //               }}
-    //             >
-    //               <Pressable
-    //                 // onPress={() => onSetAuth("sign-in")}
-    //                 onPress={() => {
-    //                   dispatch(setOtpEmail(email));
-
-    //                   Registration_Mutation.mutate({
-    //                     firstName: firstName,
-    //                     lastName: lastName,
-    //                     email: email,
-    //                     password: password,
-    //                     location: homeAddress,
-    //                     roles: roles,
-    //                   });
-    //                 }}
-    //                 style={{
-    //                   padding: 10,
-    //                   borderRadius: 40,
-    //                   backgroundColor: "#DD293E",
-    //                 }}
-    //               >
-    //                 {Registration_Mutation.isLoading ? (
-    //                   <ActivityIndicator size="small" color="white" />
-    //                 ) : (
-    //                   <Text
-    //                     style={{
-    //                       textAlign: "center",
-    //                       color: "white",
-    //                       fontSize: 16,
-    //                       fontWeight: "700",
-    //                       lineHeight: 24.05,
-    //                     }}
-    //                   >
-    //                     Sign Up
-    //                   </Text>
-    //                 )}
-    //               </Pressable>
-    //               <View style={{ justifyContent: "center" }}>
-    //                 <Pressable>
-    //                   <Text style={{ fontSize: 14, lineHeight: 22.4 }}>
-    //                     You do not have an account?{" "}
-    //                     <Text
-    //                       onPress={() => onSetAuth("sign-in")}
-    //                       style={{
-    //                         fontSize: 16,
-    //                         fontWeight: "500",
-    //                         lineHeight: 25.6,
-    //                       }}
-    //                     >
-    //                       Login
-    //                     </Text>
-    //                   </Text>
-    //                 </Pressable>
-    //               </View>
-    //             </View>
-    //           </View>
-    //         </ScrollView>
-    //       </Mainborder>
-    //     </AppScreen>
-    //   )}
-    // </>
     <View style={styles.container}>
       <Image source={backgroundImg} style={[styles.image, { width }]} />
       <View style={[styles.displayArea, { width }]}>
@@ -269,7 +91,7 @@ const SignUp = ({ onSetAuth }) => {
             Sign Up
           </Text>
           <Text style={[styles.text, { fontSize: 12 }]}>
-            Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim{" "}
+            Create an account today to get started - sign up now
           </Text>
         </View>
         {/* Role Buttons */}

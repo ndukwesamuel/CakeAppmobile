@@ -74,8 +74,6 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          //   "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${user_data?.token}`,
         },
       };
 
@@ -96,7 +94,6 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
-          //   text2: ` ${error?.response?.data?.errorMsg} `,
         });
       },
     }
@@ -118,8 +115,6 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          //   "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${user_data?.token}`,
         },
       };
 
@@ -152,7 +147,6 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
-          //   text2: ` ${error?.response?.data?.errorMsg} `,
         });
       },
     }
@@ -173,7 +167,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
               width: 35,
             }}
             onPress={() => {
-              dispatch(checkResetPassword(false));
+              dispatch(checkResetPassword());
               dispatch(reset_otpemail());
               dispatch(checkOtp(false));
               onSetAuth("sign-in");
@@ -211,7 +205,6 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
             <View style={{ gap: 10 }}>
               <Text
                 style={{
-                  color: "#06094F",
                   fontSize: 16,
                   lineHeight: 23,
                   fontWeight: 400,
@@ -219,19 +212,18 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                 }}
               >
                 Enter the 4- digit code sent to{" "}
-                <Text style={{ fontWeight: "500" }}>Email</Text>
               </Text>
-
-              {/* <Text
-            style={{
-              color: "#06094F",
-              textDecorationLine: "underline",
-              fontSize: 16,
-              fontWeight: "500",
-            }}
-          >
-            Edit Phone Number
-          </Text> */}
+              <Text
+                style={{
+                  fontWeight: "500",
+                  textAlign: "center",
+                  color: "#06094F",
+                  fontSize:16,
+                  fontWeight:"700"
+                }}
+              >
+                {otpemail}
+              </Text>
             </View>
 
             {/* otp form */}
@@ -264,6 +256,27 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
                   />
                 ))}
               </View>
+
+                          {/* resend */}
+            <Pressable
+              onPress={() =>
+                Resend_Mutation.mutate({
+                  email: otpemail,
+                })
+              }
+            >
+              <Text style={styles.resend}>
+                Didn’t receive a code?{" "}
+                <Text
+                  style={{ fontWeight: "500", textDecorationLine: "underline" }}
+                >
+                  Resend
+                </Text>
+                {Resend_Mutation.isLoading && (
+                  <ActivityIndicator color="blue" size="small" />
+                )}
+              </Text>
+            </Pressable>
 
               {code.length === length && (
                 <View
@@ -305,22 +318,7 @@ const OtpScreen = ({ navigation, onSetAuth }) => {
               )}
             </View>
 
-            {/* resend */}
-            <Pressable
-              onPress={() =>
-                Resend_Mutation.mutate({
-                  email: otpemail,
-                })
-              }
-            >
-              <Text style={styles.resend}>
-                Didn’t receive a code?{" "}
-                <Text style={{ fontWeight: "500", textDecorationLine:"underline" }}>Resend</Text>
-                {Resend_Mutation.isLoading && (
-                  <ActivityIndicator color="blue" size="small" />
-                )}
-              </Text>
-            </Pressable>
+
           </View>
         </View>
       </Mainborder>
@@ -342,6 +340,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     lineHeight: 36,
     textAlign: "center",
+    color: "#2B025F",
   },
 
   resend: {

@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Image,
   useWindowDimensions,
-  Button,
   ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,17 +17,18 @@ import { Login_Fun, reset_login } from "../../Redux/AuthSlice";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useMutation } from "react-query";
-import { checkOtp, checkResetPassword, setOtpEmail } from "../../Redux/OnboardingSlice";
+import {
+  checkOtp,
+  checkResetPassword,
+  setOtpEmail,
+} from "../../Redux/OnboardingSlice";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
-import AppScreen from "../shared/AppScreen";
-import Mainborder from "../shared/Mainborder";
 
 const API_BASEURL = process.env.EXPO_PUBLIC_API_URL;
 const backgroundImg = require("../../assets/images/signIn.png");
 
 const SignIn = ({ onSetAuth }) => {
   const navigation = useNavigation();
-  // const { localremember } = useSelector((state) => state?.DontwantToResetSlice);
   const { otpemail } = useSelector((state) => state?.OnboardingSlice);
 
   const dispatch = useDispatch();
@@ -36,9 +36,6 @@ const SignIn = ({ onSetAuth }) => {
 
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
-
-
-
   const { user_isLoading, user_data, user_message } = useSelector(
     (state) => state?.Auth
   );
@@ -52,13 +49,9 @@ const SignIn = ({ onSetAuth }) => {
 
   useEffect(() => {
     if (user_message === "Email not verified!") {
-      // navigation.navigate("OtpScreen");
       dispatch(checkOtp(true));
     }
     dispatch(checkResetPassword(false));
-
-    // dispatch(reset_login());
-
     return () => {};
   }, [user_message]);
 
@@ -70,8 +63,6 @@ const SignIn = ({ onSetAuth }) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          //   "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${user_data?.token}`,
         },
       };
 
@@ -84,8 +75,6 @@ const SignIn = ({ onSetAuth }) => {
           text1: `${success?.data?.message} `,
         });
         dispatch(checkOtp(true));
-
-        // onPress={() => onSetAuth("sign-in")}
       },
 
       onError: (error) => {
@@ -95,7 +84,6 @@ const SignIn = ({ onSetAuth }) => {
         Toast.show({
           type: "error",
           text1: `${error?.response?.data?.message} `,
-          //   text2: ` ${error?.response?.data?.errorMsg} `,
         });
       },
     }
@@ -114,7 +102,7 @@ const SignIn = ({ onSetAuth }) => {
               Welcome Back
             </Text>
             <Text style={[styles.text, { fontSize: 12 }]}>
-              Euasi architecto beatae vitae dicta sunt explicabo. Nemo enim{" "}
+              Already have an account? Sign in to continue
             </Text>
           </View>
           {/* inputs */}
@@ -166,7 +154,12 @@ const SignIn = ({ onSetAuth }) => {
               <Text style={[styles.text, { fontSize: 12 }]}>Remember me</Text>
             </TouchableOpacity>
             <Pressable onPress={() => onSetAuth("forgot-password")}>
-              <Text style={[styles.text, { fontSize: 12, textDecorationLine:"underline" }]}>
+              <Text
+                style={[
+                  styles.text,
+                  { fontSize: 12},
+                ]}
+              >
                 Forgot password?
               </Text>
             </Pressable>
@@ -268,7 +261,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(76, 6, 14, 1)",
     height: 48,
     borderRadius: 10,
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
   inputLabel: {
     color: "rgba(43, 2, 95, 1)",
